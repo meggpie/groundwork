@@ -12,31 +12,32 @@
   For a third column, add a <th> and a <td data-col="…"> to every row; data-col must match the column title.
 -->
 <style>
-  .cmp-wrap { background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); overflow: hidden; }
+  .cmp-wrap { background: var(--gw-white); border: 1px solid var(--gw-border); }
   .cmp { width: 100%; border-collapse: collapse; table-layout: fixed; }
   .cmp col.cmp-labelcol { width: 22%; }
   .cmp th, .cmp td { text-align: start; vertical-align: top; padding: var(--wa-space-m) var(--wa-space-l); }
-  .cmp thead th { padding-block: var(--wa-space-l) var(--wa-space-m); border-block-end: 2px solid var(--gw-dark-blue); }
-  .cmp tbody tr + tr > * { border-block-start: 1px solid var(--wa-color-surface-border); }
+  .cmp th + th, .cmp th + td, .cmp td + td { border-inline-start: 1px solid var(--gw-border); }
+  .cmp thead th { padding-block: var(--wa-space-l) var(--wa-space-m); border-block-end: 1px solid var(--gw-ink); }
+  .cmp tbody tr + tr > * { border-block-start: 1px solid var(--gw-border); }
   .cmp tbody th, .cmp-corner { padding-inline-end: var(--wa-space-s); }
-  .cmp-corner .gw-eyebrow { color: var(--wa-color-text-quiet); }
   .cmp tbody th .gw-eyebrow { color: var(--gw-ink); }
   .cmp-col { display: block; font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.1875rem; line-height: var(--wa-line-height-condensed); letter-spacing: -0.02em; color: var(--gw-ink); }
   .cmp-sub { display: block; font-size: 0.9375rem; font-weight: 400; color: var(--wa-color-text-quiet); margin-block-start: 2px; }
   .cmp-lead { display: block; font-weight: 700; margin-block-end: var(--wa-space-3xs); }
-  .gw-eyebrow { padding-block-start: 3px; }
+  .cmp .gw-eyebrow { font-size: 0.875rem; padding-block-start: 3px; }
 
   @media (max-width: 600px) {
     .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: 100%; }
     .cmp colgroup, .cmp thead { display: none; }
     .cmp tbody tr { padding: var(--wa-space-m) var(--wa-space-m) var(--wa-space-s); }
-    .cmp tbody tr + tr { border-block-start: 1px solid var(--wa-color-surface-border); }
+    .cmp tbody tr + tr { border-block-start: 1px solid var(--gw-border); }
+    .cmp th + th, .cmp th + td, .cmp td + td { border-inline-start: 0; }
     .cmp tbody tr + tr > * { border-block-start: 0; }
     .cmp tbody th, .cmp td { padding: 0; }
     .cmp tbody th { margin-block-end: var(--wa-space-s); }
     .cmp td { padding-block: var(--wa-space-xs) var(--wa-space-s); }
-    .cmp td + td { border-block-start: 1px dashed var(--wa-color-surface-border); padding-block-start: var(--wa-space-s); }
-    .cmp td::before { content: attr(data-col); display: block; font-family: var(--wa-font-family-heading); font-weight: 700; color: var(--gw-dark-blue); font-size: 0.9375rem; margin-block-end: 2px; }
+    .cmp td + td { border-block-start: 1px solid var(--gw-line); padding-block-start: var(--wa-space-s); }
+    .cmp td::before { content: attr(data-col); display: block; font-family: var(--wa-font-family-heading); font-weight: 700; color: var(--gw-ink); font-size: 1rem; margin-block-end: 2px; }
   }
 </style>
 </head>

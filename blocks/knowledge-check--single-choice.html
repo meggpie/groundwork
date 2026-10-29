@@ -72,6 +72,9 @@
     .kc h2 { font-size: 1.25rem; }
     wa-radio.kc-opt { padding: 14px; }
   }
+  /* Counter sizing fix (until theme/groundwork.css styles the badge host, not its base part) */
+  wa-badge.gw-counter { padding: 3px 11px; min-height: 34px; font: 700 1.0625rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.02em; }
+  wa-badge.gw-counter::part(base) { padding: 0; min-height: 0; font: inherit; letter-spacing: inherit; }
 </style>
 </head>
 <body>
