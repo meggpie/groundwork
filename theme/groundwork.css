@@ -35,6 +35,7 @@
   --gw-correct: #1b6b45;  --gw-correct-fill: #e6f2eb;   /* only after checking, with a tick and words */
   --gw-wrong: #b3261e;    --gw-wrong-fill: #fbeae8;     /* only after checking, with a cross and words */
   --gw-hex-line: #1f5fa6;       /* lesson-header outline hexagons */
+  --gw-header-label: #adcbe6;   /* lesson-header label on dark blue */
   /* Order run: diagram shapes and the knowledge-check progress only, always in this order. Never text, backgrounds, cards or buttons. */
   --gw-run-1: #a6d75e; --gw-run-2: #3fbe90; --gw-run-3: #00a0a6; --gw-run-4: #197cb3; --gw-run-5: #104c8f;
 
