@@ -7,40 +7,31 @@
 <!--
   Library block: Think about it (from Groundwork for Rise preset reflection--think-about-it).
   A big opening question at the start of a lesson or module, not for questions inside reading content.
-  Designed to sit on an ice section. Static.
+  Designed to sit on an ice section: white card, 1px outline, ink icon. Static.
   Pack for Rise: bun tools/pack.ts blocks/reflection--think-about-it.html
 -->
 <style>
-  wa-card.think { --spacing: var(--wa-space-2xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
-  .think-inner { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--wa-space-xs) var(--wa-space-l); align-items: start; }
-  .think-icon { grid-row: 1 / span 4; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 30px; }
-  .think-q { font-size: 1.75rem; letter-spacing: -0.03em; max-width: 30ch; margin-block-end: var(--wa-space-2xs); }
-  .think-prompt { font-size: 1.125rem; max-width: 60ch; }
-  .think-next { display: flex; align-items: center; gap: var(--wa-space-xs); margin-block-start: var(--wa-space-m); color: var(--wa-color-text-quiet); }
-  .think-next wa-icon { color: var(--gw-dark-blue); flex: none; }
-
-  @media (max-width: 600px) {
-    wa-card.think { --spacing: var(--wa-space-l); }
-    .think-inner { grid-template-columns: 1fr; }
-    .think-icon { grid-row: auto; width: 56px; height: 56px; font-size: 26px; margin-block-end: var(--wa-space-xs); }
-    .think-q { font-size: 1.5rem; }
-    .think-prompt { font-size: 1.0625rem; }
-    .think-next { align-items: start; }
-    .think-next wa-icon { margin-block-start: 0.2em; }
-  }
+  /* White card with a 1px outline, on an ice section. Ink line icon, no tile. */
+  .think { background: var(--gw-white); border: 1px solid var(--gw-border); padding: 30px 34px 32px; display: grid; gap: 18px; }
+  .think-label { display: flex; align-items: center; gap: 10px; letter-spacing: 0.08em; }
+  .think-label wa-icon { font-size: 28px; }
+  .think-q { font-size: 1.375rem; line-height: 1.3; }
+  .think-prompt { margin-block-start: -10px; }
+  .think-next { display: flex; align-items: flex-start; gap: 14px; margin-block-start: 6px; padding-block-start: 20px; border-block-start: 1px solid var(--gw-line); line-height: 1.55; }
+  .think-next wa-icon { font-size: 18px; flex: none; margin-block-start: 4px; }
+  @media (max-width: 600px) { .think { padding: var(--wa-space-l); gap: var(--wa-space-m); } .think-prompt { margin-block-start: -6px; } }
 </style>
 </head>
 <body>
 <section class="gw-block" aria-labelledby="think-q">
-  <wa-card class="think">
-    <div class="think-inner">
-      <span class="think-icon"><wa-icon name="message-circle-question-mark"></wa-icon></span>
-      <p class="gw-eyebrow">Think about it</p>
+  <div class="think">
+    <p class="think-label gw-eyebrow"><wa-icon name="circle-question-mark"></wa-icon>Think about it</p>
+    <div>
       <h2 class="think-q" id="think-q">Where have you encountered code requirements in your work?</h2>
-      <p class="think-prompt">Think of a specific example, and what it asked of you.</p>
-      <p class="think-next"><wa-icon name="arrow-right"></wa-icon><span>Keep your answer in mind as you continue.</span></p>
     </div>
-  </wa-card>
+    <p class="think-prompt">Think of a specific example, and what it asked of you.</p>
+    <p class="think-next"><wa-icon name="arrow-right"></wa-icon><span>Keep your answer in mind as you continue.</span></p>
+  </div>
 </section>
 </body>
 </html>
