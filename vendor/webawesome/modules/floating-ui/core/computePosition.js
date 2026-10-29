@@ -1,5 +1,5 @@
-import { computeCoordsFromPlacement } from "./computeCoordsFromPlacement";
-import { detectOverflow } from "./detectOverflow";
+import { computeCoordsFromPlacement } from "./computeCoordsFromPlacement.js";
+import { detectOverflow } from "./detectOverflow.js";
 const MAX_RESET_COUNT = 50;
 export const computePosition = async (reference, floating, config) => {
   const {

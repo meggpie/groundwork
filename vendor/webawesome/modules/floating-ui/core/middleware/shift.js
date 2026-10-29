@@ -5,7 +5,7 @@ import {
   getSide,
   getSideAxis
 } from "../../utils/index.js";
-import { originSides } from "../constants";
+import { originSides } from "../constants.js";
 export const shift = (options = {}) => ({
   name: "shift",
   options,

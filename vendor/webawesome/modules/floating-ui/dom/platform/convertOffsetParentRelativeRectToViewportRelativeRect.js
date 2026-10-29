@@ -7,10 +7,10 @@ import {
   isHTMLElement,
   isOverflowElement
 } from "../../utils/dom.js";
-import { getBoundingClientRect } from "../utils/getBoundingClientRect";
-import { getCurrentCSSZoom } from "../utils/getCurrentCSSZoom";
-import { getScale } from "./getScale";
-import { getHTMLOffset } from "../utils/getHTMLOffset";
+import { getBoundingClientRect } from "../utils/getBoundingClientRect.js";
+import { getCurrentCSSZoom } from "../utils/getCurrentCSSZoom.js";
+import { getScale } from "./getScale.js";
+import { getHTMLOffset } from "../utils/getHTMLOffset.js";
 export function convertOffsetParentRelativeRectToViewportRelativeRect({
   elements,
   rect,

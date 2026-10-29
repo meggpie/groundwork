@@ -4,9 +4,9 @@ import {
   getOverflowAncestors,
   getWindow
 } from "../utils/dom.js";
-import { getBoundingClientRect } from "./utils/getBoundingClientRect";
-import { unwrapElement } from "./utils/unwrapElement";
-import { rectsAreEqual } from "./utils/rectsAreEqual";
+import { getBoundingClientRect } from "./utils/getBoundingClientRect.js";
+import { unwrapElement } from "./utils/unwrapElement.js";
+import { rectsAreEqual } from "./utils/rectsAreEqual.js";
 function observeMove(element, onMove, ancestorResize) {
   let io = null;
   let timeoutId;

@@ -38,7 +38,8 @@ export default class WaIcon extends WebAwesomeElement {
         return this.svg;
       }
       try {
-        fileData = await fetch(url, { mode: "cors" });
+        // Groundwork patch: read inline SVG data URIs directly, so icons never depend on fetch (blocked by some LMS/CSP frames).
+        fileData = url.startsWith("data:image/svg+xml,") ? { ok: true, status: 200, text: async () => decodeURIComponent(url.slice(19)) } : await fetch(url, { mode: "cors" });
         if (!fileData.ok)
           return fileData.status === 410 ? CACHEABLE_ERROR : RETRYABLE_ERROR;
       } catch {

@@ -11,7 +11,7 @@ import {
   isTableElement,
   isTopLayer
 } from "../../utils/dom.js";
-import { isStaticPositioned } from "../utils/isStaticPositioned";
+import { isStaticPositioned } from "../utils/isStaticPositioned.js";
 function getTrueOffsetParent(element, polyfill) {
   if (!isHTMLElement(element) || getComputedStyle(element).position === "fixed") {
     return null;

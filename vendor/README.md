@@ -10,4 +10,6 @@ Committed so blocks can be packed without npm or a network connection. Don't edi
 
 Not included: `code-highlighter`, `markdown`, `color-picker`, `qr-code` and `animation` (they need extra dependencies), and Web Awesome Pro.
 
+One local change: `modules/webawesome/components/icon/icon.js` reads inline SVG data URIs directly instead of with `fetch`, so icons work in frames that block fetch.
+
 The modules were compiled from source because the build environment had no npm access. To update, rebuild from a newer Web Awesome release and replace these folders in one commit.

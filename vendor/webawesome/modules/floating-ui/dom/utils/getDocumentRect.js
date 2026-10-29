@@ -1,6 +1,6 @@
 import { max } from "../../utils/index.js";
 import { getComputedStyle, getNodeScroll } from "../../utils/dom.js";
-import { getWindowScrollBarX } from "./getWindowScrollBarX";
+import { getWindowScrollBarX } from "./getWindowScrollBarX.js";
 export function getDocumentRect(html) {
   const scroll = getNodeScroll(html);
   const body = html.ownerDocument.body || html;

@@ -5,10 +5,10 @@ import {
   getFrameElement,
   getWindow
 } from "../../utils/dom.js";
-import { getScale } from "../platform/getScale";
-import { isElement } from "../platform/isElement";
-import { getVisualOffsets, shouldAddVisualOffsets } from "./getVisualOffsets";
-import { unwrapElement } from "./unwrapElement";
+import { getScale } from "../platform/getScale.js";
+import { isElement } from "../platform/isElement.js";
+import { getVisualOffsets, shouldAddVisualOffsets } from "./getVisualOffsets.js";
+import { unwrapElement } from "./unwrapElement.js";
 export function getBoundingClientRect(element, includeScale = false, isFixedStrategy = false, offsetParent) {
   const clientRect = element.getBoundingClientRect();
   const domElement = unwrapElement(element);

@@ -1,7 +1,7 @@
 import { createCoords, round } from "../../utils/index.js";
 import { isHTMLElement } from "../../utils/dom.js";
-import { getCssDimensions } from "../utils/getCssDimensions";
-import { unwrapElement } from "../utils/unwrapElement";
+import { getCssDimensions } from "../utils/getCssDimensions.js";
+import { unwrapElement } from "../utils/unwrapElement.js";
 export function getScale(element) {
   const domElement = unwrapElement(element);
   if (!isHTMLElement(domElement)) {

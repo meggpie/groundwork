@@ -1,7 +1,7 @@
 import { getComputedStyle, getWindow, isWebKit } from "../../utils/dom.js";
-import { getDocumentElement } from "../platform/getDocumentElement";
-import { getCurrentCSSZoom } from "./getCurrentCSSZoom";
-import { getWindowScrollBarX } from "./getWindowScrollBarX";
+import { getDocumentElement } from "../platform/getDocumentElement.js";
+import { getCurrentCSSZoom } from "./getCurrentCSSZoom.js";
+import { getWindowScrollBarX } from "./getWindowScrollBarX.js";
 const SCROLLBAR_MAX = 25;
 export function getViewportRect(element, strategy, rootBoundary = "viewport") {
   const isLayoutViewport = rootBoundary === "layoutViewport";

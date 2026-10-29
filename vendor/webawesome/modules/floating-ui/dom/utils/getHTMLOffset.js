@@ -1,4 +1,4 @@
-import { getWindowScrollBarX } from "./getWindowScrollBarX";
+import { getWindowScrollBarX } from "./getWindowScrollBarX.js";
 export function getHTMLOffset(documentElement, scroll) {
   const htmlRect = documentElement.getBoundingClientRect();
   const x = htmlRect.left + scroll.scrollLeft - getWindowScrollBarX(documentElement, htmlRect);

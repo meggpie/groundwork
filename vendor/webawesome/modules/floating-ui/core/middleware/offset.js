@@ -4,7 +4,7 @@ import {
   getSide,
   getSideAxis
 } from "../../utils/index.js";
-import { originSides } from "../constants";
+import { originSides } from "../constants.js";
 async function convertValueToCoords(state, options) {
   const { placement, platform, elements } = state;
   const rtl = await platform.isRTL?.(elements.floating);

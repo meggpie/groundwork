@@ -14,6 +14,7 @@ Groundwork has three jobs:
 Blocks are built with the **Web Awesome** component library, styled by the **Groundwork theme** (our colours and fonts). Ask Claude for a block in plain words; it writes the block and gives you one HTML file to paste into a Rise code block. Nothing loads from the internet.
 
 - `theme/groundwork.css` — Groundwork colours, fonts, corners and shadows (the only place these values live)
+- `gallery/gallery.html` — every available component, live, in the Groundwork theme (pack it to view: `bun tools/pack.ts gallery/gallery.html`)
 - `blocks/` — block sources (`flashcards.html` is the first trial)
 - `tools/pack.ts` — makes the paste file: `bun tools/pack.ts blocks/flashcards.html` → `exports/flashcards.html`
 - `vendor/` — Web Awesome and Lucide icons, committed so packing needs no installs

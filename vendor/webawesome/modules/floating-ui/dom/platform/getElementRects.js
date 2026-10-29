@@ -1,5 +1,5 @@
-import { getRectRelativeToOffsetParent } from "../utils/getRectRelativeToOffsetParent";
-import { getOffsetParent } from "./getOffsetParent";
+import { getRectRelativeToOffsetParent } from "../utils/getRectRelativeToOffsetParent.js";
+import { getOffsetParent } from "./getOffsetParent.js";
 export const getElementRects = async function(data) {
   const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
   const getDimensionsFn = this.getDimensions;

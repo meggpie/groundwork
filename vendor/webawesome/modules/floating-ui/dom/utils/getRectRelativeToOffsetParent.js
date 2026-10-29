@@ -6,11 +6,11 @@ import {
   isHTMLElement,
   isOverflowElement
 } from "../../utils/dom.js";
-import { getDocumentElement } from "../platform/getDocumentElement";
-import { getBoundingClientRect } from "./getBoundingClientRect";
-import { getCurrentCSSZoom } from "./getCurrentCSSZoom";
-import { getWindowScrollBarX } from "./getWindowScrollBarX";
-import { getHTMLOffset } from "./getHTMLOffset";
+import { getDocumentElement } from "../platform/getDocumentElement.js";
+import { getBoundingClientRect } from "./getBoundingClientRect.js";
+import { getCurrentCSSZoom } from "./getCurrentCSSZoom.js";
+import { getWindowScrollBarX } from "./getWindowScrollBarX.js";
+import { getHTMLOffset } from "./getHTMLOffset.js";
 export function getRectRelativeToOffsetParent(element, offsetParent, strategy, floating) {
   const isOffsetParentAnHTMLElement = isHTMLElement(offsetParent);
   const documentElement = getDocumentElement(offsetParent);
