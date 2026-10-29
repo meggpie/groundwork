@@ -6,24 +6,27 @@
 <title>Note</title>
 <!--
   Library block: note (from Groundwork for Rise preset note--bordered).
-  A compact aside: useful but not essential. Static. Optional title: add <h3 class="note-title"> after the label.
-  Groundwork look: borderless ice card, teal info icon, 13px label. On an ice section use class="note is-white".
+  A compact, quiet aside: useful but not essential. It should read as secondary to the lesson text.
+  Grey tint on white sections; on an ice section use class="note is-white".
+  Optional title: add <h3 class="note-title">Title</h3> after the label.
+  Static block: no completion.
   Pack for Rise: bun tools/pack.ts blocks/note--bordered.html
 -->
 <style>
-  /* Compact aside: borderless ice card with a teal info icon. On an ice section use class="note is-white". */
-  .note { background: var(--gw-ice); padding: 16px 22px 18px; display: grid; gap: 6px; }
-  .note.is-white { background: var(--gw-white); }
-  .note-label { display: flex; align-items: center; gap: 7px; font-size: 0.8125rem; }
-  .note-label wa-icon { font-size: 20px; color: var(--gw-teal); }
-  .note-title { font-size: 1.25rem; }
-  .note p:not(.note-label) { margin-block-start: 2px; }
+  .note { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; row-gap: 4px; align-items: start;
+    background: var(--gw-grey); border-radius: var(--wa-border-radius-m); padding: 14px 18px 16px; }
+  .note.is-white { background: var(--gw-white); box-shadow: var(--wa-shadow-s); }
+  .note > wa-icon { grid-row: 1 / span 3; font-size: 20px; color: var(--gw-quiet); margin-block-start: 1px; }
+  .note .gw-eyebrow { color: var(--gw-quiet); font-size: 0.75rem; }
+  .note-title { font-size: 1.0625rem; }
+  .note p:not(.gw-eyebrow) { color: var(--gw-ink); font-size: 1rem; line-height: 1.5; }
 </style>
 </head>
 <body>
 <section class="gw-block">
   <aside class="note" aria-label="Note">
-    <p class="note-label gw-eyebrow"><wa-icon name="info"></wa-icon>Note</p>
+    <wa-icon name="info"></wa-icon>
+    <p class="gw-eyebrow">Note</p>
     <p>Extra information that is useful to know but not essential, such as a date, an exception or where to find more detail.</p>
   </aside>
 </section>

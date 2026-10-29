@@ -188,6 +188,12 @@
   --wa-link-decoration-default: underline;
   --wa-link-decoration-hover: underline 2px;
 
+  /* ── Density: Rise adds its own block padding, so blocks stay compact ── */
+  --wa-space-scale: 0.875;
+  --wa-form-control-padding-block: 0.6em;
+  --wa-form-control-padding-inline: 0.9em;
+  --wa-content-spacing: var(--wa-space-m);
+
   /* ── Shape: rounded where a surface is useful (trials use 12px surfaces) ── */
   --wa-border-radius-s: 6px;
   --wa-border-radius-m: 8px;

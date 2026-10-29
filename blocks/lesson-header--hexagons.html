@@ -7,40 +7,42 @@
 <!--
   Groundwork block: lesson header. Dark blue band with the lesson label and title; the gold tab and outline
   hexagons are the only place the hexagon motif appears. Place it in a dark blue Rise section.
-  Source preset: groundwork-for-rise library/presets/lesson-header--hexagons.json
-  Static: no completion.
+  Source preset: groundwork-for-rise library/presets/lesson-header--hexagons.json. Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/lesson-header--hexagons.html
 -->
 <style>
   html { background: var(--gw-dark-blue); }
-  .lh { position: relative; overflow: hidden; background: var(--gw-dark-blue); min-height: 240px; display: flex; flex-direction: column; justify-content: center; gap: var(--wa-space-s); padding: 76px 64px 80px 96px; }
-  .lh-tab { position: absolute; left: 0; top: 50%; width: 64px; height: 136px; translate: 0 -50%; }
+  .lh { position: relative; overflow: hidden; background: var(--gw-dark-blue); min-height: 220px; display: flex; flex-direction: column; justify-content: center; gap: var(--wa-space-xs); padding: 56px 64px 60px 92px; }
+  .lh-tab { position: absolute; left: 0; top: 50%; width: 52px; height: 104px; translate: 0 -50%; }
   .lh-tab polygon { fill: var(--gw-gold); }
-  .lh-hex { position: absolute; right: 40px; top: -60px; width: 300px; height: 420px; }
-  .lh-hex polygon { fill: none; stroke: var(--gw-hex-line); stroke-width: 24; }
+  .lh-hex { position: absolute; right: 24px; top: 50%; width: 360px; height: 300px; translate: 0 -50%; }
+  .lh-hex polygon { fill: none; stroke: var(--gw-hex-line); stroke-width: 10; stroke-linejoin: round; }
+  .lh-hex polygon.solid { fill: var(--gw-hex-line); stroke: none; opacity: 0.55; }
   .lh-label, .lh h1 { position: relative; }
-  .lh-label { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 0.9375rem; color: var(--gw-header-label); }
-  .lh h1 { color: var(--gw-white); font-size: clamp(1.75rem, 3.6vw, 2.125rem); line-height: 1.12; letter-spacing: -0.03em; max-width: 620px; }
+  .lh-label { font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gw-header-label); }
+  .lh h1 { color: var(--gw-white); font-size: clamp(1.875rem, 3.8vw, 2.375rem); line-height: 1.1; letter-spacing: -0.035em; max-width: 600px; }
 
   @media (max-width: 760px) {
-    .lh { min-height: 200px; padding: 52px 28px 56px 76px; }
-    .lh-tab { width: 48px; height: 102px; }
-    .lh-hex { right: -120px; }
+    .lh { min-height: 180px; padding: 44px 28px 48px 72px; }
+    .lh-tab { width: 40px; height: 80px; }
+    .lh-hex { right: -150px; }
   }
   @media (max-width: 480px) {
-    .lh { min-height: 180px; padding: 44px 20px 48px 56px; }
-    .lh-hex { opacity: 0.6; }
+    .lh { min-height: 160px; padding: 36px 20px 40px 60px; }
+    .lh-hex { right: -210px; opacity: 0.7; }
   }
 </style>
 </head>
 <body>
 <section class="gw-block">
   <header class="lh">
-    <svg class="lh-tab" viewBox="0 0 64 136" aria-hidden="true" focusable="false"><polygon points="0,0 25,0 64,68 25,136 0,136"/></svg>
-    <svg class="lh-hex" viewBox="0 0 300 420" aria-hidden="true" focusable="false">
-      <!-- two outline hexagons stacked edge to edge -->
-      <polygon points="95,24.7 205,24.7 260,120 205,215.3 95,215.3 40,120"/>
-      <polygon points="95,228.7 205,228.7 260,324 205,419.3 95,419.3 40,324"/>
+    <svg class="lh-tab" viewBox="0 0 52 104" aria-hidden="true" focusable="false"><polygon points="0,0 22,0 52,52 22,104 0,104"/></svg>
+    <svg class="lh-hex" viewBox="0 0 360 300" aria-hidden="true" focusable="false">
+      <!-- a small honeycomb of outline hexagons, one quietly filled -->
+      <polygon points="110,40 170,40 200,92 170,144 110,144 80,92"/>
+      <polygon class="solid" points="200,92 260,92 290,144 260,196 200,196 170,144"/>
+      <polygon points="110,144 170,144 200,196 170,248 110,248 80,196"/>
+      <polygon points="290,40 350,40 380,92 350,144 290,144 260,92"/>
     </svg>
     <p class="lh-label">Lesson 1</p>
     <h1>Lesson title</h1>

@@ -5,40 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Icon list — list</title>
 <!--
-  Groundwork block: icon list, "list" layout. Open list: icons in ink and short text with no containers, one column.
-  Source preset: groundwork-for-rise library/presets/icon-grid--list.json
-  Add class "ig--tile" to the list for white icons in solid ink squares. Static: no completion.
+  Groundwork block: icon list, "list" layout. Open list: no containers; two columns on wide blocks, one on phones.
+  Each item takes a hue class (gw-hue-blue, -coral, -plum, -jade, -cobalt): icon in the deep hue on a tint tile.
+  Use a restrained set and keep the order meaningful; one hue for every item is fine when items are alike.
+  Source preset: groundwork-for-rise library/presets/icon-grid--list.json. Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/icon-grid--list.html
 -->
 <style>
+  /* Icon list family: each item carries its own hue (DESIGN.md colour roles; experiments/01-model-codes). */
   .ig { list-style: none; margin: 0; padding: 0; }
-  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-l); align-items: start; min-width: 0; }
-  .ig-icon { color: var(--gw-ink); font-size: 36px; line-height: 0; }
-  .ig-title { font-size: 1.1875rem; margin-block-end: var(--wa-space-2xs); }
+  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-m); align-items: start; min-width: 0; }
+  .ig-icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: var(--wa-border-radius-l); background: var(--hue-tint); color: var(--hue-deep); font-size: 28px; line-height: 0; }
+  .ig-title { font-size: 1.1875rem; margin-block: 4px var(--wa-space-3xs); }
   .ig-text { color: var(--wa-color-text-quiet); }
-  /* Tile style (add class="ig--tile"): white icon in a solid 64px ink square, 52px on phones */
-  .ig--tile .ig-item { align-items: center; }
-  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; background: var(--gw-ink); color: var(--gw-white); font-size: 34px; }
-  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 28px; } }
-  .ig--list { display: grid; gap: var(--wa-space-xl); }
+  @media (max-width: 600px) { .ig-icon { width: 48px; height: 48px; font-size: 24px; } }
+  .ig--list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-xl) var(--wa-space-2xl); }
+  @media (max-width: 640px) { .ig--list { grid-template-columns: 1fr; gap: var(--wa-space-l); } }
 </style>
 </head>
 <body>
 <section class="gw-block">
   <ul class="ig ig--list" aria-label="Key ideas">
-    <li class="ig-item">
+    <li class="ig-item gw-hue-blue">
       <span class="ig-icon"><wa-icon name="drafting-compass"></wa-icon></span>
       <div><h3 class="ig-title">Plan</h3><p class="ig-text">Set out what needs to happen and why.</p></div>
     </li>
-    <li class="ig-item">
+    <li class="ig-item gw-hue-coral">
       <span class="ig-icon"><wa-icon name="scroll-text"></wa-icon></span>
       <div><h3 class="ig-title">Design</h3><p class="ig-text">Work out the details before work starts.</p></div>
     </li>
-    <li class="ig-item">
+    <li class="ig-item gw-hue-plum">
       <span class="ig-icon"><wa-icon name="hard-hat"></wa-icon></span>
       <div><h3 class="ig-title">Build</h3><p class="ig-text">Put the plan into practice.</p></div>
     </li>
-    <li class="ig-item">
+    <li class="ig-item gw-hue-jade">
       <span class="ig-icon"><wa-icon name="badge-check"></wa-icon></span>
       <div><h3 class="ig-title">Check</h3><p class="ig-text">Confirm the result meets the standard.</p></div>
     </li>

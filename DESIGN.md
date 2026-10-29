@@ -31,6 +31,7 @@ These are **starting points**, not new prohibitions. Evaluate them against real 
 - **Icons:** Lucide line icons, coloured with the item's hue or ink.
 - **Core colour candidates:** dark blue `#104C8F`, ice `#E7EDF4`, ink `#1D2030`, white and gold `#DAA82F`. These preserve continuity with the existing system, but are subject to visual testing.
 - **Illustration candidates:** cobalt `#3656BD`, plum `#705B83`, jade `#3FBE90`, warm coral `#D9866B`. Use expressive illustration colours purposefully, choosing a restrained subset for each illustration and checking contrast and meaning. The trials’ exact combinations are not a required palette for every component.
+- **Density:** compact. Rise already adds block padding, so keep inner padding, gaps and icon sizes tight and let content set heights; avoid reserved empty space and tall centred layouts.
 - **Shape:** rounded corners are part of the visual direction where a surface is useful. Choose their scale for the composition; the prototypes’ radii are not universal rules. Preserve open layouts and avoid unnecessary nested containers.
 - **Depth:** subtle drop shadows are part of the visual direction. Apply elevation where it clarifies grouping or interaction rather than automatically to every element. Avoid combining heavy borders with heavy shadows.
 - **Diagrams:** tailor geometry to the actual relationships; do not invent or oversimplify roles, sequence or authority. Keep labels close to their referents, use clear connectors, and allow dark panels for meaningful endpoints or emphasis.

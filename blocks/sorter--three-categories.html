@@ -12,65 +12,72 @@
   Edit the content in the JSON below. Pack for Rise: bun tools/pack.ts blocks/sorter--three-categories.html
 -->
 <style>
-  /* Groundwork "do" block: white card, 1px outline, on an ice section. */
-  wa-card.st { --spacing: var(--wa-space-l); border-color: var(--gw-border); }
-  wa-card.st::part(body) { padding: 28px 32px 32px; }
-  /* Label: 36px ink tile with a white icon, then an 18px capitalised label */
-  .st-label { display: flex; align-items: center; gap: 16px; font: 700 1.125rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.06em; text-transform: uppercase; color: var(--gw-ink); margin: 0 0 var(--wa-space-l); }
-  .st-tile { flex: none; display: grid; place-items: center; width: 36px; height: 36px; background: var(--gw-ink); color: var(--gw-white); font-size: 20px; }
-  .st h2 { font-size: 1.375rem; line-height: 1.3; }
-  .st-hint { margin-block: var(--wa-space-s) var(--wa-space-l); }
-  .st-sub { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font: 700 1.25rem/1.25 var(--wa-font-family-heading); margin: 0 0 var(--wa-space-m); }
+  /* Contained activity: a white card with a soft edge and shadow, sitting on an ice section. */
+  wa-card.st { --spacing: var(--wa-space-l); border-color: var(--gw-border); box-shadow: var(--wa-shadow-l); }
+  wa-card.st::part(body) { padding: 18px 20px 20px; }
+  .st-head { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s) var(--wa-space-m); flex-wrap: wrap; margin-block-end: 12px; }
+  .st-label { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: var(--gw-ink); }
+  .st-label wa-icon { font-size: 1.125rem; }
+  .st h2 { font-size: 1.25rem; line-height: 1.3; }
+  .st-hint { color: var(--wa-color-text-quiet); margin-block: 2px 12px; }
 
-  .st-rows { list-style: none; margin: 0; padding: 0; display: grid; }
-  .st-row { display: flex; flex-direction: column; gap: 10px; padding-block: 16px; border-block-start: 1px solid var(--gw-line); }
-  .st-row:last-child { border-block-end: 1px solid var(--gw-line); }
-  .st-text { display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; margin: 0; }
-  .st-n { flex: none; font-size: 1rem; line-height: 1.6rem; }
-  .st-mark { display: inline-flex; align-items: center; gap: 8px; margin-inline-start: var(--wa-space-s); font-weight: 700; font-size: 0.9375rem; white-space: nowrap; vertical-align: middle; }
-  .st-mark i { display: inline-grid; place-items: center; width: 24px; height: 24px; color: var(--gw-white); font-size: 15px; font-style: normal; }
-  .st-row.is-ok .st-mark { color: var(--gw-correct); } .st-row.is-ok .st-mark i { background: var(--gw-correct); }
-  .st-row.is-no .st-mark { color: var(--gw-wrong); }   .st-row.is-no .st-mark i { background: var(--gw-wrong); }
+  /* Categories: each carries its own hue, shown as a dot on its choice, so learners can scan by category */
+  .st-dot { display: inline-block; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--hue); }
 
-  /* Choices: a segmented row of equal buttons (Web Awesome button radios) */
+  .st-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .st-row { display: grid; gap: 8px; padding: 10px 12px; border-radius: var(--wa-border-radius-m); background: var(--gw-grey); transition: background-color var(--wa-transition-normal); }
+  .st-text { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; line-height: 1.45; margin: 0; font-weight: 700; }
+  .st-n { flex: none; font-size: 0.875rem; color: var(--wa-color-text-quiet); font-weight: 500; }
+  .st-mark { display: inline-flex; align-items: center; gap: 6px; margin-inline-start: auto; font-weight: 700; font-size: 0.9375rem; white-space: nowrap; }
+  .st-mark:empty { display: none; }
+  .st-row.is-ok { background: var(--gw-correct-fill); }
+  .st-row.is-no { background: var(--gw-wrong-fill); }
+  .st-row.is-ok .st-mark { color: var(--gw-correct); }
+  .st-row.is-no .st-mark { color: var(--gw-wrong); }
+
+  /* Choices: rounded pill buttons (Web Awesome button radios) */
   .st-choice::part(form-control-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .st-choice::part(form-control-input) { gap: 0; }
-  .st-choice wa-radio[appearance="button"] { flex: 1 1 0; min-width: 0; justify-content: center; text-align: center; min-height: 50px; font-weight: 700; color: var(--gw-ink); border-color: var(--gw-border); }
-  .st-choice[orientation="horizontal"] wa-radio + wa-radio { margin-inline-start: -1px; }
-  .st-choice[orientation="vertical"] wa-radio + wa-radio { margin-block-start: -1px; }
-  .st-choice wa-radio:hover:not([aria-checked="true"]):not([disabled]) { background: var(--gw-grey); }
-  .st-choice wa-radio[aria-checked="true"] { position: relative; z-index: 1; background: var(--gw-gold-tint); border-color: var(--gw-gold-deep); box-shadow: inset 0 0 0 1px var(--gw-gold-deep); }
-  .st-choice wa-radio:focus-visible { position: relative; z-index: 2; }
+  .st-choice::part(form-control-input) { gap: 8px; flex-wrap: wrap; }
+  .st-choice wa-radio[appearance="button"] {
+    flex: 1 1 0; min-width: 0; min-height: 40px; justify-content: center; text-align: center;
+    border: 1px solid var(--gw-border); border-radius: 999px; background: var(--gw-white); color: var(--gw-ink); font-weight: 700;
+  }
+  .st-choice wa-radio[appearance="button"]::part(label) { display: inline-flex; align-items: center; gap: 8px; }
+  .st-choice wa-radio:hover:not([aria-checked="true"]):not([disabled]) { border-color: var(--wa-color-neutral-border-loud); }
+  .st-choice wa-radio[aria-checked="true"] { background: var(--gw-blue-tint); border-color: var(--gw-dark-blue); box-shadow: inset 0 0 0 1px var(--gw-dark-blue); color: var(--gw-dark-blue); }
+  .st-choice wa-radio:focus-visible { outline: var(--wa-focus-ring); outline-offset: 2px; }
   .st-choice wa-radio[disabled] { opacity: 1; cursor: default; }
-  .st-row.is-ok wa-radio[aria-checked="true"] { background: var(--gw-correct-fill); border-color: var(--gw-correct); box-shadow: inset 0 0 0 1px var(--gw-correct); color: var(--gw-correct); }
-  .st-row.is-no wa-radio[aria-checked="true"] { background: var(--gw-wrong-fill); border-color: var(--gw-wrong); box-shadow: inset 0 0 0 1px var(--gw-wrong); color: var(--gw-wrong); }
+  .st-choice wa-radio[disabled]:not([aria-checked="true"]) { color: var(--wa-color-text-quiet); }
+  .st-row.is-ok wa-radio[aria-checked="true"] { background: var(--gw-white); border-color: var(--gw-correct); box-shadow: inset 0 0 0 1px var(--gw-correct); color: var(--gw-correct); }
+  .st-row.is-no wa-radio[aria-checked="true"] { background: var(--gw-white); border-color: var(--gw-wrong); box-shadow: inset 0 0 0 1px var(--gw-wrong); color: var(--gw-wrong); }
 
-  /* Feedback: a 4px coloured rule, a coloured heading, then the explanation in ink */
-  wa-callout.gw-fb { background: transparent; border: 0; border-inline-start: 4px solid var(--wa-color-border-loud); padding: 4px 0 4px 18px; outline: none; }
-  wa-callout.gw-fb[variant="neutral"] { border-inline-start-color: var(--gw-border); }
-  .gw-fb-h { display: flex; align-items: center; gap: 10px; font: 700 1.1875rem/1.3 var(--wa-font-family-heading); color: var(--wa-color-on-quiet); margin-block-end: 6px; }
-  .st-why { margin-block-start: 4px; }
-  .st-summary:not(:empty) { margin-block-start: var(--wa-space-l); }
-  .st-actions { display: flex; flex-wrap: wrap; gap: var(--wa-space-s); margin-block-start: var(--wa-space-xl); }
-  wa-button[disabled]::part(button) { background: var(--gw-disabled); border-color: var(--gw-disabled); color: var(--gw-muted); opacity: 1; }
+  /* Feedback */
+  wa-callout.gw-fb { border-radius: var(--wa-border-radius-m); outline: none; }
+  wa-callout.gw-fb p { color: var(--gw-ink); }
+  .gw-fb-h { font-weight: 700; margin-block-end: 2px; }
+  .st-why { color: var(--gw-ink); margin: 0; }
+  .st-why strong { color: var(--gw-wrong); }
+  .st-summary:not(:empty) { margin-block-start: 12px; }
+  .st-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-block-start: 14px; }
 
   @media (max-width: 600px) {
-    wa-card.st::part(body) { padding: 22px 20px 24px; }
-    .st h2 { font-size: 1.25rem; }
+    wa-card.st::part(body) { padding: 16px; }
+    .st h2 { font-size: 1.1875rem; }
+    .st-row { padding: 10px; }
+    .st-choice wa-radio[appearance="button"] { flex-basis: 100%; }
   }
-  /* Counter sizing fix (until theme/groundwork.css styles the badge host, not its base part) */
-  wa-badge.gw-counter { padding: 3px 11px; min-height: 34px; font: 700 1.0625rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.02em; }
-  wa-badge.gw-counter::part(base) { padding: 0; min-height: 0; font: inherit; letter-spacing: inherit; }
 </style>
 </head>
 <body>
 <section class="gw-block" aria-label="Sort it"
-  data-gw-components="radio-group radio callout button badge" data-gw-icons="check x rotate-ccw circle-check circle-x info">
+  data-gw-components="radio-group radio callout button badge" data-gw-icons="check x rotate-ccw circle-check info">
   <wa-card class="st">
-    <p class="st-label"><span class="st-tile" aria-hidden="true"><wa-icon name="arrow-down-up"></wa-icon></span><span data-label>Sort it</span></p>
+    <div class="st-head">
+      <p class="st-label gw-eyebrow"><wa-icon name="arrow-down-up"></wa-icon><span data-label>Sort it</span></p>
+      <wa-badge class="gw-counter" appearance="accent" data-count></wa-badge>
+    </div>
     <h2 data-instruction></h2>
     <p class="st-hint" data-hint></p>
-    <p class="st-sub"><span data-sub>Sort the following</span> <wa-badge class="gw-counter" appearance="accent" data-count></wa-badge></p>
     <ol class="st-rows" data-rows></ol>
     <div class="st-summary" role="status" aria-live="polite" data-summary></div>
     <div class="st-actions" data-actions></div>
@@ -99,6 +106,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const cats = d.categories.slice(0, 4), items = d.items;
   const narrow = matchMedia('(max-width: 600px)');
+  const hues = ['gw-hue-cobalt', 'gw-hue-coral', 'gw-hue-plum', 'gw-hue-jade'];
 
   $('[data-label]').textContent = d.label || 'Sort it';
   block.setAttribute('aria-label', d.label || 'Sort it');
@@ -108,14 +116,13 @@
   const rows = items.map((item, i) => {
     const li = el('li', { class: 'st-row' });
     const text = el('p', { class: 'st-text', id: `st-t${i}` }, `<span class="st-n gw-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(item.text)}<span class="st-mark" data-mark></span></span>`);
-    const group = el('wa-radio-group', { class: 'st-choice', label: item.text, name: `st-${i}`, orientation: narrow.matches ? 'vertical' : 'horizontal' });
-    cats.forEach(c => group.append(el('wa-radio', { appearance: 'button', value: c }, esc(c))));
+    const group = el('wa-radio-group', { class: 'st-choice', label: item.text, name: `st-${i}`, orientation: 'horizontal' });
+    cats.forEach((c, k) => group.append(el('wa-radio', { appearance: 'button', value: c, class: hues[k] }, `<span class="st-dot" aria-hidden="true"></span>${esc(c)}`)));
     li.append(text, group);
     $('[data-rows]').append(li);
     group.addEventListener('change', update);
     return { li, group, item, locked: false };
   });
-  narrow.addEventListener('change', () => rows.forEach(r => r.group.orientation = narrow.matches ? 'vertical' : 'horizontal'));
 
   const count = $('[data-count]'), summary = $('[data-summary]'), actions = $('[data-actions]');
   const check = el('wa-button', { variant: 'brand', disabled: '' }, 'Check answers');
@@ -136,18 +143,19 @@
       r.li.classList.add(ok ? 'is-ok' : 'is-no');
       r.group.querySelectorAll('wa-radio').forEach(x => x.disabled = true);
       const mark = r.li.querySelector('[data-mark]');
-      mark.innerHTML = `<i aria-hidden="true"><wa-icon></wa-icon></i>${ok ? 'Correct' : 'Not quite'}`;
+      mark.innerHTML = `<wa-icon></wa-icon>${ok ? 'Correct' : 'Not quite'}`;
       mark.querySelector('wa-icon').setAttribute('name', ok ? 'check' : 'x');
-      if (!ok && r.item.why) r.li.append(el('wa-callout', { class: 'gw-fb st-why', variant: 'danger', appearance: 'plain' }, `<p>${esc(r.item.why)}</p>`));
+      if (!ok && r.item.why) r.li.append(el('p', { class: 'st-why' }, `<strong>Why:</strong> ${esc(r.item.why)}`));
     });
     const right = rows.filter(r => r.locked).length, all = right === rows.length;
-    const msg = el('wa-callout', { class: 'gw-fb', variant: all ? 'success' : 'neutral', appearance: 'plain', tabindex: '-1' },
-      `<p class="gw-fb-h"><wa-icon></wa-icon>${right} of ${rows.length} correct</p><p>${all ? 'Every statement is in the right category.' : 'Try the others again.'}</p>`);
+    const msg = el('wa-callout', { class: 'gw-fb', variant: all ? 'success' : 'neutral', appearance: 'filled', tabindex: '-1' },
+      `<wa-icon slot="icon"></wa-icon><p class="gw-fb-h">${right} of ${rows.length} correct</p><p>${all ? 'Every statement is in the right category.' : 'Try the others again.'}</p>`);
     msg.querySelector('wa-icon').setAttribute('name', all ? 'circle-check' : 'info');
     summary.replaceChildren(msg);
     actions.replaceChildren(...(all ? [] : [retry]));
     if (all) {
       count.innerHTML = `<span class="gw-num">${right}</span>&nbsp;of&nbsp;<span class="gw-num">${rows.length}</span>&nbsp;correct`;
+      count.classList.add('is-done');
       setTimeout(() => msg.focus(), 50);
       window.gwComplete();
     } else {

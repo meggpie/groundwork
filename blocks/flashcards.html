@@ -10,40 +10,38 @@
   Pack for Rise: bun tools/pack.ts blocks/flashcards.html
 -->
 <style>
-  .fc-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); margin-block-end: var(--wa-space-l); }
-  .fc-head h2 { font-size: 1.375rem; }
-  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  /* Compact: Rise adds block padding, so the block keeps its own spacing tight and lets content set heights. */
+  .fc-head { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s); margin-block-end: var(--wa-space-s); }
+  .fc-head h2 { font-size: 1.25rem; }
+  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: 2px; }
   .fc-count { flex: none; }
   .fc-count wa-icon { display: none; }
   .fc-count.is-done wa-icon { display: inline-flex; }
 
-  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-l); }
+  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .fc-grid { align-items: start; } /* an opened card grows on its own; its neighbour keeps its compact height */
   .fc-grid > li { display: grid; }
 
-  wa-card.fc { --spacing: var(--wa-space-l); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); height: 100%; }
+  wa-card.fc { --spacing: 16px; box-shadow: var(--wa-shadow-m); border-color: var(--wa-color-surface-border); height: 100%; }
   wa-card.fc::part(body) { height: 100%; }
-  /* Both faces share one cell, so the card keeps the taller face's height and nothing jumps. */
-  .fc-faces { display: grid; height: 100%; }
-  .fc-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: var(--wa-space-s); transition: opacity var(--wa-transition-normal) var(--wa-transition-easing); }
-  .fc-face[hidden] { display: flex; visibility: hidden; opacity: 0; }
-  .fc-back wa-button { margin-block-start: auto; align-self: start; }
-  .fc-back wa-button::part(button) { padding-inline-start: 0; } /* keeps "Back" on the text's left edge */
-  /* Front: one centred group, so the space the back's text needs doesn't read as a gap. */
-  .fc-front { justify-content: center; align-items: center; text-align: center; padding-block: var(--wa-space-m); }
+  .fc-face { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+  .fc-face[hidden] { display: none; }
 
-  .fc-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--hue-tint); color: var(--hue-deep); font-size: 30px; }
-  .fc-front h3 { font-size: 1.25rem; margin-block-end: var(--wa-space-2xs); }
+  /* Front: icon and title on one line, action under them. */
+  .fc-title { display: flex; align-items: center; gap: 12px; }
+  .fc-icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--hue-tint); color: var(--hue-deep); font-size: 22px; }
+  .fc-front h3 { font-size: 1.125rem; }
+  .fc-face wa-button { margin-block-start: auto; align-self: start; }
+  .fc-face wa-button::part(button) { padding-inline-start: 0; } /* keeps the action on the text's left edge */
+
   .fc-back .gw-eyebrow { display: block; color: var(--hue-deep); }
   .fc-lead { font-weight: 700; font-size: 1.0625rem; line-height: var(--wa-line-height-condensed); outline: none; }
-  .fc-text { color: var(--wa-color-text-quiet); margin-block-end: var(--wa-space-s); }
+  .fc-text { color: var(--wa-color-text-quiet); }
   .fc.is-flipped { border-color: var(--hue); }
 
   @media (max-width: 600px) {
-    /* One column: each face takes only its own height. */
-    .fc-face[hidden] { display: none; }
-    .fc-front { padding-block: var(--wa-space-xs); }
     .fc-head { flex-direction: column; align-items: start; }
-    .fc-grid { grid-template-columns: 1fr; gap: var(--wa-space-m); }
+    .fc-grid { grid-template-columns: 1fr; gap: 10px; }
   }
 </style>
 </head>
@@ -63,9 +61,8 @@
       <wa-card class="fc gw-hue-blue">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="flask-conical"></wa-icon></span>
-            <h3>Research and testing</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show question</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="flask-conical"></wa-icon></span><h3>Research and testing</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show question<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Research and testing</span>
@@ -80,9 +77,8 @@
       <wa-card class="fc gw-hue-coral">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="factory"></wa-icon></span>
-            <h3>Manufacturing</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show question</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="factory"></wa-icon></span><h3>Manufacturing</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show question<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Manufacturing</span>
@@ -97,9 +93,8 @@
       <wa-card class="fc gw-hue-plum">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="wrench"></wa-icon></span>
-            <h3>Installation and operation</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show question</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="wrench"></wa-icon></span><h3>Installation and operation</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show question<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Installation and operation</span>
@@ -114,9 +109,8 @@
       <wa-card class="fc gw-hue-jade">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="clipboard-check"></wa-icon></span>
-            <h3>Inspection and enforcement</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show question</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="clipboard-check"></wa-icon></span><h3>Inspection and enforcement</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show question<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Inspection and enforcement</span>

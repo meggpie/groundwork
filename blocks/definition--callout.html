@@ -6,25 +6,24 @@
 <title>Definition — callout</title>
 <!--
   Library block: definition callout (from Groundwork for Rise preset definition--callout).
-  A short official definition set apart inside reading content. Static; nothing to select.
-  Groundwork look: borderless ice card; on an ice section use class="defc is-white". For a definition learners explore, use definition--key-term.
+  A plain, non-clickable definition inside reading content, set apart so it is easy to find again.
+  Plum tint surface (definitions carry the plum hue; see definition--key-term). Works on white and ice.
+  Static block: no completion.
   Pack for Rise: bun tools/pack.ts blocks/definition--callout.html
 -->
 <style>
-  /* Plain, non-clickable definition inside reading content: borderless ice card. On an ice section use class="defc is-white". */
-  .defc { background: var(--gw-ice); padding: 22px 28px 24px; display: grid; gap: var(--wa-space-xs); }
-  .defc.is-white { background: var(--gw-white); }
-  .defc-label { display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--gw-label-grey); }
-  .defc-label wa-icon { font-size: 16px; margin-inline-start: -2px; }
-  .defc dl { margin: 0; display: grid; gap: var(--wa-space-2xs); }
-  .defc dt { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.25rem; line-height: 1.35; }
-  .defc dd { margin: 0; }
-  @media (max-width: 600px) { .defc { padding: var(--wa-space-m) var(--wa-space-l); } }
+  .defc { background: var(--hue-tint); border-radius: var(--wa-border-radius-l); padding: 18px 24px 20px; display: grid; gap: 6px; }
+  .defc-label { display: flex; align-items: center; gap: 8px; color: var(--hue-deep); }
+  .defc-label wa-icon { font-size: 16px; }
+  .defc dl { margin: 0; display: grid; gap: 4px; }
+  .defc dt { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.25; }
+  .defc dd { margin: 0; line-height: 1.55; max-width: 48em; }
+  @media (max-width: 600px) { .defc { padding: 16px 18px 18px; } }
 </style>
 </head>
 <body>
 <section class="gw-block" aria-label="Definition">
-  <div class="defc">
+  <div class="defc gw-hue-plum">
     <p class="defc-label gw-eyebrow"><wa-icon name="bookmark"></wa-icon>Definition</p>
     <dl>
       <dt>Term</dt>
