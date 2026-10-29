@@ -6,51 +6,54 @@
 <title>Definition — Checklist</title>
 <!--
   Library block: key-term definition (from Groundwork for Rise preset definition--key-term).
-  The term is the heading; the marked words in the definition open a short explanation below.
-  Groundwork look: borderless ice card, gold-tint marked words, teal counter. On an ice section use class="def is-white".
+  The term is the heading; the marked words in the definition are buttons that open a short explanation below.
+  White card with a soft shadow (works on white and ice); definitions carry the plum hue (see definition--callout).
+  Marked words are interactive, so they use dark blue.
   Completes when every marked word has been opened.
   To reuse: change the term and definition, and give each <button class="def-sub" data-term="id"> a matching
-  <template data-term="id"> with its label and explanation.
+  <template data-term="id"> with its heading and explanation.
   Pack for Rise: bun tools/pack.ts blocks/definition--key-term.html
 -->
 <style>
-  /* Borderless ice card; an opened word's panel is white. On an ice section add class="def is-white": white card, grey panel. */
-  .def { background: var(--gw-ice); padding: var(--wa-space-xl) var(--wa-space-xl) var(--wa-space-xl); display: grid; gap: var(--wa-space-m); }
-  .def.is-white { background: var(--gw-white); }
-  .def-label { display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--gw-label-grey); }
-  .def-label wa-icon { font-size: 16px; margin-inline-start: -2px; }
-  .def-term { font-size: 1.5rem; letter-spacing: -0.01em; margin-block-start: calc(-1 * var(--wa-space-xs)); }
-  .def-text { line-height: 1.65; margin-block-start: calc(-1 * var(--wa-space-xs)); }
+  .def { background: var(--gw-white); border: 1px solid var(--gw-border); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l);
+    padding: 16px 20px 18px; display: grid; gap: 8px; }
+  .def-label { display: flex; align-items: center; gap: 8px; color: var(--hue-deep); }
+  .def-label wa-icon { font-size: 16px; }
+  .def-term { font-size: 1.5rem; letter-spacing: -0.02em; }
+  .def-text { line-height: 1.6; max-width: 48em; }
+  .def-more { color: var(--gw-quiet); }
 
-  /* Marked words: gold tint with a deep-gold underline; open = gold with an ink underline. */
+  /* Marked words: clearly clickable inline buttons (dark blue, dotted underline); open = blue tint. */
   .def-sub {
-    display: inline; margin: 0; padding: 1px 6px 0; border: 0; border-bottom: 2px solid var(--gw-gold-deep); border-radius: 0;
-    background: var(--gw-gold-tint); color: var(--gw-ink); font: inherit; font-weight: 700; cursor: pointer;
+    display: inline; margin: 0; padding: 0 3px; border: 0; border-radius: 4px; background: none;
+    color: var(--gw-dark-blue); font: inherit; font-weight: 700; cursor: pointer;
+    text-decoration: underline 2px dotted; text-underline-offset: 4px;
   }
-  .def-sub:hover { box-shadow: inset 0 -2px 0 var(--gw-gold-deep); }
-  .def-sub[aria-expanded="true"] { background: var(--gw-gold); border-bottom-color: var(--gw-ink); }
+  .def-sub:hover { background: var(--gw-blue-tint); text-decoration-style: solid; }
+  .def-sub[aria-expanded="true"] { background: var(--gw-blue-tint); text-decoration-style: solid; }
 
-  .def-panel { background: var(--gw-white); padding: 22px 24px; display: grid; grid-template-columns: minmax(0, 1fr) 48px; gap: var(--wa-space-xs); align-items: start; }
-  .def.is-white .def-panel { background: var(--gw-grey); }
+  .def-panel { background: var(--hue-tint); border-radius: var(--wa-border-radius-m); padding: 12px 16px 14px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px; row-gap: 4px; align-items: start; }
   .def-panel[hidden] { display: none; }
-  .def-panel h3 { font-size: 1.25rem; line-height: 1.3; outline: none; }
-  .def-panel p { grid-column: 1; line-height: 1.6; }
-  .def-panel wa-button { grid-row: 1 / span 2; grid-column: 2; justify-self: end; margin: -10px -10px 0 0; font-size: 1.25rem; }
+  .def-panel h3 { font-size: 1.125rem; line-height: 1.3; outline: none; }
+  .def-panel p { grid-column: 1; line-height: 1.55; }
+  .def-panel wa-button { grid-row: 1 / span 2; grid-column: 2; margin: -8px -10px 0 0; font-size: 1.125rem; }
 
-  .def-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .def-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px;
+    padding-block-start: 10px; border-block-start: 1px solid var(--gw-line); }
+  .def-foot p { color: var(--gw-quiet); font-size: 0.9375rem; }
   .def-count wa-icon { display: none; }
   .def-count.is-done wa-icon { display: inline-flex; }
 
   @media (max-width: 600px) {
-    .def { padding: var(--wa-space-l); }
-    .def-term { font-size: 1.375rem; }
-    .def-panel { padding: var(--wa-space-m) var(--wa-space-l); }
+    .def { padding: 14px 16px 16px; }
+    .def-term { font-size: 1.3125rem; }
   }
 </style>
 </head>
 <body>
 <section class="gw-block" aria-labelledby="def-term" data-gw-icons="check">
-  <div class="def">
+  <div class="def gw-hue-plum">
     <p class="def-label gw-eyebrow"><wa-icon name="bookmark"></wa-icon>Definition</p>
     <h2 class="def-term" id="def-term">Checklist</h2>
     <p class="def-text">A structured list of <button type="button" class="def-sub" data-term="item" aria-expanded="false" aria-controls="def-panel">items</button> to be confirmed, arranged in a defined <button type="button" class="def-sub" data-term="sequence" aria-expanded="false" aria-controls="def-panel">sequence</button>, so that nothing is overlooked.</p>
@@ -59,7 +62,7 @@
     <div class="def-panel" id="def-panel" role="region" aria-labelledby="def-panel-title" hidden>
       <h3 id="def-panel-title" tabindex="-1"></h3>
       <p data-panel-text></p>
-      <wa-button appearance="plain" variant="neutral" data-close><wa-icon name="x" label="Close explanation"></wa-icon></wa-button>
+      <wa-button appearance="plain" variant="neutral" size="s" data-close><wa-icon name="x" label="Close explanation"></wa-icon></wa-button>
     </div>
 
     <div class="def-foot">
@@ -101,7 +104,6 @@
     if (open === id) { show(null); return; }
     show(id, true);
     seen.add(id);
-    b.classList.add('is-seen');
     block.querySelector('[data-seen]').textContent = seen.size;
     if (seen.size === triggers.length) {
       count.classList.add('is-done');

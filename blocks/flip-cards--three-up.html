@@ -6,48 +6,46 @@
 <title>Flashcards — Key terms (3 up)</title>
 <!--
   Library block: flashcards, 3 columns (from Groundwork for Rise preset flip-cards--three-up).
-  Same pattern as blocks/flashcards.html: each card has its own hue (gw-hue-*), an icon on a tint circle,
-  and reveals its meaning in place. Completes when every card has been turned.
-  Optional lead line: add <p class="fc-lead" tabindex="-1">Question?</p> above the meaning and drop "fc-lead" from the meaning.
+  Same pattern as blocks/flashcards.html: each card has its own hue (gw-hue-*), an icon on a tint circle beside
+  its title, and reveals its meaning in place. Completes when every card has been turned.
+  Optional lead line: add <p class="fc-lead" tabindex="-1">Question?</p> above the meaning and drop "fc-lead" from the meaning's class.
   Pack for Rise: bun tools/pack.ts blocks/flip-cards--three-up.html
 -->
 <style>
-  .fc-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); margin-block-end: var(--wa-space-l); }
-  .fc-head h2 { font-size: 1.375rem; }
-  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  /* Compact: Rise adds block padding, so the block keeps its own spacing tight and lets content set heights. */
+  .fc-head { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s); margin-block-end: var(--wa-space-s); }
+  .fc-head h2 { font-size: 1.25rem; }
+  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: 2px; }
   .fc-count { flex: none; }
   .fc-count wa-icon { display: none; }
   .fc-count.is-done wa-icon { display: inline-flex; }
 
-  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--wa-space-m); }
+  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .fc-grid { align-items: start; } /* an opened card grows on its own; its neighbour keeps its compact height */
   .fc-grid > li { display: grid; }
 
-  wa-card.fc { --spacing: var(--wa-space-m) var(--wa-space-l); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); height: 100%; }
+  wa-card.fc { --spacing: 16px; box-shadow: var(--wa-shadow-m); border-color: var(--wa-color-surface-border); height: 100%; }
   wa-card.fc::part(body) { height: 100%; }
-  /* Both faces share one cell, so the card keeps the taller face's height and nothing jumps. */
-  .fc-faces { display: grid; height: 100%; }
-  .fc-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: var(--wa-space-s); transition: opacity var(--wa-transition-normal) var(--wa-transition-easing); }
-  .fc-face[hidden] { display: flex; visibility: hidden; opacity: 0; }
-  .fc-back wa-button { margin-block-start: auto; align-self: start; }
-  .fc-back wa-button::part(button) { padding-inline-start: 0; } /* keeps "Back" on the text's left edge */
-  /* Front: one centred group, so the space the back's text needs doesn't read as a gap. */
-  .fc-front { justify-content: center; align-items: center; text-align: center; padding-block: var(--wa-space-m); }
+  .fc-face { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+  .fc-face[hidden] { display: none; }
 
-  .fc-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--hue-tint); color: var(--hue-deep); font-size: 30px; }
-  .fc-front h3 { font-size: 1.25rem; margin-block-end: var(--wa-space-2xs); }
+  /* Front: icon and title on one line, action under them. */
+  .fc-title { display: flex; align-items: center; gap: 12px; }
+  .fc-icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--hue-tint); color: var(--hue-deep); font-size: 22px; }
+  .fc-front h3 { font-size: 1.125rem; }
+  .fc-face wa-button { margin-block-start: auto; align-self: start; }
+  .fc-face wa-button::part(button) { padding-inline-start: 0; } /* keeps the action on the text's left edge */
+
   .fc-back .gw-eyebrow { display: block; color: var(--hue-deep); }
   .fc-lead { font-weight: 700; font-size: 1.0625rem; line-height: var(--wa-line-height-condensed); outline: none; }
-  .fc-text { color: var(--wa-color-text-quiet); margin-block-end: var(--wa-space-s); }
-  .fc-meaning { font-size: 1.0625rem; line-height: 1.45; outline: none; margin-block-end: var(--wa-space-s); }
+  .fc-text { color: var(--wa-color-text-quiet); }
+  .fc-meaning { font-size: 1.0625rem; line-height: 1.45; outline: none; }
   .fc.is-flipped { border-color: var(--hue); }
 
   @media (max-width: 760px) { .fc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 600px) {
-    /* One column: each face takes only its own height. */
-    .fc-face[hidden] { display: none; }
-    .fc-front { padding-block: var(--wa-space-xs); }
     .fc-head { flex-direction: column; align-items: start; }
-    .fc-grid { grid-template-columns: 1fr; gap: var(--wa-space-m); }
+    .fc-grid { grid-template-columns: 1fr; gap: 10px; }
   }
 </style>
 </head>
@@ -67,9 +65,8 @@
       <wa-card class="fc gw-hue-blue">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="scroll-text"></wa-icon></span>
-            <h3>Requirements</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show meaning</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="scroll-text"></wa-icon></span><h3>Requirements</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show meaning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Requirements</span>
@@ -83,9 +80,8 @@
       <wa-card class="fc gw-hue-coral">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="building"></wa-icon></span>
-            <h3>Responsibilities</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show meaning</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="building"></wa-icon></span><h3>Responsibilities</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show meaning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Responsibilities</span>
@@ -99,9 +95,8 @@
       <wa-card class="fc gw-hue-jade">
         <div class="fc-faces">
           <div class="fc-face fc-front">
-            <span class="fc-icon"><wa-icon name="award"></wa-icon></span>
-            <h3>Verification</h3>
-            <wa-button appearance="outlined" variant="neutral" size="s" data-flip>Show meaning</wa-button>
+            <div class="fc-title"><span class="fc-icon"><wa-icon name="award"></wa-icon></span><h3>Verification</h3></div>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip>Show meaning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </div>
           <div class="fc-face fc-back" hidden>
             <span class="gw-eyebrow">Verification</span>

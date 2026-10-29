@@ -11,22 +11,24 @@
   Pack for Rise: bun tools/pack.ts blocks/reflection--think-about-it.html
 -->
 <style>
-  .think { display: grid; grid-template-columns: 64px minmax(0, 1fr); column-gap: var(--wa-space-l); row-gap: var(--wa-space-xs);
-    background: var(--gw-white); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); padding: 28px 32px 26px; }
-  .think-icon { grid-row: 1 / span 3; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
-    background: var(--hue-tint); color: var(--hue-deep); font-size: 30px; }
-  .think .gw-eyebrow { color: var(--hue-deep); margin-block-start: 4px; }
-  .think-q { font-size: 1.75rem; letter-spacing: -0.03em; line-height: 1.2; max-width: 22em; }
+  .think { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px; row-gap: 6px;
+    background: var(--gw-white); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); padding: 18px 20px; }
+  .think-icon { grid-row: 1 / span 3; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--hue-tint); color: var(--hue-deep); font-size: 22px; }
+  .think .gw-eyebrow { color: var(--hue-deep); margin-block-start: 2px; }
+  .think-q { font-size: 1.5rem; letter-spacing: -0.03em; line-height: 1.2; max-width: 24em; }
   .think-prompt { font-size: 1.0625rem; color: var(--gw-quiet); }
-  .think-next { grid-column: 2; display: flex; align-items: center; gap: 10px; margin-block-start: var(--wa-space-s);
-    padding-block-start: var(--wa-space-s); border-block-start: 1px solid var(--gw-line); color: var(--gw-ink); font-weight: 700; }
+  .think-next { grid-column: 2; display: flex; align-items: center; gap: 10px; margin-block-start: 6px;
+    padding-block-start: 10px; border-block-start: 1px solid var(--gw-line); color: var(--gw-ink); font-weight: 700; }
   .think-next wa-icon { color: var(--hue-deep); flex: none; }
 
   @media (max-width: 600px) {
-    .think { grid-template-columns: 1fr; padding: 22px 20px; }
-    .think-icon { grid-row: auto; width: 52px; height: 52px; font-size: 24px; margin-block-end: var(--wa-space-2xs); }
-    .think-q { font-size: 1.4375rem; }
-    .think-next { grid-column: 1; }
+    .think { grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; padding: 16px; }
+    .think-icon { grid-row: 1; width: 40px; height: 40px; font-size: 20px; }
+    .think .gw-eyebrow { align-self: center; margin: 0; }
+    .think-q, .think-prompt { grid-column: 1 / -1; }
+    .think-q { font-size: 1.3125rem; }
+    .think-next { grid-column: 1 / -1; }
   }
 </style>
 </head>

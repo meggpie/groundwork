@@ -14,19 +14,19 @@
   Pack for Rise: bun tools/pack.ts blocks/worked-example--situation-explanation.html
 -->
 <style>
-  .we { display: grid; gap: var(--wa-space-s); }
-  .we-situation { background: var(--gw-dark-blue); color: var(--gw-white); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-m); padding: 18px 24px 20px; }
+  .we { display: grid; gap: 10px; }
+  .we-situation { background: var(--gw-dark-blue); color: var(--gw-white); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-m); padding: 16px 20px 18px; }
   .we-situation .gw-eyebrow { color: var(--gw-header-label); font-size: 0.75rem; letter-spacing: 0.12em; }
   .we-situation h2 { color: var(--gw-white); font-size: 1.4375rem; letter-spacing: -0.03em; margin-block: 6px 8px; }
   .we-situation p { max-width: 50em; }
 
-  .we-steps { list-style: none; margin: 0; padding: 4px 24px 0; counter-reset: we; }
-  .we-steps li { display: grid; grid-template-columns: 35px minmax(0, 1fr); column-gap: 14px; padding-block: 14px; }
+  .we-steps { list-style: none; margin: 0; padding: 0 20px; counter-reset: we; }
+  .we-steps li { display: grid; grid-template-columns: 35px minmax(0, 1fr); column-gap: 14px; padding-block: 10px; }
   .we-steps li + li { border-block-start: 1px solid var(--gw-line); }
   .we-steps li::before { counter-increment: we; content: '0' counter(we); grid-row: 1 / span 2; font: 500 0.875rem/30px var(--wa-font-family-code); color: var(--gw-dark-blue); }
   .we-steps h3 { font-size: 1.125rem; margin-block: 3px 5px; }
 
-  .we-answer { margin: 6px 24px 0; padding: 6px 0 6px 16px; border-inline-start: 3px solid var(--gw-gold); }
+  .we-answer { margin: 4px 20px 0; padding: 6px 0 6px 16px; border-inline-start: 3px solid var(--gw-gold); }
   .we-answer h3 { font-size: 1.125rem; letter-spacing: -0.03em; margin-block-end: 6px; }
 
   @media (max-width: 600px) {

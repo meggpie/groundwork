@@ -48,8 +48,8 @@
   wa-radio.kc-opt[disabled] { opacity: 1; cursor: default; }
   wa-radio.kc-opt.is-ok { background: var(--gw-correct-fill); border-color: var(--gw-correct); box-shadow: inset 0 0 0 1px var(--gw-correct); }
   wa-radio.kc-opt.is-no { background: var(--gw-wrong-fill); border-color: var(--gw-wrong); box-shadow: inset 0 0 0 1px var(--gw-wrong); }
-  .is-ok .kc-letter { background: var(--gw-correct); color: var(--gw-white); }
-  .is-no .kc-letter { background: var(--gw-wrong); color: var(--gw-white); }
+  wa-radio.kc-opt.is-ok .kc-letter { background: var(--gw-correct); color: var(--gw-white); }
+  wa-radio.kc-opt.is-no .kc-letter { background: var(--gw-wrong); color: var(--gw-white); }
   .kc-mark { flex: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.9375rem; }
   .kc-mark:empty { display: none; }
   .is-ok .kc-mark { color: var(--gw-correct); }
@@ -58,7 +58,8 @@
   /* Feedback: a quiet tinted callout with icon and heading */
   .kc-feedback:empty { display: none; }
   .kc-feedback { margin-block-start: 10px; }
-  wa-callout.gw-fb { border-radius: var(--wa-border-radius-m); outline: none; }
+  wa-callout.gw-fb { border-radius: var(--wa-border-radius-m); outline: none; padding: 10px 14px; }
+  wa-callout.gw-fb > wa-icon[slot="icon"] { margin-inline-end: 10px; font-size: 1.25rem; }
   wa-callout.gw-fb p { color: var(--gw-ink); }
   .gw-fb-h { font-weight: 700; margin-block-end: 2px; }
   .kc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-block-start: 14px; }
@@ -69,7 +70,7 @@
     .kc h2 { font-size: 1.1875rem; }
     wa-radio.kc-opt { padding: 7px 10px; }
     wa-radio.kc-opt::part(label) { gap: 12px; flex-wrap: wrap; }
-    .kc-mark { margin-inline-start: 38px; }
+    .kc-mark { flex-basis: 100%; margin-inline-start: 38px; }
   }
 </style>
 </head>

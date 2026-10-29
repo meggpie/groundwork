@@ -26,7 +26,7 @@
 
   .st-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .st-row { display: grid; gap: 8px; padding: 10px 12px; border-radius: var(--wa-border-radius-m); background: var(--gw-grey); transition: background-color var(--wa-transition-normal); }
-  .st-text { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; line-height: 1.45; margin: 0; font-weight: 700; }
+  .st-text { display: flex; gap: 4px 12px; align-items: baseline; flex-wrap: wrap; line-height: 1.45; margin: 0; font-weight: 700; }
   .st-n { flex: none; font-size: 0.875rem; color: var(--wa-color-text-quiet); font-weight: 500; }
   .st-mark { display: inline-flex; align-items: center; gap: 6px; margin-inline-start: auto; font-weight: 700; font-size: 0.9375rem; white-space: nowrap; }
   .st-mark:empty { display: none; }
@@ -52,7 +52,8 @@
   .st-row.is-no wa-radio[aria-checked="true"] { background: var(--gw-white); border-color: var(--gw-wrong); box-shadow: inset 0 0 0 1px var(--gw-wrong); color: var(--gw-wrong); }
 
   /* Feedback */
-  wa-callout.gw-fb { border-radius: var(--wa-border-radius-m); outline: none; }
+  wa-callout.gw-fb { border-radius: var(--wa-border-radius-m); outline: none; padding: 10px 14px; }
+  wa-callout.gw-fb > wa-icon[slot="icon"] { margin-inline-end: 10px; font-size: 1.25rem; }
   wa-callout.gw-fb p { color: var(--gw-ink); }
   .gw-fb-h { font-weight: 700; margin-block-end: 2px; }
   .st-why { color: var(--gw-ink); margin: 0; }
@@ -64,7 +65,8 @@
     wa-card.st::part(body) { padding: 16px; }
     .st h2 { font-size: 1.1875rem; }
     .st-row { padding: 10px; }
-    .st-choice wa-radio[appearance="button"] { flex-basis: 100%; }
+    .st-choice wa-radio[appearance="button"] { flex: 1 1 auto; min-height: 40px; }
+    .st-choice wa-radio[appearance="button"]::part(label) { gap: 6px; }
   }
 </style>
 </head>
@@ -115,7 +117,7 @@
 
   const rows = items.map((item, i) => {
     const li = el('li', { class: 'st-row' });
-    const text = el('p', { class: 'st-text', id: `st-t${i}` }, `<span class="st-n gw-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(item.text)}<span class="st-mark" data-mark></span></span>`);
+    const text = el('p', { class: 'st-text', id: `st-t${i}` }, `<span class="st-n gw-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(item.text)}</span><span class="st-mark" data-mark></span>`);
     const group = el('wa-radio-group', { class: 'st-choice', label: item.text, name: `st-${i}`, orientation: 'horizontal' });
     cats.forEach((c, k) => group.append(el('wa-radio', { appearance: 'button', value: c, class: hues[k] }, `<span class="st-dot" aria-hidden="true"></span>${esc(c)}`)));
     li.append(text, group);

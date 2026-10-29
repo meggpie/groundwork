@@ -11,16 +11,16 @@
   Pack for Rise: bun tools/pack.ts blocks/key-takeaway--card.html
 -->
 <style>
-  wa-card.kt { --spacing: var(--wa-space-l) var(--wa-space-xl); box-shadow: var(--wa-shadow-l); }
-  .kt-body { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--wa-space-3xs) var(--wa-space-l); align-items: start; }
-  .kt-mark { grid-row: 1 / span 2; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--gw-gold); color: var(--gw-ink); font-size: 26px; }
-  .kt-label { color: var(--wa-color-warning-30); margin-block-start: 2px; }
-  .kt-text { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.25rem; line-height: 1.35; letter-spacing: -0.015em; color: var(--gw-ink); max-width: 62ch; text-wrap: pretty; }
+  wa-card.kt { --spacing: 16px 20px; box-shadow: var(--wa-shadow-l); }
+  .kt-body { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 14px; align-items: start; }
+  .kt-mark { grid-row: 1 / span 2; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--gw-gold); color: var(--gw-ink); font-size: 22px; }
+  .kt-label { color: var(--wa-color-warning-30); margin-block-start: 1px; }
+  .kt-text { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.1875rem; line-height: 1.35; letter-spacing: -0.015em; color: var(--gw-ink); max-width: 62ch; text-wrap: pretty; }
   @media (max-width: 600px) {
-    wa-card.kt { --spacing: var(--wa-space-m) var(--wa-space-l); }
-    .kt-body { column-gap: var(--wa-space-m); }
-    .kt-mark { width: 44px; height: 44px; font-size: 22px; }
-    .kt-text { font-size: 1.125rem; }
+    wa-card.kt { --spacing: 14px 16px; }
+    .kt-body { column-gap: 12px; }
+    .kt-mark { width: 40px; height: 40px; font-size: 20px; }
+    .kt-text { font-size: 1.0625rem; }
   }
 </style>
 </head>

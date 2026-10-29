@@ -12,10 +12,10 @@
 -->
 <style>
   html { background: var(--gw-dark-blue); }
-  .lh { position: relative; overflow: hidden; background: var(--gw-dark-blue); min-height: 220px; display: flex; flex-direction: column; justify-content: center; gap: var(--wa-space-xs); padding: 56px 64px 60px 92px; }
-  .lh-tab { position: absolute; left: 0; top: 50%; width: 52px; height: 104px; translate: 0 -50%; }
+  .lh { position: relative; overflow: hidden; background: var(--gw-dark-blue); min-height: 168px; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 40px 64px 42px 84px; }
+  .lh-tab { position: absolute; left: 0; top: 50%; width: 44px; height: 88px; translate: 0 -50%; }
   .lh-tab polygon { fill: var(--gw-gold); }
-  .lh-hex { position: absolute; right: 24px; top: 50%; width: 360px; height: 300px; translate: 0 -50%; }
+  .lh-hex { position: absolute; right: 24px; top: 50%; width: 300px; height: 250px; translate: 0 -50%; }
   .lh-hex polygon { fill: none; stroke: var(--gw-hex-line); stroke-width: 10; stroke-linejoin: round; }
   .lh-hex polygon.solid { fill: var(--gw-hex-line); stroke: none; opacity: 0.55; }
   .lh-label, .lh h1 { position: relative; }
@@ -23,13 +23,13 @@
   .lh h1 { color: var(--gw-white); font-size: clamp(1.875rem, 3.8vw, 2.375rem); line-height: 1.1; letter-spacing: -0.035em; max-width: 600px; }
 
   @media (max-width: 760px) {
-    .lh { min-height: 180px; padding: 44px 28px 48px 72px; }
-    .lh-tab { width: 40px; height: 80px; }
+    .lh { min-height: 148px; padding: 32px 28px 34px 64px; }
+    .lh-tab { width: 36px; height: 72px; }
     .lh-hex { right: -150px; }
   }
   @media (max-width: 480px) {
-    .lh { min-height: 160px; padding: 36px 20px 40px 60px; }
-    .lh-hex { right: -210px; opacity: 0.7; }
+    .lh { min-height: 132px; padding: 28px 20px 30px 54px; }
+    .lh-hex { display: none; }
   }
 </style>
 </head>
