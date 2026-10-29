@@ -1,6 +1,6 @@
 # Groundwork visual design foundation
 
-**Status: working direction, not a locked component specification.**
+**Status: working design direction.** The principles below guide new work. Exact values remain provisional until tested in Rise.
 
 ## Purpose
 
@@ -25,9 +25,9 @@ These are **starting points**, not new prohibitions. Evaluate them against real 
 - **Type:** Archivo headings, Atkinson Hyperlegible Next body, IBM Plex Mono selectively for numbers.
 - **Core colour candidates:** dark blue `#104C8F`, ice `#E7EDF4`, ink `#1D2030`, white and gold `#DAA82F`. These preserve continuity with the existing system, but are subject to visual testing.
 - **Illustration candidates:** cobalt `#3656BD`, plum `#705B83`, jade `#3FBE90`, warm coral `#D9866B`. Choose a restrained subset for each illustration, checking contrast and meaning.
-- **Shape:** softened corners; test 12px standard and 20px feature treatments. Square or open forms remain available when appropriate.
-- **Depth:** test one soft resting shadow. Use elevation for hierarchy, not on every surface; avoid automatically layering strong borders and shadows.
-- **Diagrams:** tailor geometry to the relationships. Make labels close to what they describe, use clear connectors, and allow dark panels for meaningful endpoints or emphasis.
+- **Shape:** softened corners are a deliberate part of the new visual identity. Start by testing approximately 12px on standard cards and 20px on featured surfaces; these are not universal requirements. Open layouts and occasional square geometry are still valid when they communicate better.
+- **Depth:** restrained drop shadows are part of the visual identity. Establish one useful resting shadow, applying it where elevation clarifies grouping or interaction rather than automatically to every element. Avoid combining heavy borders with heavy shadows.
+- **Diagrams:** tailor geometry to the actual relationships; do not invent or oversimplify roles, sequence or authority. Keep labels close to their referents, use clear connectors, and allow dark panels for meaningful endpoints or emphasis.
 - **Illustrations:** contemporary flat line-and-fill artwork with consistent visual weight. Colour and detail should illuminate, not compete with, the teaching.
 
 ## Three visual approaches
@@ -36,7 +36,7 @@ These are **starting points**, not new prohibitions. Evaluate them against real 
 - **Contained:** worked examples, prompts, practice activities and grouped information that benefits from a distinct surface.
 - **Purpose-built:** relationship diagrams, hierarchies, timelines and other explanatory visuals whose composition should follow the subject.
 
-These are **approaches, not component classes**.
+These are **design approaches, not new component classes**. Do not turn each approach into its own rendering engine.
 
 ## Decision process
 
@@ -54,8 +54,12 @@ Test the direction with:
 2. A contained professional worked example.
 3. A CBHCC–committees–NRC relationship diagram, including shared priorities, reciprocal planning/recommendations, ongoing NRC support, and final publication.
 
-Assess the three together for hierarchy, balance, variation, legibility and course cohesion.
+Build these first as small, standalone visual experiments; no reusable engine is needed yet. Compare them together for hierarchy, balance, variation, legibility and course cohesion. Promote a treatment to the reusable library only when it proves useful beyond its initial example.
+
+## Accessibility checks
+
+Test meaningful text and graphics in context, including mobile widths. Target WCAG AA contrast for normal text (4.5:1), large text (3:1), and meaningful graphical elements (3:1). Gold, jade and coral can work well as fills or accents but are generally too low-contrast for small text on white. Never rely on colour alone to convey meaning.
 
 ## Avoid instruction drift
 
-Keep current principles here, operational rules in `AGENTS.md`, and component implementation details beside source files. Do not append historical prohibitions each time feedback changes a visual preference. Revise the relevant principle or approved component specification instead. Experimental values are not permanent tokens until approved.
+Keep current principles here, operational rules in `AGENTS.md`, and component implementation details beside source files. Do not append historical prohibitions each time feedback changes a visual preference. Revise the relevant principle or approved component specification instead. Experimental values are not permanent tokens until approved. When production tokens exist, keep their actual hex values and dimensions in one code location; this guide should explain the choices rather than duplicate code-level settings.
