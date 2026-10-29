@@ -12,64 +12,77 @@
   Edit the questions in the JSON below. Pack for Rise: bun tools/pack.ts blocks/knowledge-check--three-questions.html
 -->
 <style>
-  wa-card.kc { --spacing: var(--wa-space-xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
-  .kc-top { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s); }
-  .kc-label { display: inline-flex; align-items: center; gap: var(--wa-space-xs); }
-  .kc-label wa-icon { font-size: 1.125rem; color: var(--gw-dark-blue); }
-  .kc-progress { --track-height: 6px; --indicator-color: var(--gw-dark-blue); margin-block: var(--wa-space-m) var(--wa-space-l); }
-  .kc-progress::part(base) { border-radius: 999px; }
-  .kc-progress[hidden] + [data-question] { margin-block-start: var(--wa-space-m); }
-  .kc h2 { font-size: 1.375rem; outline: none; }
-  .kc-hint { color: var(--wa-color-text-quiet); margin-block: var(--wa-space-2xs) var(--wa-space-m); }
+  /* Groundwork "do" block: white card, 1px outline, on an ice section. */
+  wa-card.kc { --spacing: var(--wa-space-l); border-color: var(--gw-border); }
+  wa-card.kc::part(body) { padding: 28px 32px 32px; }
+  .kc-head { display: flex; flex-direction: column; gap: var(--wa-space-l); margin-block-end: var(--wa-space-l); }
+  /* Label: 36px ink tile with a white icon, then an 18px capitalised label */
+  .kc-label { display: flex; align-items: center; gap: 16px; font: 700 1.125rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.06em; text-transform: uppercase; color: var(--gw-ink); margin: 0; }
+  .kc-tile { flex: none; display: grid; place-items: center; width: 36px; height: 36px; background: var(--gw-ink); color: var(--gw-white); font-size: 20px; }
+  /* Progress: one segment per question, each filling with the next order-run colour */
+  .kc-progress { display: flex; gap: 6px; }
+  .kc-progress span { flex: 1; height: 10px; background: var(--gw-white); box-shadow: inset 0 0 0 1px var(--gw-line); }
+  .kc-progress span.on { box-shadow: none; }
+  .kc-progress span.on:nth-child(1) { background: var(--gw-run-1); }
+  .kc-progress span.on:nth-child(2) { background: var(--gw-run-2); }
+  .kc-progress span.on:nth-child(3) { background: var(--gw-run-3); }
+  .kc-progress span.on:nth-child(4) { background: var(--gw-run-4); }
+  .kc-progress span.on:nth-child(5) { background: var(--gw-run-5); }
+  .kc-qhead { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font: 700 1.25rem/1.25 var(--wa-font-family-heading); margin: 0; }
+  .kc h2 { font-size: 1.375rem; line-height: 1.3; outline: none; }
+  .kc-qhead + h2 { margin-block-start: var(--wa-space-m); }
+  .kc-hint { margin-block: var(--wa-space-s) var(--wa-space-l); }
 
   /* Answers: each radio is a full-width option row */
   .kc-opts::part(form-control-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .kc-opts::part(form-control-input) { gap: var(--wa-space-s); }
+  .kc-opts::part(form-control-input) { gap: 12px; }
   wa-radio.kc-opt {
-    display: flex; align-items: center; width: 100%; margin: 0; gap: var(--wa-space-s);
-    padding: var(--wa-space-s) var(--wa-space-m); border: 1px solid var(--wa-color-neutral-80); border-radius: var(--wa-border-radius-m);
-    background: var(--wa-color-surface-default);
-    transition: border-color var(--wa-transition-fast), background-color var(--wa-transition-fast);
+    display: flex; align-items: flex-start; width: 100%; margin: 0; gap: 16px;
+    padding: 16px 18px; border: 1px solid var(--gw-border); background: var(--gw-white); font-size: 1.0625rem; line-height: 1.5;
+    --checked-icon-color: var(--gw-ink);
   }
-  wa-radio.kc-opt:hover { border-color: var(--wa-color-brand-60); }
-  wa-radio.kc-opt[aria-checked="true"] { border-color: var(--wa-color-brand-50); background: var(--wa-color-brand-95); box-shadow: inset 0 0 0 1px var(--wa-color-brand-50); }
-  wa-radio.kc-opt::part(label) { display: flex; align-items: center; gap: var(--wa-space-s); width: 100%; }
-  /* The letter tile is the selection marker, so the radio's own circle is hidden (semantics stay on wa-radio). */
-  wa-radio.kc-opt::part(control) { display: none; }
+  wa-radio.kc-opt::part(control) { width: 24px; height: 24px; margin-block-start: 1px; border-color: var(--gw-ink); }
+  wa-radio.kc-opt::part(label) { display: flex; align-items: flex-start; gap: 16px; width: 100%; margin: 0; }
+  wa-radio.kc-opt:hover:not([aria-checked="true"]):not([disabled]) { background: var(--gw-grey); }
+  /* Chosen, before checking: gold tint with a 2px deep-gold outline (inset so nothing shifts) */
+  wa-radio.kc-opt[aria-checked="true"] { background: var(--gw-gold-tint); border-color: var(--gw-gold-deep); box-shadow: inset 0 0 0 1px var(--gw-gold-deep); }
   wa-radio.kc-opt:focus-visible { outline: var(--wa-focus-ring); outline-offset: 2px; }
-  .kc-letter { flex: none; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: var(--wa-border-radius-s); background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 0.875rem; }
-  wa-radio.kc-opt[aria-checked="true"] .kc-letter { background: var(--gw-dark-blue); color: var(--gw-white); }
-  wa-radio.kc-opt.is-ok .kc-letter { background: var(--wa-color-success-40); color: var(--gw-white); }
-  wa-radio.kc-opt.is-no .kc-letter { background: var(--wa-color-danger-40); color: var(--gw-white); }
+  .kc-letter { flex: none; font-size: 1rem; line-height: 1.5rem; }
   .kc-text { flex: 1; min-width: 0; }
-  .kc-mark { flex: none; display: inline-flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.875rem; }
-  /* After checking: the group is locked but stays fully readable */
+  /* After checking: correct / wrong, always with a mark and words */
   wa-radio.kc-opt[disabled] { opacity: 1; cursor: default; }
-  wa-radio.kc-opt.is-ok { border-color: var(--wa-color-success-50); background: var(--wa-color-success-95); box-shadow: inset 0 0 0 1px var(--wa-color-success-50); }
-  wa-radio.kc-opt.is-ok .kc-mark { color: var(--wa-color-success-30); }
-  wa-radio.kc-opt.is-no { border-color: var(--wa-color-danger-50); background: var(--wa-color-danger-95); box-shadow: inset 0 0 0 1px var(--wa-color-danger-50); }
-  wa-radio.kc-opt.is-no .kc-mark { color: var(--wa-color-danger-40); }
+  wa-radio.kc-opt.is-ok { background: var(--gw-correct-fill); border-color: var(--gw-correct); box-shadow: inset 0 0 0 1px var(--gw-correct); }
+  wa-radio.kc-opt.is-no { background: var(--gw-wrong-fill); border-color: var(--gw-wrong); box-shadow: inset 0 0 0 1px var(--gw-wrong); }
+  .kc-mark { flex: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9375rem; }
+  .kc-mark i { display: inline-grid; place-items: center; width: 24px; height: 24px; color: var(--gw-white); font-size: 15px; font-style: normal; }
+  .is-ok .kc-mark { color: var(--gw-correct); } .is-ok .kc-mark i { background: var(--gw-correct); }
+  .is-no .kc-mark { color: var(--gw-wrong); }   .is-no .kc-mark i { background: var(--gw-wrong); }
 
-  .kc-feedback:not(:empty) { margin-block-start: var(--wa-space-l); }
-  .kc-feedback wa-callout { outline: none; }
+  /* Feedback: a 4px coloured rule, a coloured heading, then the explanation in ink */
+  .kc-feedback:empty { display: none; }
+  .kc-feedback { margin-block-start: var(--wa-space-l); }
+  wa-callout.gw-fb { background: transparent; border: 0; border-inline-start: 4px solid var(--wa-color-border-loud); padding: 4px 0 4px 18px; outline: none; }
+  .gw-fb-h { display: flex; align-items: center; gap: 10px; font: 700 1.1875rem/1.3 var(--wa-font-family-heading); color: var(--wa-color-on-quiet); margin-block-end: 6px; }
   .kc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--wa-space-s); margin-block-start: var(--wa-space-l); }
-  .kc-done { display: inline-flex; align-items: center; gap: var(--wa-space-xs); font-weight: 700; color: var(--wa-color-success-30); outline: none; }
+  wa-button[disabled]::part(button) { background: var(--gw-disabled); border-color: var(--gw-disabled); color: var(--gw-muted); opacity: 1; }
+  .kc-done { display: inline-flex; align-items: center; gap: var(--wa-space-xs); font-weight: 700; outline: none; }
 
   @media (max-width: 600px) {
-    wa-card.kc { --spacing: var(--wa-space-l); }
+    wa-card.kc::part(body) { padding: 22px 20px 24px; }
     .kc h2 { font-size: 1.25rem; }
+    wa-radio.kc-opt { padding: 14px; }
   }
 </style>
 </head>
 <body>
 <section class="gw-block" aria-label="Knowledge check"
-  data-gw-components="radio-group radio callout button" data-gw-icons="circle-check circle-x arrow-right rotate-ccw check">
+  data-gw-components="radio-group radio callout button badge" data-gw-icons="check x arrow-right rotate-ccw circle-check circle-x">
   <wa-card class="kc">
-    <div class="kc-top">
-      <span class="kc-label gw-eyebrow"><wa-icon name="list-checks"></wa-icon><span data-label>Knowledge check</span></span>
-      <wa-badge class="kc-count" variant="neutral" appearance="filled" pill hidden>Question&nbsp;<span class="gw-num" data-n>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>3</span></wa-badge>
+    <div class="kc-head">
+      <p class="kc-label"><span class="kc-tile" aria-hidden="true"><wa-icon name="square-check"></wa-icon></span><span data-label>Knowledge check</span></p>
+      <div class="kc-progress" role="progressbar" aria-label="Questions answered correctly" aria-valuemin="0" aria-valuenow="0" hidden data-progress></div>
     </div>
-    <wa-progress-bar class="kc-progress" value="0" label="Questions answered correctly" hidden></wa-progress-bar>
+    <p class="kc-qhead" hidden data-qhead>Question <wa-badge class="gw-counter" appearance="accent"><span class="gw-num" data-n>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>3</span></wa-badge></p>
     <div data-question></div>
   </wa-card>
 </section>
@@ -111,13 +124,15 @@
   const qs = data.questions.slice(0, 5);
   const block = document.querySelector('.gw-block');
   const host = block.querySelector('[data-question]');
-  const count = block.querySelector('.kc-count');
-  const bar = block.querySelector('.kc-progress');
+  const qhead = block.querySelector('[data-qhead]');
+  const bar = block.querySelector('[data-progress]');
   const multi = qs.length > 1;
   block.querySelector('[data-label]').textContent = data.label || 'Knowledge check';
   block.setAttribute('aria-label', data.label || 'Knowledge check');
   block.querySelector('[data-total]').textContent = qs.length;
-  count.hidden = bar.hidden = !multi;
+  qhead.hidden = bar.hidden = !multi;
+  bar.setAttribute('aria-valuemax', qs.length);
+  bar.innerHTML = qs.map(() => '<span></span>').join('');
   let idx = 0, correct = 0;
 
   const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.innerHTML = html; return e; };
@@ -145,20 +160,23 @@
       const opt = group.querySelectorAll('wa-radio')[i];
       group.querySelectorAll('wa-radio').forEach(r => r.disabled = true);
       opt.classList.add(ok ? 'is-ok' : 'is-no');
-      opt.querySelector('[data-mark]').innerHTML = ok ? '<wa-icon name="circle-check"></wa-icon>Correct' : '<wa-icon name="circle-x"></wa-icon>Not this one';
-      const callout = el('wa-callout', { variant: ok ? 'success' : 'danger', appearance: 'filled-outlined' },
-        `<strong>${ok ? 'Correct.' : 'Not quite.'}</strong> ${esc(a.feedback || (ok ? 'That’s right.' : 'Review the options and try again.'))}`);
-      callout.prepend(el('wa-icon', { slot: 'icon', name: ok ? 'circle-check' : 'circle-x' }));
+      const mark = opt.querySelector('[data-mark]');
+      mark.innerHTML = `<i aria-hidden="true"><wa-icon></wa-icon></i>${ok ? 'Correct' : 'Not this one'}`;
+      mark.querySelector('wa-icon').setAttribute('name', ok ? 'check' : 'x');
+      const callout = el('wa-callout', { class: 'gw-fb', variant: ok ? 'success' : 'danger', appearance: 'plain' },
+        `<p class="gw-fb-h"><wa-icon></wa-icon>${ok ? 'Correct' : 'Not quite'}</p><p>${esc(a.feedback || (ok ? 'That’s right.' : 'Review the options and try again.'))}</p>`);
+      callout.querySelector('wa-icon').setAttribute('name', ok ? 'circle-check' : 'circle-x');
       feedback.replaceChildren(callout);
       actions.innerHTML = '';
       if (!ok) {
-        const retry = el('wa-button', { variant: 'brand', appearance: 'outlined' }, '<wa-icon slot="start" name="rotate-ccw"></wa-icon>Try again');
+        const retry = el('wa-button', { variant: 'neutral', appearance: 'outlined' }, '<wa-icon slot="start" name="rotate-ccw"></wa-icon>Try again');
         retry.addEventListener('click', () => { draw(); setTimeout(() => host.querySelector('wa-radio')?.focus(), 50); });
         actions.append(retry); setTimeout(() => retry.focus(), 50);
         return;
       }
       correct = Math.max(correct, idx + 1);
-      bar.value = Math.round(correct / qs.length * 100);
+      bar.querySelectorAll('span').forEach((seg, k) => seg.classList.toggle('on', k < correct));
+      bar.setAttribute('aria-valuenow', correct);
       if (idx < qs.length - 1) {
         const next = el('wa-button', { variant: 'brand' }, 'Next question<wa-icon slot="end" name="arrow-right"></wa-icon>');
         next.addEventListener('click', () => { idx++; draw(true); });
@@ -166,7 +184,6 @@
       } else {
         const done = el('p', { class: 'kc-done', tabindex: '-1' }, `<wa-icon name="check"></wa-icon>${multi ? 'All questions answered.' : 'Question answered.'}`);
         actions.append(done); setTimeout(() => done.focus(), 50);
-        if (multi) { count.variant = 'success'; count.innerHTML = `<wa-icon slot="start" name="check"></wa-icon><span class="gw-num">${qs.length}</span>&nbsp;of&nbsp;<span class="gw-num">${qs.length}</span>&nbsp;correct`; }
         window.gwComplete();
       }
     });

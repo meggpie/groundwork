@@ -15,83 +15,79 @@
 -->
 <style>
   .cy { display: grid; gap: var(--wa-space-l); }
-  .cy-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); }
-  .cy-head h2 { font-size: 1.375rem; margin-block-start: var(--wa-space-2xs); }
-  .cy-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
-  .cy-head .gw-eyebrow { display: inline-flex; align-items: center; gap: 6px; }
-  .cy-count { flex: none; }
+  .cy-head { display: grid; gap: var(--wa-space-m); }
+  .cy-label { display: flex; align-items: center; gap: 12px; font-size: 1.125rem; }
+  .cy-label wa-icon { font-size: 28px; color: var(--gw-ink); }
+  .cy-intro { font-size: 1.0625rem; line-height: 1.55; }
   .cy-count wa-icon { display: none; }
-  .cy-count[variant="success"] wa-icon { display: inline-flex; }
+  .cy-count.is-done wa-icon { display: inline-flex; }
 
   /* Desktop: stage cards either side of the ring, laid out to sit beside their segments */
-  .cy-desk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 300px) minmax(0, 1fr); grid-template-rows: repeat(var(--rows), auto); column-gap: var(--wa-space-l); row-gap: var(--wa-space-s); align-items: center; }
+  .cy-desk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 300px) minmax(0, 1fr); grid-template-rows: repeat(var(--rows), auto); column-gap: var(--wa-space-l); row-gap: var(--wa-space-m); align-items: center; }
   .cy-ring { grid-column: 2; grid-row: 1 / -1; position: relative; }
   .cy-ring svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .cy-seg { fill: var(--gw-ice); stroke: var(--wa-color-brand-80); stroke-width: 1; cursor: pointer; transition: fill var(--wa-transition-normal) var(--wa-transition-easing); }
-  .cy-seg:hover { fill: var(--wa-color-brand-90); }
-  .cy-seg.on { fill: var(--gw-dark-blue); stroke: var(--gw-dark-blue); }
-  .cy-segnum { fill: var(--gw-dark-blue); font-family: var(--wa-font-family-code); font-weight: 500; font-size: 17px; pointer-events: none; }
+  .cy-seg { fill: var(--gw-ice); stroke: var(--gw-border); stroke-width: 1; cursor: pointer; transition: fill var(--wa-transition-normal) var(--wa-transition-easing); }
+  .cy-seg:hover { fill: color-mix(in srgb, var(--gw-ice), var(--gw-border) 14%); }
+  .cy-seg.on { fill: var(--gw-ink); stroke: var(--gw-ink); }
+  .cy-segnum { fill: var(--gw-ink); font-family: var(--wa-font-family-code); font-weight: 500; font-size: 19px; pointer-events: none; }
   .cy-segnum.on { fill: var(--gw-white); }
   .cy-hub { fill: var(--gw-white); }
-  .cy-hubicon { color: var(--gw-dark-blue); }
-  .cy-loop { fill: none; stroke: var(--wa-color-neutral-50); stroke-width: 2; stroke-dasharray: 5 5; }
-  .cy-loop.on { stroke: var(--gw-dark-blue); }
-  .cy-loophead { fill: none; stroke: var(--wa-color-neutral-50); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .cy-loop.on + .cy-loophead { stroke: var(--gw-dark-blue); }
-  .cy-looplabel { fill: var(--wa-color-text-quiet); font-family: var(--wa-font-family-body); font-size: 14px; font-weight: 700; }
-  .cy-looplabel.on { fill: var(--gw-dark-blue); }
+  .cy-hubtext { height: 100%; display: grid; place-items: center; text-align: center; font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 20px; line-height: 1.2; color: var(--gw-ink); }
+  .cy-loop { fill: none; stroke: var(--gw-line); stroke-width: 2; stroke-dasharray: 5 5; }
+  .cy-loop.on { stroke: var(--gw-ink); }
+  .cy-loophead { fill: none; stroke: var(--gw-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .cy-loop.on + .cy-loophead { stroke: var(--gw-ink); }
+  .cy-looplabel { fill: var(--gw-ink); font-family: var(--wa-font-family-body); font-size: 15px; }
+  .cy-looplabel.on { font-weight: 700; }
 
   .cy-card {
-    all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--wa-space-s); row-gap: 2px; align-items: center;
-    padding: var(--wa-space-s) var(--wa-space-m); border-radius: var(--wa-border-radius-m); background: var(--gw-white);
-    border: 1px solid var(--wa-color-surface-border); box-shadow: var(--wa-shadow-s);
-    transition: box-shadow var(--wa-transition-normal) var(--wa-transition-easing), border-color var(--wa-transition-normal);
+    all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--wa-space-s); row-gap: var(--wa-space-xs); align-items: center;
+    padding: var(--wa-space-m); background: var(--gw-white); border: 1px solid var(--gw-border);
+    transition: background-color var(--wa-transition-normal);
   }
-  .cy-card:hover { box-shadow: var(--wa-shadow-m); border-color: var(--wa-color-brand-80); }
+  .cy-card:hover { background: var(--gw-grey); }
   .cy-card:focus-visible { outline: var(--wa-focus-ring); outline-offset: 2px; }
-  .cy-card[aria-pressed="true"] { border: 2px solid var(--gw-dark-blue); padding: calc(var(--wa-space-s) - 1px) calc(var(--wa-space-m) - 1px); box-shadow: var(--wa-shadow-m); }
+  .cy-card[aria-pressed="true"] { border: 2px solid var(--gw-ink); padding: calc(var(--wa-space-m) - 1px); background: var(--gw-white); }
   .cy-card strong { font-family: var(--wa-font-family-heading); font-size: 1.0625rem; line-height: 1.25; }
-  .cy-card .cy-sum { grid-column: 2; color: var(--wa-color-text-quiet); font-size: 0.9375rem; line-height: 1.35; }
-  .cy-card .cy-seen { grid-column: 2; grid-row: 1; justify-self: end; color: var(--wa-color-success-40); font-size: 1rem; display: none; }
-  .cy-card.is-seen .cy-seen { display: inline-flex; }
-  .cy-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 0.875rem; line-height: 1; grid-row: span 2; align-self: start; }
-  [aria-pressed="true"] .cy-n, [aria-expanded="true"] .cy-n, .cy-panel .cy-n { background: var(--gw-dark-blue); color: var(--gw-white); }
+  .cy-card .cy-sum { grid-column: 1 / -1; font-size: 1rem; line-height: 1.4; }
+  .cy-n { display: grid; place-items: center; width: 40px; height: 40px; background: var(--gw-ice); border: 1px solid var(--gw-border); color: var(--gw-ink); font-size: 1.0625rem; line-height: 1; }
+  [aria-pressed="true"] .cy-n, [aria-expanded="true"] .cy-n, .cy-panel .cy-n { background: var(--gw-ink); border-color: var(--gw-ink); color: var(--gw-white); }
 
-  /* Detail panel: every stage's panel shares one cell, so the panel keeps the tallest stage's height */
-  .cy-panels { display: grid; background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); }
-  .cy-panel { grid-area: 1 / 1; padding: var(--wa-space-l); display: grid; gap: var(--wa-space-m); align-content: start; }
+  /* Detail panel: grey; every stage's panel shares one cell, so it keeps the tallest stage's height */
+  .cy-panels { display: grid; background: var(--gw-grey); }
+  .cy-panel { grid-area: 1 / 1; padding: var(--wa-space-l) var(--wa-space-xl); display: grid; gap: var(--wa-space-m); align-content: start; }
   .cy-panel[hidden] { display: grid; visibility: hidden; }
   .cy-ph { display: flex; align-items: center; gap: var(--wa-space-s); }
   .cy-ph h3 { font-size: 1.25rem; }
-  .cy-ph .cy-n { width: 34px; height: 34px; }
-  .cy-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); margin: 0; border-block: 1px solid var(--wa-color-surface-border); }
-  .cy-facts dt, .cy-facts dd { margin: 0; padding-block: var(--wa-space-s); }
-  .cy-facts dt { padding-inline-end: var(--wa-space-xl); }
-  .cy-facts dt .gw-eyebrow { color: var(--wa-color-text-quiet); }
-  .cy-facts dt:not(:first-of-type), .cy-facts dt:not(:first-of-type) + dd { border-block-start: 1px solid var(--wa-color-surface-border); }
+  .cy-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); margin: 0; background: var(--gw-white); border: 1px solid var(--gw-border); }
+  .cy-facts dt, .cy-facts dd { margin: 0; padding: var(--wa-space-s) var(--wa-space-m); }
+  .cy-facts dt { padding-inline-end: var(--wa-space-2xl); }
+  .cy-facts dt:not(:first-of-type), .cy-facts dt:not(:first-of-type) + dd { border-block-start: 1px solid var(--gw-border); }
   .cy-text { display: grid; gap: var(--wa-space-xs); }
 
-  .cy-nav { display: flex; gap: var(--wa-space-s); flex-wrap: wrap; }
+  .cy-nav { display: flex; gap: var(--wa-space-s); flex-wrap: wrap; align-items: center; }
+  .cy-nav .cy-count { margin-inline-start: auto; }
 
-  /* Phones: a stacked list; the selected stage opens in place */
+  /* Phones: stacked outlined rows; the selected stage opens in place */
   .cy-bands { display: none; list-style: none; margin: 0; padding: 0; gap: var(--wa-space-s); }
   .cy-band { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: var(--wa-space-s); align-items: center; padding: var(--wa-space-s) var(--wa-space-m); }
-  .cy-band:focus-visible { outline: var(--wa-focus-ring); outline-offset: -3px; border-radius: var(--wa-border-radius-m); }
-  .cy-band .cy-n { grid-row: auto; align-self: center; }
+  .cy-band:hover { background: var(--gw-grey); }
+  .cy-band:focus-visible { outline: var(--wa-focus-ring); outline-offset: -3px; }
   .cy-band strong { font-family: var(--wa-font-family-heading); font-size: 1.0625rem; }
-  .cy-band .cy-chev { color: var(--wa-color-text-quiet); transition: transform var(--wa-transition-normal); }
+  .cy-band .cy-chev { color: var(--gw-ink); transition: transform var(--wa-transition-normal); }
   .cy-band[aria-expanded="true"] .cy-chev { transform: rotate(180deg); }
-  .cy-bands > li { background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-m); box-shadow: var(--wa-shadow-s); }
-  .cy-bands > li.is-open { border: 2px solid var(--gw-dark-blue); }
-  .cy-bands .cy-panel { padding: 0 var(--wa-space-m) var(--wa-space-m); }
+  .cy-bands > li { background: var(--gw-white); border: 1px solid var(--gw-border); }
+  .cy-bands > li.is-open { border: 2px solid var(--gw-ink); }
+  .cy-bands .cy-panel { padding: var(--wa-space-m); background: var(--gw-grey); }
   .cy-bands .cy-panel .cy-ph { display: none; }
   .cy-bands .cy-panel[hidden] { display: none; }
-  .cy-bands .cy-band .cy-sum { grid-column: 2; color: var(--wa-color-text-quiet); font-size: 0.9375rem; }
+  .cy-bands .cy-band .cy-sum { grid-column: 2; font-size: 0.9375rem; }
+  .cy-bandcount { display: none; }
 
   @media (max-width: 700px) {
-    .cy-head { flex-direction: column; align-items: start; }
     .cy-desk, .cy-panels, .cy-nav { display: none; }
     .cy-bands { display: grid; }
+    .cy-bandcount { display: block; }
     .cy-facts { grid-template-columns: minmax(0, 1fr); }
     .cy-facts dt { padding-block-end: 0; }
     .cy-facts dd { padding-block-start: 2px; }
@@ -101,28 +97,28 @@
 </style>
 </head>
 <body>
-<section class="gw-block cy" aria-labelledby="cy-title" data-gw-icons="target refresh-cw check chevron-down arrow-right arrow-left external-link circle-check">
+<section class="gw-block cy" aria-labelledby="cy-title" data-gw-icons="target check chevron-down arrow-right arrow-left">
   <header class="cy-head">
-    <div>
-      <span class="gw-eyebrow"><wa-icon name="target"></wa-icon>Explore it</span>
-      <h2 id="cy-title">Project cycle</h2>
-      <p>Select each stage to see who is involved and what it produces.</p>
-    </div>
-    <wa-badge class="cy-count" variant="neutral" appearance="filled" pill><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>5</span>&nbsp;viewed</wa-badge>
+    <p class="gw-eyebrow cy-label"><wa-icon name="target"></wa-icon>Explore it</p>
+    <h2 id="cy-title" class="wa-visually-hidden">Project cycle</h2>
+    <p class="cy-intro">Select each stage to see who is involved and what it produces.</p>
   </header>
   <p class="wa-visually-hidden" aria-live="polite" data-live></p>
   <div class="cy-desk" data-desk></div>
   <div class="cy-panels" data-panels></div>
   <div class="cy-nav">
-    <wa-button variant="brand" appearance="outlined" data-prev><wa-icon slot="start" name="arrow-left"></wa-icon>Previous</wa-button>
+    <wa-button variant="neutral" appearance="outlined" data-prev><wa-icon slot="start" name="arrow-left"></wa-icon>Previous</wa-button>
     <wa-button variant="brand" data-next><span data-next-label>Next</span><wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
+    <wa-badge class="gw-counter cy-count" appearance="accent"><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>5</span>&nbsp;viewed</wa-badge>
   </div>
   <ul class="cy-bands" data-bands></ul>
+  <p class="cy-bandcount"><wa-badge class="gw-counter cy-count" appearance="accent"><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>5</span>&nbsp;viewed</wa-badge></p>
 </section>
 
 <script type="module">
   // ── Content (from the preset). 3–5 stages; loop is optional (from/to are stage numbers). link is optional: { text, href }.
   const DATA = {
+    topic: 'Project cycle',
     loop: { from: 4, to: 3, text: 'Back for revision' },
     stages: [
       { title: 'Plan', summary: 'Produces: priorities', facts: [['Who', 'The people setting direction'], ['Result', 'Agreed priorities']], text: ['Set out what needs to happen and why, and agree what matters most this cycle.'] },
@@ -178,7 +174,7 @@
       minX = Math.min(minX, x0 - 4); maxX = Math.max(maxX, x0 + tw + 4); minY = Math.min(minY, g.ctrl[1] - 8, ly - 16); maxY = Math.max(maxY, g.ctrl[1] + 8, ly + 6);
     }
     const segs = S.map((_, i) => { const g = seg(i, i === sel ? 9 : 0); return `<path class="cy-seg${i === sel ? ' on' : ''}" d="${g.d}" data-pick="${i}"/><text class="cy-segnum${i === sel ? ' on' : ''}" x="${f(g.x)}" y="${f(g.y)}" text-anchor="middle">${num(i)}</text>`; }).join('');
-    return `<svg viewBox="${f(minX)} ${f(minY)} ${f(maxX - minX)} ${f(maxY - minY)}" aria-hidden="true">${segs}<circle class="cy-hub" r="${RI - 6}"/><foreignObject x="-18" y="-18" width="36" height="36"><wa-icon class="cy-hubicon" name="refresh-cw" style="font-size:36px"></wa-icon></foreignObject>${loopMarkup}</svg>`;
+    return `<svg viewBox="${f(minX)} ${f(minY)} ${f(maxX - minX)} ${f(maxY - minY)}" aria-hidden="true">${segs}<circle class="cy-hub" r="${RI - 6}"/><foreignObject x="${-(RI - 12)}" y="${-(RI - 12)}" width="${2 * (RI - 12)}" height="${2 * (RI - 12)}"><div xmlns="http://www.w3.org/1999/xhtml" class="cy-hubtext">${esc(DATA.topic)}</div></foreignObject>${loopMarkup}</svg>`;
   }
 
   const facts = s => `<dl class="cy-facts">${s.facts.map(([k, v]) => `<dt><span class="gw-eyebrow">${esc(k)}</span></dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
@@ -188,14 +184,14 @@
   function render(focus) {
     const desk = block.querySelector('[data-desk]');
     desk.style.setProperty('--rows', rows);
-    desk.innerHTML = `<div class="cy-ring">${ringSvg()}</div>` + S.map((s, i) => { const p = pos(i); return `<button type="button" class="cy-card${seen.has(i) ? ' is-seen' : ''}" style="grid-column:${p.col};grid-row:${p.row}" aria-pressed="${i === sel}" data-pick="${i}"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><strong>${esc(s.title)}</strong><wa-icon class="cy-seen" name="circle-check" label="Viewed"></wa-icon><span class="cy-sum">${esc(s.summary)}</span></button>`; }).join('');
+    desk.innerHTML = `<div class="cy-ring">${ringSvg()}</div>` + S.map((s, i) => { const p = pos(i); return `<button type="button" class="cy-card" style="grid-column:${p.col};grid-row:${p.row}" aria-pressed="${i === sel}" data-pick="${i}"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><strong>${esc(s.title)}</strong><span class="cy-sum">${esc(s.summary)}</span></button>`; }).join('');
     block.querySelector('[data-panels]').innerHTML = S.map(panel).join('');
     block.querySelector('[data-bands]').innerHTML = S.map((s, i) => `<li class="${i === sel ? 'is-open' : ''}"><button type="button" class="cy-band" aria-expanded="${i === sel}" data-pick="${i}"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><span><strong>${esc(s.title)}</strong><span class="cy-sum" style="display:block">${esc(s.summary)}</span></span><wa-icon class="cy-chev" name="chevron-down"></wa-icon></button>${panel(s, i)}</li>`).join('');
     const next = (sel + 1) % N, prev = (sel + N - 1) % N;
     const nextBtn = block.querySelector('[data-next]');
     nextBtn.querySelector('[data-next-label]').textContent = `Next: ${S[next].title}`;
     nextBtn.dataset.target = next; block.querySelector('[data-prev]').dataset.target = prev;
-    block.querySelector('[data-seen]').textContent = seen.size;
+    block.querySelectorAll('[data-seen]').forEach(el => { el.textContent = seen.size; });
     block.querySelectorAll('[data-pick]').forEach(el => el.addEventListener('click', () => pick(Number(el.dataset.pick), el.classList.contains('cy-band') ? 'band' : el.classList.contains('cy-card') ? 'card' : null)));
     if (focus === 'card') block.querySelector(`.cy-card[data-pick="${sel}"]`)?.focus();
     if (focus === 'band') block.querySelector(`.cy-band[data-pick="${sel}"]`)?.focus();
@@ -207,12 +203,12 @@
     block.querySelector('[data-live]').textContent = `Stage ${i + 1} of ${N}: ${S[i].title}. ${seen.size} of ${N} viewed.`;
     if (!completed && seen.size === N) {
       completed = true;
-      block.querySelector('.cy-count').variant = 'success';
+      block.querySelectorAll('.cy-count').forEach(c => c.classList.add('is-done'));
       window.gwComplete();
     }
   }
 
-  block.querySelector('[data-total]').textContent = N;
+  block.querySelectorAll('[data-total]').forEach(el => { el.textContent = N; });
   block.querySelector('[data-next]').addEventListener('click', e => pick(Number(e.currentTarget.dataset.target)));
   block.querySelector('[data-prev]').addEventListener('click', e => pick(Number(e.currentTarget.dataset.target)));
   render();

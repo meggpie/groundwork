@@ -7,22 +7,22 @@
 <!--
   Groundwork block: icon list, "divided" layout. Divided list: one column of items separated by fine rules, for slightly longer text.
   Source preset: groundwork-for-rise library/presets/icon-grid--divided.json
-  Add class "ig--tile" to the list for icons in ice circles. Static: no completion.
+  Add class "ig--tile" to the list for white icons in solid ink squares. Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/icon-grid--divided.html
 -->
 <style>
   .ig { list-style: none; margin: 0; padding: 0; }
-  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-m); align-items: start; min-width: 0; }
-  .ig-icon { color: var(--gw-dark-blue); font-size: 32px; line-height: 0; padding-block-start: 2px; }
+  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-l); align-items: start; min-width: 0; }
+  .ig-icon { color: var(--gw-ink); font-size: 36px; line-height: 0; }
   .ig-title { font-size: 1.1875rem; margin-block-end: var(--wa-space-3xs); }
   .ig-text { color: var(--wa-color-text-quiet); }
-  /* Tile style: icon in a 64px ice circle (same treatment as the flashcards) */
+  /* Tile style (add class="ig--tile"): white icon in a solid 64px ink square, 52px on phones */
   .ig--tile .ig-item { align-items: center; }
-  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); font-size: 30px; padding: 0; }
-  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 26px; } }
+  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; background: var(--gw-ink); color: var(--gw-white); font-size: 34px; }
+  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 28px; } }
   .ig--divided { display: grid; }
   .ig-rule { grid-column: 1 / -1; }
-  .ig--divided wa-divider { --spacing: var(--wa-space-l); --color: var(--wa-color-neutral-90); }
+  .ig--divided wa-divider { --spacing: var(--wa-space-l); }
 </style>
 </head>
 <body>

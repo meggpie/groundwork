@@ -18,17 +18,17 @@
   .st { list-style: none; margin: 0; padding: 0; display: grid; }
   .st > li { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--wa-space-m); position: relative; }
   .st-n {
-    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
-    background: var(--gw-dark-blue); color: var(--gw-white); font-size: 0.9375rem; line-height: 1;
+    display: grid; place-items: center; width: 40px; height: 40px;
+    background: var(--gw-ink); color: var(--gw-white); font-size: 1.0625rem; line-height: 1;
   }
   .st h3 { font-size: 1.1875rem; padding-block-start: 7px; }
-  .st p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  .st p { margin-block-start: var(--wa-space-xs); }
   .st-body { padding-block-end: var(--wa-space-xl); min-width: 0; }
 
   /* stack: a connector runs from each marker to the next */
   .st[data-layout="stack"] > li:not(:last-child)::before {
-    content: ""; position: absolute; inset-inline-start: 19px; top: 48px; bottom: 8px;
-    width: 2px; border-radius: 2px; background: var(--wa-color-brand-80);
+    content: ""; position: absolute; inset-inline-start: 19.5px; top: 48px; bottom: 8px;
+    width: 1px; background: var(--gw-border);
   }
   .st[data-layout="stack"] > li:last-child .st-body { padding-block-end: 0; }
 
@@ -37,30 +37,30 @@
   .st[data-layout="row"] > li { grid-template-columns: minmax(0, 1fr); row-gap: var(--wa-space-s); }
   .st[data-layout="row"] > li:not(:last-child)::before {
     content: ""; position: absolute; top: 19px; inset-inline-start: 52px; inset-inline-end: calc(-1 * var(--wa-space-l) + 8px);
-    height: 2px; border-radius: 2px; background: var(--wa-color-brand-80);
+    height: 1px; background: var(--gw-border);
   }
   .st[data-layout="row"] h3 { padding-block-start: 0; }
   .st[data-layout="row"] .st-body { padding-block-end: 0; }
 
   /* list: numerals in a column, soft dividers */
-  .st[data-layout="list"] > li { grid-template-columns: 64px minmax(0, 1fr); padding-block: var(--wa-space-l); border-block-end: 1px solid var(--wa-color-surface-border); }
+  .st[data-layout="list"] > li { grid-template-columns: 76px minmax(0, 1fr); column-gap: 0; padding-block: var(--wa-space-l); border-block-end: 1px solid color-mix(in srgb, var(--gw-ink) 16%, transparent); }
   .st[data-layout="list"] > li:first-child { padding-block-start: 0; }
-  .st[data-layout="list"] .st-n { width: auto; height: auto; place-items: start; background: none; color: var(--gw-dark-blue); font-size: 1.5rem; }
+  .st[data-layout="list"] .st-n { width: auto; height: auto; place-items: start; background: none; color: var(--gw-dark-blue); font-size: 1.5rem; } /* the old spec's one blue here: list numerals */
   .st[data-layout="list"] h3 { padding-block-start: 2px; }
   .st[data-layout="list"] .st-body { padding-block-end: 0; }
 
   .st-loop {
     display: flex; align-items: center; gap: var(--wa-space-s);
     margin-block-start: var(--wa-space-l); padding-block-start: var(--wa-space-m);
-    border-block-start: 1px solid var(--wa-color-surface-border); color: var(--wa-color-text-quiet);
+    border-block-start: 1px solid var(--gw-line);
   }
-  .st-loop wa-icon { color: var(--gw-dark-blue); font-size: 1.25rem; flex: none; }
+  .st-loop wa-icon { color: var(--gw-ink); font-size: 1.25rem; flex: none; }
 
   @media (max-width: 600px) {
     .st[data-layout="row"] { grid-auto-flow: row; grid-template-columns: minmax(0, 1fr); }
     .st[data-layout="row"] > li { grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--wa-space-m); }
     .st[data-layout="row"] > li::before { display: none; }
-    .st[data-layout="list"] > li { grid-template-columns: 48px minmax(0, 1fr); }
+    .st[data-layout="list"] > li { grid-template-columns: 52px minmax(0, 1fr); }
     .st[data-layout="list"] .st-n { font-size: 1.25rem; }
   }
 </style>
@@ -68,12 +68,12 @@
 <body>
 <section class="gw-block" aria-label="Steps">
   <ol class="st" data-layout="stack">
-    <li><span class="st-n gw-num" aria-hidden="true">1</span><div class="st-body"><h3>Notice</h3><p>Spot something that could be done better.</p></div></li>
-    <li><span class="st-n gw-num" aria-hidden="true">2</span><div class="st-body"><h3>Test</h3><p>Try a change on a small scale first.</p></div></li>
-    <li><span class="st-n gw-num" aria-hidden="true">3</span><div class="st-body"><h3>Review</h3><p>Look at what the test showed.</p></div></li>
-    <li><span class="st-n gw-num" aria-hidden="true">4</span><div class="st-body"><h3>Adopt</h3><p>Make the change part of normal practice.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">01</span><div class="st-body"><h3>Notice</h3><p>Spot something that could be done better.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">02</span><div class="st-body"><h3>Test</h3><p>Try a change on a small scale first.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">03</span><div class="st-body"><h3>Review</h3><p>Look at what the test showed.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">04</span><div class="st-body"><h3>Adopt</h3><p>Make the change part of normal practice.</p></div></li>
   </ol>
-  <p class="st-loop"><wa-icon name="rotate-ccw"></wa-icon>Then the steps start again.</p>
+  <p class="st-loop"><wa-icon name="undo-2"></wa-icon>Then the steps start again.</p>
 </section>
 </body>
 </html>

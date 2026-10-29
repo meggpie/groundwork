@@ -5,23 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Icon list — list</title>
 <!--
-  Groundwork block: icon list, "list" layout. Open list: icons and short text with no containers, two columns on wide screens.
+  Groundwork block: icon list, "list" layout. Open list: icons in ink and short text with no containers, one column.
   Source preset: groundwork-for-rise library/presets/icon-grid--list.json
-  Add class "ig--tile" to the list for icons in ice circles. Static: no completion.
+  Add class "ig--tile" to the list for white icons in solid ink squares. Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/icon-grid--list.html
 -->
 <style>
   .ig { list-style: none; margin: 0; padding: 0; }
-  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-m); align-items: start; min-width: 0; }
-  .ig-icon { color: var(--gw-dark-blue); font-size: 32px; line-height: 0; padding-block-start: 2px; }
+  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-l); align-items: start; min-width: 0; }
+  .ig-icon { color: var(--gw-ink); font-size: 36px; line-height: 0; }
   .ig-title { font-size: 1.1875rem; margin-block-end: var(--wa-space-3xs); }
   .ig-text { color: var(--wa-color-text-quiet); }
-  /* Tile style: icon in a 64px ice circle (same treatment as the flashcards) */
+  /* Tile style (add class="ig--tile"): white icon in a solid 64px ink square, 52px on phones */
   .ig--tile .ig-item { align-items: center; }
-  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); font-size: 30px; padding: 0; }
-  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 26px; } }
-  .ig--list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-xl) var(--wa-space-2xl); }
-  @media (max-width: 600px) { .ig--list { grid-template-columns: 1fr; gap: var(--wa-space-l); } }
+  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; background: var(--gw-ink); color: var(--gw-white); font-size: 34px; }
+  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 28px; } }
+  .ig--list { display: grid; gap: var(--wa-space-l); }
 </style>
 </head>
 <body>

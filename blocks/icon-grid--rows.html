@@ -5,30 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Icon list — rows</title>
 <!--
-  Groundwork block: icon list, "rows" layout. Rows: one card per item (two columns on wide screens), for items that each stand on their own.
+  Groundwork block: icon list, "rows" layout. Rows: one outlined card per item, stacked, for items that each stand on their own.
   Source preset: groundwork-for-rise library/presets/icon-grid--rows.json
-  Add class "ig--tile" to the list for icons in ice circles. Static: no completion.
+  Add class "ig--tile" to the list for white icons in solid ink squares. Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/icon-grid--rows.html
 -->
 <style>
   .ig { list-style: none; margin: 0; padding: 0; }
-  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-m); align-items: start; min-width: 0; }
-  .ig-icon { color: var(--gw-dark-blue); font-size: 32px; line-height: 0; padding-block-start: 2px; }
+  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-l); align-items: start; min-width: 0; }
+  .ig-icon { color: var(--gw-ink); font-size: 36px; line-height: 0; }
   .ig-title { font-size: 1.1875rem; margin-block-end: var(--wa-space-3xs); }
   .ig-text { color: var(--wa-color-text-quiet); }
-  /* Tile style: icon in a 64px ice circle (same treatment as the flashcards) */
+  /* Tile style (add class="ig--tile"): white icon in a solid 64px ink square, 52px on phones */
   .ig--tile .ig-item { align-items: center; }
-  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); font-size: 30px; padding: 0; }
-  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 26px; } }
-  .ig--rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-m); }
+  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; background: var(--gw-ink); color: var(--gw-white); font-size: 34px; }
+  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 28px; } }
+  .ig--rows { display: grid; gap: var(--wa-space-s); }
   .ig--rows > li { display: grid; }
-  @media (max-width: 600px) { .ig--rows { grid-template-columns: 1fr; } }
-  .ig--rows wa-card { --spacing: var(--wa-space-l); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); height: 100%; }
+  .ig--rows wa-card { --spacing: var(--wa-space-l); height: 100%; }
 </style>
 </head>
 <body>
 <section class="gw-block">
-  <ul class="ig ig--rows ig--tile" aria-label="Key ideas">
+  <ul class="ig ig--rows" aria-label="Key ideas">
     <li><wa-card><div class="ig-item">
       <span class="ig-icon"><wa-icon name="drafting-compass"></wa-icon></span>
       <div><h3 class="ig-title">Plan</h3><p class="ig-text">Set out what needs to happen and why.</p></div>

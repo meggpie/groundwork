@@ -6,22 +6,21 @@
 <title>Key takeaway — card</title>
 <!--
   Groundwork block: key takeaway. One short statement the learner should remember from the section.
-  Gold is its accent (the only content block that uses gold this way). Works on white or ice sections.
+  Gold top bar is its accent (the only content block where gold is an accent). Works on white or ice sections.
   Source preset: groundwork-for-rise library/presets/key-takeaway--card.json
   Static: no completion.
   Pack for Rise: bun tools/pack.ts blocks/key-takeaway--card.html
 -->
 <style>
-  wa-card.kt { --spacing: var(--wa-space-xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
-  .kt-body { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--wa-space-2xs) var(--wa-space-l); align-items: center; }
-  .kt-icon { grid-row: span 2; align-self: start; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--gw-gold); color: var(--gw-ink); font-size: 28px; }
-  .kt-label { color: var(--gw-ink); }
-  .kt-text { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.1875rem; line-height: 1.45; letter-spacing: -0.01em; color: var(--gw-ink); max-width: 60ch; }
+  /* White card, 1px outline, 6px gold top bar; ink mark with no tile; text a step above body. */
+  wa-card.kt { --spacing: var(--wa-space-l) var(--wa-space-xl) var(--wa-space-l); border-top: 6px solid var(--gw-gold); }
+  .kt-body { display: grid; gap: var(--wa-space-s); }
+  .kt-label { display: flex; align-items: center; gap: var(--wa-space-s); }
+  .kt-label wa-icon { font-size: 28px; color: var(--gw-ink); }
+  .kt-text { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.125rem; line-height: 1.4; letter-spacing: -0.005em; color: var(--gw-ink); max-width: 66ch; }
 
   @media (max-width: 600px) {
-    wa-card.kt { --spacing: var(--wa-space-l); }
-    .kt-body { grid-template-columns: 1fr; gap: var(--wa-space-s); }
-    .kt-icon { grid-row: auto; width: 48px; height: 48px; font-size: 24px; }
+    wa-card.kt { --spacing: var(--wa-space-m) var(--wa-space-l) var(--wa-space-l); }
     .kt-text { font-size: 1.0625rem; }
   }
 </style>
@@ -30,8 +29,7 @@
 <section class="gw-block">
   <wa-card class="kt">
     <div class="kt-body">
-      <span class="kt-icon"><wa-icon name="lightbulb"></wa-icon></span>
-      <p class="gw-eyebrow kt-label">Key takeaway</p>
+      <p class="gw-eyebrow kt-label"><wa-icon name="lightbulb"></wa-icon>Key takeaway</p>
       <p class="kt-text">One or two sentences that state the idea the learner should remember from this section.</p>
     </div>
   </wa-card>
