@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flashcards — Examining the proposal</title>
+<!--
+  Trial block: flashcards on Web Awesome + the Groundwork theme.
+  Content: SCS101 Module 2 Lesson 3, "Examining the proposal".
+  Pack for Rise: bun tools/pack.ts blocks/flashcards.html
+-->
+<style>
+  .fc-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); margin-block-end: var(--wa-space-l); }
+  .fc-head h2 { font-size: 1.375rem; }
+  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  .fc-count { flex: none; }
+  .fc-count wa-icon { display: none; }
+  .fc-count[variant="success"] wa-icon { display: inline-flex; }
+
+  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-l); }
+  .fc-grid > li { display: grid; }
+
+  wa-card.fc { --spacing: var(--wa-space-l); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); height: 100%; }
+  wa-card.fc::part(body) { height: 100%; }
+  /* Both faces share one cell, so the card keeps the taller face's height and nothing jumps. */
+  .fc-faces { display: grid; height: 100%; }
+  .fc-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: var(--wa-space-s); transition: opacity var(--wa-transition-normal) var(--wa-transition-easing); }
+  .fc-face[hidden] { display: flex; visibility: hidden; opacity: 0; }
+  .fc-back wa-button { margin-block-start: auto; align-self: start; }
+  .fc-back wa-button::part(button) { padding-inline-start: 0; } /* keeps "Back" on the text's left edge */
+  /* Front: one centred group, so the space the back's text needs doesn't read as a gap. */
+  .fc-front { justify-content: center; align-items: center; text-align: center; padding-block: var(--wa-space-m); }
+
+  .fc-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 30px; }
+  .fc-front h3 { font-size: 1.25rem; margin-block-end: var(--wa-space-2xs); }
+  .fc-back .gw-eyebrow { display: block; }
+  .fc-lead { font-weight: 700; font-size: 1.0625rem; line-height: var(--wa-line-height-condensed); outline: none; }
+  .fc-text { color: var(--wa-color-text-quiet); margin-block-end: var(--wa-space-s); }
+  .fc.is-flipped { border-color: var(--wa-color-brand-80); }
+
+  @media (max-width: 600px) {
+    .fc-head { flex-direction: column; align-items: start; }
+    .fc-grid { grid-template-columns: 1fr; gap: var(--wa-space-m); }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-labelledby="fc-title" data-gw-icons="check">
+  <header class="fc-head">
+    <div>
+      <h2 id="fc-title">Examining the proposal</h2>
+      <p>Select each perspective to explore the question it brings to the review.</p>
+    </div>
+    <wa-badge class="fc-count" variant="neutral" appearance="filled" pill><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>0</span>&nbsp;of&nbsp;<span class="gw-num" data-total>4</span>&nbsp;viewed</wa-badge>
+  </header>
+  <p class="wa-visually-hidden" aria-live="polite" data-live></p>
+
+  <ul class="fc-grid">
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="flask-conical"></wa-icon></span>
+            <h3>Research and testing</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show question</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Research and testing</span>
+            <p class="fc-lead" tabindex="-1">Under what conditions does the device provide protection?</p>
+            <p class="fc-text">The committee examines what the testing demonstrates and any limits on the device’s performance.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="factory"></wa-icon></span>
+            <h3>Manufacturing</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show question</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Manufacturing</span>
+            <p class="fc-lead" tabindex="-1">Are the performance criteria clear?</p>
+            <p class="fc-text">Manufacturers need to understand what the device must achieve, and testing organizations need criteria they can evaluate consistently.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="wrench"></wa-icon></span>
+            <h3>Installation and operation</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show question</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Installation and operation</span>
+            <p class="fc-lead" tabindex="-1">Can the device be installed, accessed, and maintained as intended?</p>
+            <p class="fc-text">If the device would be difficult to reach for maintenance, the committee may add an access requirement to the proposed wording.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="clipboard-check"></wa-icon></span>
+            <h3>Inspection and enforcement</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show question</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Inspection and enforcement</span>
+            <p class="fc-lead" tabindex="-1">How could compliance be verified?</p>
+            <p class="fc-text">The committee considers what documentation or inspection checks would show that the installation meets the requirement.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+  </ul>
+</section>
+
+<script type="module">
+  const block = document.querySelector('.gw-block');
+  const cards = [...block.querySelectorAll('wa-card.fc')];
+  const seen = new Set();
+  const count = block.querySelector('.fc-count');
+  const live = block.querySelector('[data-live]');
+  block.querySelector('[data-total]').textContent = cards.length;
+
+  cards.forEach((card, i) => {
+    const [front, back] = card.querySelectorAll('.fc-face');
+    card.querySelectorAll('[data-flip]').forEach(btn => btn.addEventListener('click', () => {
+      const toBack = back.hidden;
+      front.hidden = toBack;
+      back.hidden = !toBack;
+      card.classList.toggle('is-flipped', toBack);
+      if (toBack) {
+        back.querySelector('.fc-lead').focus();
+        seen.add(i);
+        block.querySelector('[data-seen]').textContent = seen.size;
+        if (seen.size === cards.length) {
+          count.variant = 'success';
+          live.textContent = 'All perspectives viewed.';
+          window.gwComplete();
+        }
+      } else {
+        front.querySelector('wa-button').focus();
+      }
+    }));
+  });
+</script>
+</body>
+</html>

@@ -9,10 +9,14 @@ Groundwork has three jobs:
 2. **Components** — reuse tested patterns when they fit, while allowing purposeful new designs.
 3. **Production** — generate and test self-contained HTML/CSS/JS blocks for Rise.
 
-## Current status
+## How it works
 
-This is a clean rebuild. The visual foundation is being developed before migrating any legacy code.
+Blocks are built with the **Web Awesome** component library, styled by the **Groundwork theme** (our colours and fonts). Ask Claude for a block in plain words; it writes the block and gives you one HTML file to paste into a Rise code block. Nothing loads from the internet.
 
+- `theme/groundwork.css` — Groundwork colours, fonts, corners and shadows (the only place these values live)
+- `blocks/` — block sources (`flashcards.html` is the first trial)
+- `tools/pack.ts` — makes the paste file: `bun tools/pack.ts blocks/flashcards.html` → `exports/flashcards.html`
+- `vendor/` — Web Awesome and Lucide icons, committed so packing needs no installs
 - [DESIGN.md](DESIGN.md) — visual principles and provisional direction
 - [AGENTS.md](AGENTS.md) — instructions for coding agents, including Codex
 - [CLAUDE.md](CLAUDE.md) — short pointer for Claude Code

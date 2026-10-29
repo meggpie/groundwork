@@ -1,0 +1,18 @@
+const includeFiles = new Map;
+export function requestInclude(src, mode = "cors") {
+  const prev = includeFiles.get(src);
+  if (prev !== undefined) {
+    return Promise.resolve(prev);
+  }
+  const fileDataPromise = fetch(src, { mode }).then(async (response) => {
+    const res = {
+      ok: response.ok,
+      status: response.status,
+      html: await response.text()
+    };
+    includeFiles.set(src, res);
+    return res;
+  });
+  includeFiles.set(src, fileDataPromise);
+  return fileDataPromise;
+}

@@ -1,0 +1,344 @@
+import { __legacyDecorateClassTS as __legacyDecorateClassTS_3r173x8m } from "../../../shims/bun-wrap.js";
+import { html, isServer } from "../../../lit/lit/index.js";
+import { customElement, property, query, state } from "../../../lit/lit/decorators.js";
+import { classMap } from "../../../lit/lit/directives/class-map.js";
+import { WaTabHideEvent } from "../../events/tab-hide.js";
+import { WaTabShowEvent } from "../../events/tab-show.js";
+import { scrollIntoView } from "../../internal/scroll.js";
+import { watch } from "../../internal/watch.js";
+import WebAwesomeElement from "../../internal/webawesome-element.js";
+import { LocalizeController } from "../../utilities/localize.js";
+import"../button/button.js";
+import"../tab-panel/tab-panel.js";
+import"../tab/tab.js";
+import styles from "./tab-group.styles.js";
+export default class WaTabGroup extends WebAwesomeElement {
+  constructor() {
+    super(...arguments);
+    this.tabs = [];
+    this.focusableTabs = [];
+    this.panels = [];
+    this.localize = new LocalizeController(this);
+    this.hasScrollControls = false;
+    this.active = "";
+    this.placement = "top";
+    this.activation = "auto";
+    this.withoutScrollControls = false;
+  }
+  static css = styles;
+  connectedCallback() {
+    super.connectedCallback();
+    if (isServer) {
+      return;
+    }
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updateScrollControls();
+    });
+    this.mutationObserver = new MutationObserver((mutations) => {
+      if (mutations.some((m) => !["aria-labelledby", "aria-controls"].includes(m.attributeName))) {
+        setTimeout(() => this.setAriaLabels());
+      }
+      const relevantMutations = mutations.filter((m) => {
+        const target = m.target;
+        return target.closest("wa-tab-group") === this;
+      });
+      if (relevantMutations.some((m) => m.attributeName === "disabled")) {
+        this.syncTabsAndPanels();
+      } else if (relevantMutations.some((m) => m.attributeName === "active")) {
+        const tabs = relevantMutations.filter((m) => m.attributeName === "active" && m.target.tagName.toLowerCase() === "wa-tab").map((m) => m.target);
+        const newActiveTab = tabs.find((tab) => tab.active);
+        if (newActiveTab && newActiveTab.closest("wa-tab-group") === this) {
+          this.setActiveTab(newActiveTab);
+        }
+      }
+    });
+    this.updateComplete.then(() => {
+      this.syncTabsAndPanels();
+      this.mutationObserver.observe(this, { attributes: true, childList: true, subtree: true });
+      this.resizeObserver.observe(this.nav);
+      let initialTab = this.getActiveTab() ?? this.tabs[0];
+      if (this.active) {
+        initialTab = this.tabs.find((t) => t.panel === this.active) ?? initialTab;
+      }
+      if (initialTab) {
+        this.setActiveTab(initialTab, { emitEvents: false, scroll: false });
+      }
+      const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        if (entries[0].intersectionRatio > 0) {
+          if (this.activeTab && ["top", "bottom"].includes(this.placement)) {
+            scrollIntoView(this.activeTab, this.nav, "horizontal", "auto");
+          }
+          observer.unobserve(entries[0].target);
+        }
+      });
+      intersectionObserver.observe(this.tabGroup);
+    });
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.mutationObserver?.disconnect();
+    if (this.nav) {
+      this.resizeObserver?.unobserve(this.nav);
+    }
+  }
+  getAllTabs() {
+    const slot = this.shadowRoot.querySelector('slot[name="nav"]');
+    return [...slot.assignedElements()].filter((el) => {
+      return el.tagName.toLowerCase() === "wa-tab";
+    });
+  }
+  getAllPanels() {
+    return [...this.defaultSlot.assignedElements()].filter((el) => el.tagName.toLowerCase() === "wa-tab-panel");
+  }
+  getActiveTab() {
+    return this.tabs.find((el) => el.active);
+  }
+  handleClick(event) {
+    const target = event.target;
+    const tab = target.closest("wa-tab");
+    const tabGroup = tab?.closest("wa-tab-group");
+    if (tabGroup !== this) {
+      return;
+    }
+    if (tab !== null) {
+      this.setActiveTab(tab, { scrollBehavior: "smooth" });
+    }
+  }
+  handleKeyDown(event) {
+    const target = event.target;
+    const tab = target.closest("wa-tab");
+    const tabGroup = tab?.closest("wa-tab-group");
+    if (tabGroup !== this) {
+      return;
+    }
+    if (["Enter", " "].includes(event.key)) {
+      if (tab !== null) {
+        this.setActiveTab(tab, { scrollBehavior: "smooth" });
+        event.preventDefault();
+      }
+      return;
+    }
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) {
+      const activeEl = this.tabs.find((t) => t.matches(":focus"));
+      const isRtl = this.localize.dir() === "rtl";
+      let nextTab = null;
+      if (activeEl?.tagName.toLowerCase() === "wa-tab") {
+        if (event.key === "Home") {
+          nextTab = this.focusableTabs[0];
+        } else if (event.key === "End") {
+          nextTab = this.focusableTabs[this.focusableTabs.length - 1];
+        } else if (["top", "bottom"].includes(this.placement) && event.key === (isRtl ? "ArrowRight" : "ArrowLeft") || ["start", "end"].includes(this.placement) && event.key === "ArrowUp") {
+          const currentIndex = this.tabs.findIndex((el) => el === activeEl);
+          nextTab = this.findNextFocusableTab(currentIndex, "backward");
+        } else if (["top", "bottom"].includes(this.placement) && event.key === (isRtl ? "ArrowLeft" : "ArrowRight") || ["start", "end"].includes(this.placement) && event.key === "ArrowDown") {
+          const currentIndex = this.tabs.findIndex((el) => el === activeEl);
+          nextTab = this.findNextFocusableTab(currentIndex, "forward");
+        }
+        if (!nextTab) {
+          return;
+        }
+        nextTab.tabIndex = 0;
+        nextTab.focus({ preventScroll: true });
+        if (this.activation === "auto") {
+          this.setActiveTab(nextTab, { scrollBehavior: "smooth" });
+        } else {
+          this.tabs.forEach((tabEl) => {
+            tabEl.tabIndex = tabEl === nextTab ? 0 : -1;
+          });
+        }
+        if (["top", "bottom"].includes(this.placement)) {
+          scrollIntoView(nextTab, this.nav, "horizontal");
+        }
+        event.preventDefault();
+      }
+    }
+  }
+  findNextFocusableTab(currentIndex, direction) {
+    let nextTab = null;
+    const iterator = direction === "forward" ? 1 : -1;
+    let nextIndex = currentIndex + iterator;
+    while (currentIndex < this.tabs.length) {
+      nextTab = this.tabs[nextIndex] || null;
+      if (nextTab === null) {
+        if (direction === "forward") {
+          nextTab = this.focusableTabs[0];
+        } else {
+          nextTab = this.focusableTabs[this.focusableTabs.length - 1];
+        }
+        break;
+      }
+      if (!nextTab.disabled) {
+        break;
+      }
+      nextIndex += iterator;
+    }
+    return nextTab;
+  }
+  handleScrollToStart() {
+    this.nav.scroll({
+      left: this.localize.dir() === "rtl" ? this.nav.scrollLeft + this.nav.clientWidth : this.nav.scrollLeft - this.nav.clientWidth,
+      behavior: "smooth"
+    });
+  }
+  handleScrollToEnd() {
+    this.nav.scroll({
+      left: this.localize.dir() === "rtl" ? this.nav.scrollLeft - this.nav.clientWidth : this.nav.scrollLeft + this.nav.clientWidth,
+      behavior: "smooth"
+    });
+  }
+  setActiveTab(tab, options) {
+    options = {
+      emitEvents: true,
+      scrollBehavior: "auto",
+      scroll: true,
+      ...options
+    };
+    if (tab.closest("wa-tab-group") !== this) {
+      return;
+    }
+    if (tab !== this.activeTab && !tab.disabled) {
+      const previousTab = this.activeTab;
+      this.active = tab.panel;
+      this.activeTab = tab;
+      this.tabs.forEach((el) => {
+        el.active = el === this.activeTab;
+        el.tabIndex = el === this.activeTab ? 0 : -1;
+      });
+      this.panels.forEach((el) => el.active = el.name === this.activeTab?.panel);
+      if (["top", "bottom"].includes(this.placement) && !options.scroll) {
+        scrollIntoView(this.activeTab, this.nav, "horizontal", options.scrollBehavior);
+      }
+      if (options.emitEvents) {
+        if (previousTab) {
+          this.dispatchEvent(new WaTabHideEvent({ name: previousTab.panel }));
+        }
+        this.dispatchEvent(new WaTabShowEvent({ name: this.activeTab.panel }));
+      }
+    }
+  }
+  setAriaLabels() {
+    this.tabs.forEach((tab) => {
+      const panel = this.panels.find((el) => el.name === tab.panel);
+      if (panel) {
+        tab.setAttribute("aria-controls", panel.getAttribute("id"));
+        panel.setAttribute("aria-labelledby", tab.getAttribute("id"));
+      }
+    });
+  }
+  syncTabsAndPanels() {
+    this.tabs = this.getAllTabs();
+    this.focusableTabs = this.tabs.filter((el) => !el.disabled);
+    this.panels = this.getAllPanels();
+    this.setAriaLabels();
+    this.updateComplete.then(() => this.updateScrollControls());
+  }
+  updateActiveTab() {
+    const tab = this.tabs.find((el) => el.panel === this.active);
+    if (tab) {
+      this.setActiveTab(tab, { scrollBehavior: "smooth" });
+    }
+  }
+  updateScrollControls() {
+    if (this.withoutScrollControls) {
+      this.hasScrollControls = false;
+    } else {
+      this.hasScrollControls = ["top", "bottom"].includes(this.placement) && this.nav.scrollWidth > this.nav.clientWidth + 1;
+    }
+  }
+  render() {
+    const isRtl = this.hasUpdated ? this.localize.dir() === "rtl" : this.dir === "rtl";
+    return html`
+      <div
+        part="base tab-group"
+        class=${classMap({
+      "tab-group": true,
+      "tab-group-top": this.placement === "top",
+      "tab-group-bottom": this.placement === "bottom",
+      "tab-group-start": this.placement === "start",
+      "tab-group-end": this.placement === "end",
+      "tab-group-has-scroll-controls": this.hasScrollControls
+    })}
+        @click=${this.handleClick}
+        @keydown=${this.handleKeyDown}
+      >
+        <div class="nav-container" part="nav">
+          ${this.hasScrollControls ? html`
+                <wa-button
+                  part="scroll-button scroll-button-start"
+                  exportparts="base:scroll-button__base"
+                  class="scroll-button scroll-button-start"
+                  appearance="plain"
+                  @click=${this.handleScrollToStart}
+                >
+                  <wa-icon
+                    name=${isRtl ? "chevron-right" : "chevron-left"}
+                    library="system"
+                    variant="solid"
+                    label=${this.localize.term("scrollToStart")}
+                  ></wa-icon>
+                </wa-button>
+              ` : ""}
+
+          <!-- We have a focus listener because in Firefox (and soon to be Chrome) overflow containers are focusable. -->
+          <div class="nav" @focus=${() => this.activeTab?.focus({ preventScroll: true })}>
+            <div part="tabs" class="tabs" role="tablist">
+              <slot name="nav" @slotchange=${this.syncTabsAndPanels}></slot>
+            </div>
+          </div>
+
+          ${this.hasScrollControls ? html`
+                <wa-button
+                  part="scroll-button scroll-button-end"
+                  class="scroll-button scroll-button-end"
+                  exportparts="base:scroll-button__base"
+                  appearance="plain"
+                  @click=${this.handleScrollToEnd}
+                >
+                  <wa-icon
+                    name=${isRtl ? "chevron-left" : "chevron-right"}
+                    library="system"
+                    variant="solid"
+                    label=${this.localize.term("scrollToEnd")}
+                  ></wa-icon>
+                </wa-button>
+              ` : ""}
+        </div>
+
+        <div part="body" class="body"><slot @slotchange=${this.syncTabsAndPanels}></slot></div>
+      </div>
+    `;
+  }
+}
+__legacyDecorateClassTS_3r173x8m([
+  query(".tab-group")
+], WaTabGroup.prototype, "tabGroup", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  query(".body slot")
+], WaTabGroup.prototype, "defaultSlot", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  query(".nav")
+], WaTabGroup.prototype, "nav", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  state()
+], WaTabGroup.prototype, "hasScrollControls", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  property({ reflect: true })
+], WaTabGroup.prototype, "active", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  property()
+], WaTabGroup.prototype, "placement", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  property()
+], WaTabGroup.prototype, "activation", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  property({ attribute: "without-scroll-controls", type: Boolean })
+], WaTabGroup.prototype, "withoutScrollControls", undefined);
+__legacyDecorateClassTS_3r173x8m([
+  watch("active")
+], WaTabGroup.prototype, "updateActiveTab", null);
+__legacyDecorateClassTS_3r173x8m([
+  watch("withoutScrollControls", { waitUntilFirstUpdate: true })
+], WaTabGroup.prototype, "updateScrollControls", null);
+WaTabGroup = __legacyDecorateClassTS_3r173x8m([
+  customElement("wa-tab-group")
+], WaTabGroup);

@@ -18,11 +18,16 @@ Groundwork helps create clear, engaging and accessible professional learning in 
 6. **Accessible by default.** Maintain readable type, sufficient contrast, explicit labels, keyboard operation, visible focus and mobile usability. Do not communicate meaning by colour alone.
 7. **Simple to maintain.** Add a reusable abstraction only after a recurring need is demonstrated. Prefer plain HTML, CSS and JavaScript for custom blocks.
 
+## Foundation
+
+Blocks are built on **Web Awesome**, themed with Groundwork's colours and fonts in `theme/groundwork.css`. Web Awesome provides consistent controls, spacing, states, focus and accessibility; Groundwork decides how they look and how each visual is composed. Use the library for anything that is a control or a standard surface, and reserve custom design effort for composition and explanatory visuals.
+
 ## Visual direction
 
 These are **starting points**, not new prohibitions. Evaluate them against real examples before locking specific values.
 
-- **Type:** Archivo headings, Atkinson Hyperlegible Next body, IBM Plex Mono selectively for numbers.
+- **Type:** Archivo headings, Atkinson Hyperlegible Next body (17px in blocks), IBM Plex Mono selectively for numbers.
+- **Icons:** Lucide line icons, recoloured through tokens.
 - **Core colour candidates:** dark blue `#104C8F`, ice `#E7EDF4`, ink `#1D2030`, white and gold `#DAA82F`. These preserve continuity with the existing system, but are subject to visual testing.
 - **Illustration candidates:** cobalt `#3656BD`, plum `#705B83`, jade `#3FBE90`, warm coral `#D9866B`. Use expressive illustration colours purposefully, choosing a restrained subset for each illustration and checking contrast and meaning. The trials’ exact combinations are not a required palette for every component.
 - **Shape:** rounded corners are part of the visual direction where a surface is useful. Choose their scale for the composition; the prototypes’ radii are not universal rules. Preserve open layouts and avoid unnecessary nested containers.

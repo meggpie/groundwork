@@ -22,7 +22,16 @@ Apply this through design judgment, not mechanical checks. Inspect the rendered 
 
 ## Technical defaults
 
-Use plain HTML, CSS and JavaScript without introducing a framework or runtime dependencies unless there is a demonstrated need. Keep individual components understandable. Reuse shared utilities for genuinely repeated behaviour. Maintain accessible semantics, focus states, keyboard operation, readable contrast, responsive layout and reduced-motion support where applicable.
+**Web Awesome is the component foundation; Groundwork is its theme.** Build blocks from Web Awesome components (`<wa-button>`, `<wa-card>`, `<wa-badge>`, `<wa-callout>`, `<wa-details>`, `<wa-tab-group>`, `<wa-dialog>`, `<wa-icon>` …) and style custom parts with Web Awesome and Groundwork tokens (`var(--wa-…)`, `var(--gw-…)`). Don't hand-build a control Web Awesome already provides, and don't add hex values, font stacks or radii to a block: if a value is missing, add it to `theme/groundwork.css`. Custom layouts and diagrams are expected; they share the foundation rather than replacing it.
+
+- **Source:** a block is one normal HTML document (`blocks/<name>.html`, or a course folder): `<title>`, the block's own `<style>`, markup inside `<section class="gw-block">`, and block JavaScript as `<script type="module">`. Don't link the theme or library; the packer adds them.
+- **Icons:** Lucide names, `<wa-icon name="book-open">`. List icons that JavaScript inserts in `data-gw-icons="a b"` (and components it creates in `data-gw-components`).
+- **Completion:** call `window.gwComplete()` once the learner has done what the block requires.
+- **Pack:** `bun tools/pack.ts <source.html>` writes `exports/<name>.html`, a single self-contained file to paste into a Rise code block. It embeds only the components and icons the block uses, the theme and the fonts, and refuses anything loaded from the network. Deliver that file.
+- **Check:** open the packed file in a browser with network blocked; test desktop (about 920px), laptop and 390px widths, keyboard use and completion.
+- Free components only (see `vendor/README.md`). Use plain HTML, CSS and JavaScript around them; don't add frameworks or other runtime dependencies unless there is a demonstrated need.
+
+Keep individual components understandable. Reuse shared utilities for genuinely repeated behaviour. Maintain accessible semantics, focus states, keyboard operation, readable contrast, responsive layout and reduced-motion support where applicable.
 
 For production blocks, also test meaningful interaction states and keyboard/mobile behaviour, and review the output in a realistic lesson context. Verify Rise-specific completion in Rise: local browser previews alone cannot prove it.
 
@@ -33,6 +42,7 @@ Do not bulk-migrate files or legacy instructions from the previous `groundwork-f
 Prefer the smallest implementation and fewest new files that meet the request. Do not create a generic component engine for a one-off graphic. Do not generate extensive extra policy documents. Keep one authority for each decision:
 - `DESIGN.md`: principles and provisional visual direction
 - `AGENTS.md`: workflow and engineering expectations
+- `theme/groundwork.css`: the actual colour, type, shape and depth values
 - component source: specific component implementation
 
 When a review changes a preference, update the relevant current guidance instead of adding another permanent exception. Explain any substantial new dependency, abstraction or maintenance cost before adding it.
