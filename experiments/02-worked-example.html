@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Worked example · Groundwork</title><style>
+@font-face{font-family:Archivo;src:url('fonts/archivo-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1d2030;font:18px/1.55 'Atkinson Hyperlegible Next','Segoe UI',sans-serif}
+main{max-width:1100px;padding:32px 40px;margin:auto}
+h2,h3{font-family:Archivo,'Segoe UI',sans-serif;letter-spacing:-.03em;line-height:1.2}
+.example{margin:0}
+.scenario{padding:18px 24px;background:#104c8f;color:#fff;border-radius:12px;box-shadow:0 4px 14px #19385b10}
+.scenario h2{font-size:23px;margin:6px 0 8px}
+.scenario p{margin:0;max-width:790px;font-size:17px}
+.tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#dce7f5}
+.steps{list-style:none;padding:4px 24px 8px;margin:0;counter-reset:step}
+.steps li{display:grid;grid-template-columns:35px minmax(0,1fr);gap:14px;padding:14px 0}
+.steps li+li{border-top:1px solid #ccd7e3}
+.steps li:before{counter-increment:step;content:'0' counter(step);font:500 14px/30px 'IBM Plex Mono',Consolas,monospace;color:#104c8f}
+.steps h3{font-size:18px;margin:3px 0 5px}
+.steps p{margin:0;font-size:17px}
+.answer{margin:6px 24px 0;padding:6px 0 6px 16px;border-left:3px solid #daa82f}
+.answer h3{font-size:18px;margin:0 0 6px}
+.answer p{margin:0;font-size:17px}
+.caption{font-size:13px;color:#505769;margin:18px 0 0}
+@media(max-width:600px){main{padding:28px 20px}
+.scenario{padding:18px 20px}
+.scenario h2{font-size:22px}
+.steps{padding:4px 8px 8px}
+.steps li{gap:8px;grid-template-columns:28px minmax(0,1fr)}
+.steps h3{font-size:18px}
+.answer{margin:6px 8px 0;padding:6px 0 6px 14px}
+}
+</style></head><body><main><article class="example" aria-labelledby="case-title"><header class="scenario"><div><div class="tag">Worked example · Situation</div><h2 id="case-title">“Can we use the newest model code?”</h2><p>A permit submission cites a newly published National Building Code. Does publication make that edition applicable?</p></div></header>
+<ol class="steps"><li><div><h3>Publication ≠ adoption</h3><p>A new model code does not automatically become law in a province or territory.</p></div></li><li><div><h3>Confirm what is in force</h3><p>Check legislation and regulations for the adopted edition, amendments, effective dates and transition provisions.</p></div></li><li><div><h3>Document the basis</h3><p>Record the requirements and source. Resolve uncertainty with the authority having jurisdiction before assessing the design.</p></div></li></ol>
+<div class="answer"><h3>Conclusion</h3><p><strong>No. Confirm the applicable requirements first.</strong> Then assess the submission against them.</p></div></article>
+<p class="caption">Illustrative training scenario.</p>
+</main><script>
+// Report content height to the gallery, including under file:// where direct iframe access is restricted.
+if(parent!==window){const report=()=>parent.postMessage({type:'groundwork-height',height:document.documentElement.getBoundingClientRect().height},'*');new ResizeObserver(report).observe(document.documentElement);document.fonts.ready.then(report);addEventListener('load',report);}
+</script></body></html>

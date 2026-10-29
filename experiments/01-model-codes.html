@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Four national model codes · Groundwork</title>
+<style>
+@font-face{font-family:Archivo;src:url('fonts/archivo-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url('fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;color:#1d2030;background:#fff;font:18px/1.5 'Atkinson Hyperlegible Next','Segoe UI',sans-serif}
+main{max-width:1100px;margin:auto;padding:32px 40px}
+h2{font:700 20px/1.25 Archivo,'Segoe UI',sans-serif;letter-spacing:-.035em;margin:6px 0 14px}
+.codes{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.codes p{font-size:17px;margin:0;color:#505769}
+.icon{height:76px;width:86px;display:block}
+.abbr{display:block;font:500 14px/1.5 'IBM Plex Mono',Consolas,monospace;letter-spacing:.09em;color:#104c8f;margin-top:16px}
+.codes li:nth-child(2) .abbr{color:#8c432d}
+.codes li:nth-child(3) .abbr{color:#705b83}
+.codes li:nth-child(4) .abbr{color:#237457}
+@media(min-width:761px){.codes{row-gap:0}
+.codes li{display:grid;grid-template-rows:subgrid;grid-row:span 4}
+}
+@media(max-width:760px){main{padding:32px 24px}
+.codes{grid-template-columns:1fr 1fr;gap:32px 24px}
+}
+@media(max-width:420px){main{padding:28px 20px}
+.codes{grid-template-columns:1fr;gap:30px}
+.codes li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 18px}
+.icon{width:64px;height:64px;grid-row:1/4}
+.abbr{margin-top:0}
+.codes h2{margin:4px 0 10px;min-height:0}
+.codes .abbr,.codes h2,.codes p{grid-column:2}
+}
+</style></head><body><main>
+<ul class="codes" aria-label="The four national model codes">
+<li><svg class="icon" viewBox="0 0 100 88" aria-hidden="true"><rect x="9" y="24" width="72" height="58" rx="12" fill="#e7edf4"/><path d="M19 72V26L49 10l30 16v46M10 73h78M39 73V54h20v19M31 34h6m25 0h6M31 44h6m25 0h6" fill="none" stroke="#104c8f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M45 28h9v13h-9z" fill="#3656bd"/></svg><span class="abbr">NBC</span><h2>National Building Code</h2><p>Design and construction of new buildings, and substantial alteration of existing buildings.</p></li>
+<li><svg class="icon" viewBox="0 0 100 88" aria-hidden="true"><circle cx="49" cy="46" r="37" fill="#f8e9e3"/><path d="M49 9c4 21 24 24 24 43a24 24 0 0 1-48 0c0-12 8-23 14-28-1 14 3 17 7 20 8-11 5-21 3-35Z" fill="#d9866b" stroke="#8c432d" stroke-width="3" stroke-linejoin="round"/><path d="M49 50c-2 9-9 10-9 17a10 10 0 0 0 20 0c0-8-7-10-11-17Z" fill="#fff" stroke="#8c432d" stroke-width="2"/></svg><span class="abbr">NFC</span><h2>National Fire Code</h2><p>Fire safety in the use and maintenance of buildings and facilities.</p></li>
+<li><svg class="icon" viewBox="0 0 100 88" aria-hidden="true"><rect x="13" y="10" width="72" height="72" rx="22" fill="#eee9f2"/><path d="M24 15v27c0 4 3 7 7 7h29v27h17V42c0-5-4-10-10-10H41V15Z" fill="#fff" stroke="#705b83" stroke-width="3" stroke-linejoin="round"/><path d="M18 15h29M54 76h29M31 25v12c0 3 2 4 5 4h14" fill="none" stroke="#705b83" stroke-width="3" stroke-linecap="round"/></svg><span class="abbr">NPC</span><h2>National Plumbing Code</h2><p>Design and installation of plumbing systems, including water supply and drainage.</p></li>
+<li><svg class="icon" viewBox="0 0 100 88" aria-hidden="true"><circle cx="50" cy="45" r="37" fill="#e3f4eb"/><path d="M25 67V32l25-17 25 17v35" fill="none" stroke="#237457" stroke-width="3" stroke-linejoin="round"/><path d="m54 29-18 25h14l-4 23 22-30H53l1-18Z" fill="#3fbe90" stroke="#237457" stroke-width="2.5" stroke-linejoin="round"/></svg><span class="abbr">NECB</span><h2>National Energy Code of Canada for Buildings</h2><p>Energy efficiency in the design and construction of buildings.</p></li>
+</ul></main><script>
+// Report content height to the gallery, including under file:// where direct iframe access is restricted.
+if(parent!==window){const report=()=>parent.postMessage({type:'groundwork-height',height:document.documentElement.getBoundingClientRect().height},'*');new ResizeObserver(report).observe(document.documentElement);document.fonts.ready.then(report);addEventListener('load',report);}
+</script></body></html>
