@@ -244,6 +244,13 @@ wa-badge.gw-counter { --wa-color-fill-loud: #eceff4; --wa-color-on-loud: var(--g
   border-radius: 9999px; padding: 4px 12px; font: 700 0.875rem/1.2 var(--wa-font-family-body); }
 wa-badge.gw-counter.is-done { --wa-color-fill-loud: var(--gw-correct-fill); --wa-color-on-loud: var(--gw-correct); }
 
+/* Hue helpers: give related items their own colour. Use --hue (icons/fills), --hue-deep (labels, icons on tint), --hue-tint (surfaces). */
+.gw-hue-blue   { --hue: var(--gw-blue);   --hue-deep: var(--gw-blue-deep);   --hue-tint: var(--gw-blue-tint); }
+.gw-hue-cobalt { --hue: var(--gw-cobalt); --hue-deep: var(--gw-cobalt-deep); --hue-tint: var(--gw-cobalt-tint); }
+.gw-hue-coral  { --hue: var(--gw-coral);  --hue-deep: var(--gw-coral-deep);  --hue-tint: var(--gw-coral-tint); }
+.gw-hue-plum   { --hue: var(--gw-plum);   --hue-deep: var(--gw-plum-deep);   --hue-tint: var(--gw-plum-tint); }
+.gw-hue-jade   { --hue: var(--gw-jade);   --hue-deep: var(--gw-jade-deep);   --hue-tint: var(--gw-jade-tint); }
+
 /* Buttons: main action dark blue; outline buttons soft edge with ink text. */
 wa-button::part(base), wa-button::part(button) { font-weight: 700; }
 wa-button[variant="brand"]:not([appearance])::part(button):hover,
