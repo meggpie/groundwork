@@ -2,7 +2,9 @@
  * Groundwork theme for Web Awesome
  * ---------------------------------
  * The ONE place Groundwork colour, type, shape and depth values live.
- * Web Awesome supplies the components and their behaviour; this file makes them Groundwork.
+ * Web Awesome supplies behaviour, spacing and accessibility; this file gives it the Groundwork look:
+ * ink does most of the work, dark blue is the main action, teal marks counters, gold means
+ * "selected" or "this matters most". Square corners, 1px outlines, no shadows.
  * Blocks should use these tokens (var(--wa-…) / var(--gw-…)), not new hex values.
  *
  * Fonts are referenced as fonts/…; tools/pack.ts embeds them in the paste file.
@@ -15,17 +17,26 @@
 
 /* Unlayered, so it overrides Web Awesome's own theme layers. */
 :root {
-  /* ── Groundwork core colours (DESIGN.md) ───────────────────── */
-  --gw-dark-blue: #104c8f;
-  --gw-ice: #e7edf4;
-  --gw-ink: #1d2030;
+  /* ── Groundwork colours: every colour has one job ──────────── */
+  --gw-ink: #000000;            /* all text and headings, icons, icon tiles, outline buttons */
   --gw-white: #ffffff;
-  --gw-gold: #daa82f;
-  /* Illustration colours: fills and accents, not small text on white */
-  --gw-cobalt: #3656bd;
-  --gw-plum: #705b83;
-  --gw-jade: #3fbe90;
-  --gw-coral: #d9866b;
+  --gw-dark-blue: #104c8f;      /* the main action (Check answer, Next), lesson header, focus ring */
+  --gw-dark-blue-hover: #0c3a6e;
+  --gw-ice: #e7edf4;            /* section colour behind activity and prompt blocks; Definition and Note fill */
+  --gw-teal: #007277;           /* counters (white text) and the Note icon */
+  --gw-gold: #daa82f;           /* key takeaway bar, lesson-header tab, an open key term; dark text on gold */
+  --gw-gold-tint: #fbefc8;      /* chosen answer before checking, clickable key terms */
+  --gw-gold-deep: #a8780f;      /* 2px outline on a chosen answer; key-term underline */
+  --gw-border: #5c6b80;         /* every card outline, answer option, chip and box: always 1px */
+  --gw-line: #7f8fa6;           /* dividers inside cards, empty progress segments */
+  --gw-grey: #f0f0f0;           /* inner panels (open key term, open flashcard), hover on choices and outline buttons */
+  --gw-muted: #4b5a6e;          /* disabled text only */
+  --gw-disabled: #d5deea;       /* disabled fill */
+  --gw-correct: #1b6b45;  --gw-correct-fill: #e6f2eb;   /* only after checking, with a tick and words */
+  --gw-wrong: #b3261e;    --gw-wrong-fill: #fbeae8;     /* only after checking, with a cross and words */
+  --gw-hex-line: #1f5fa6;       /* lesson-header outline hexagons */
+  /* Order run: diagram shapes and the knowledge-check progress only, always in this order. Never text, backgrounds, cards or buttons. */
+  --gw-run-1: #a6d75e; --gw-run-2: #3fbe90; --gw-run-3: #00a0a6; --gw-run-4: #197cb3; --gw-run-5: #104c8f;
 
   /* ── Web Awesome colour scales, derived from the core colours ──
    * brand = dark blue (pinned at 40), neutral = ink (10) + quiet text #505769 (40),
@@ -107,26 +118,49 @@
   /* ── Roles ─────────────────────────────────────────────────── */
   --wa-color-surface-default: var(--gw-white);
   --wa-color-surface-raised: var(--gw-white);
-  --wa-color-surface-lowered: var(--gw-ice);
-  --wa-color-surface-border: var(--wa-color-neutral-90);
+  --wa-color-surface-lowered: var(--gw-grey);
+  --wa-color-surface-border: var(--gw-border);
 
   --wa-color-text-normal: var(--gw-ink);
-  --wa-color-text-quiet: var(--wa-color-neutral-40);
+  --wa-color-text-quiet: var(--gw-ink);     /* Groundwork keeps body, hints and descriptions in ink */
   --wa-color-text-link: var(--gw-dark-blue);
-  --wa-color-focus: var(--wa-color-brand-50);
+  --wa-color-focus: var(--gw-dark-blue);
 
-  /* Loud fills use step 40 so white text passes AA (Web Awesome's default 50 doesn't for these hues). */
-  --wa-color-brand-fill-loud: var(--wa-color-brand-40);
-  --wa-color-brand-border-loud: var(--wa-color-brand-50);
-  --wa-color-success-fill-loud: var(--wa-color-success-40);
-  --wa-color-success-border-loud: var(--wa-color-success-50);
-  --wa-color-danger-fill-loud: var(--wa-color-danger-40);
-  --wa-color-danger-border-loud: var(--wa-color-danger-50);
-  /* Warning is gold with ink text. */
+  --wa-color-brand-fill-loud: var(--gw-dark-blue);
+  --wa-color-brand-border-loud: var(--gw-dark-blue);
+  --wa-color-brand-on-quiet: var(--gw-dark-blue);
+  --wa-color-neutral-fill-loud: var(--gw-ink);
+  --wa-color-neutral-border-loud: var(--gw-ink);   /* outline buttons and outlined controls in ink */
+  --wa-color-neutral-on-quiet: var(--gw-ink);
+  --wa-color-neutral-on-normal: var(--gw-ink);
+  --wa-color-neutral-fill-quiet: var(--gw-grey);
+  --wa-color-neutral-fill-normal: var(--gw-grey);
+  --wa-color-neutral-border-quiet: var(--gw-line);
+  --wa-color-neutral-border-normal: var(--gw-border);
+
+  --wa-color-success-fill-quiet: var(--gw-correct-fill);
+  --wa-color-success-fill-normal: var(--gw-correct-fill);
+  --wa-color-success-fill-loud: var(--gw-correct);
+  --wa-color-success-border-quiet: var(--gw-correct);
+  --wa-color-success-border-normal: var(--gw-correct);
+  --wa-color-success-border-loud: var(--gw-correct);
+  --wa-color-success-on-quiet: var(--gw-correct);
+  --wa-color-success-on-normal: var(--gw-correct);
+  --wa-color-danger-fill-quiet: var(--gw-wrong-fill);
+  --wa-color-danger-fill-normal: var(--gw-wrong-fill);
+  --wa-color-danger-fill-loud: var(--gw-wrong);
+  --wa-color-danger-border-quiet: var(--gw-wrong);
+  --wa-color-danger-border-normal: var(--gw-wrong);
+  --wa-color-danger-border-loud: var(--gw-wrong);
+  --wa-color-danger-on-quiet: var(--gw-wrong);
+  --wa-color-danger-on-normal: var(--gw-wrong);
+  --wa-color-warning-fill-quiet: var(--gw-gold-tint);
   --wa-color-warning-fill-loud: var(--gw-gold);
   --wa-color-warning-on-loud: var(--gw-ink);
-  --wa-color-warning-border-loud: var(--wa-color-warning-60);
-  --wa-color-neutral-fill-loud: var(--gw-ink);
+  --wa-color-warning-border-loud: var(--gw-gold-deep);
+
+  --wa-form-control-activated-color: var(--gw-ink);   /* checked radios, checkboxes, switches */
+  --wa-form-control-border-color: var(--gw-border);
 
   /* ── Type ──────────────────────────────────────────────────── */
   --wa-font-family-body: 'Atkinson Hyperlegible Next', 'Segoe UI', system-ui, sans-serif;
@@ -151,19 +185,20 @@
   --wa-link-decoration-default: underline;
   --wa-link-decoration-hover: underline 2px;
 
-  /* ── Shape ─────────────────────────────────────────────────── */
-  --wa-border-radius-s: 6px;
-  --wa-border-radius-m: 10px;
-  --wa-border-radius-l: 16px;
-  --wa-panel-border-radius: var(--wa-border-radius-l);
-  --wa-form-control-border-radius: var(--wa-border-radius-m);
-  --wa-form-control-border-color: var(--wa-color-neutral-50);
+  /* ── Shape: square corners everywhere; 1px outlines (2px only for selected, correct, wrong and outline buttons) ── */
+  --wa-border-radius-s: 0px;
+  --wa-border-radius-m: 0px;
+  --wa-border-radius-l: 0px;
+  --wa-border-radius-pill: 0px;
+  --wa-panel-border-radius: 0px;
+  --wa-form-control-border-radius: 0px;
+  --wa-border-width-s: 1px;
 
-  /* ── Depth: soft, wide, blue-tinted ────────────────────────── */
-  --wa-color-shadow: rgb(25 56 91 / 0.08);
-  --wa-shadow-s: 0 1px 3px rgb(25 56 91 / 0.08);
-  --wa-shadow-m: 0 4px 14px rgb(25 56 91 / 0.07);
-  --wa-shadow-l: 0 8px 30px rgb(25 56 91 / 0.06);
+  /* ── Depth: none ───────────────────────────────────────────── */
+  --wa-color-shadow: transparent;
+  --wa-shadow-s: none;
+  --wa-shadow-m: none;
+  --wa-shadow-l: none;
 
   /* ── Motion ────────────────────────────────────────────────── */
   --wa-transition-normal: 180ms;
@@ -195,10 +230,25 @@ body {
 :where(a) { color: var(--wa-color-text-link); }
 :where(strong, b) { font-weight: 700; }
 .gw-num { font-family: var(--wa-font-family-code); font-weight: 500; font-variant-numeric: tabular-nums; }
+/* Capitalised label above a heading (Definition, Note, Think about it, Key takeaway, Knowledge check…) */
 .gw-eyebrow {
-  font-weight: 700; font-size: 0.8125rem; line-height: 1.3;
-  letter-spacing: 0.08em; text-transform: uppercase; color: var(--wa-color-brand-40);
+  font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 0.9375rem; line-height: 1.2;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--gw-ink);
 }
+
+/* Counter: teal with white text, square (1 of 3, 0 of 4 viewed, 2 left). Use on <wa-badge class="gw-counter">. */
+wa-badge.gw-counter { --wa-color-fill-loud: var(--gw-teal); --wa-color-on-loud: var(--gw-white); --wa-color-border-loud: var(--gw-teal); }
+wa-badge.gw-counter::part(base) { border-radius: 0; min-height: 34px; padding: 3px 11px; font: 700 1.0625rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.02em; }
+
+/* Buttons: 48px, bold; main action dark blue; outline buttons 2px ink with a grey hover. */
+wa-button::part(base), wa-button::part(button) { font-weight: 700; }
+wa-button[variant="brand"]:not([appearance])::part(button):hover,
+wa-button[variant="brand"][appearance="accent"]::part(button):hover { background-color: var(--gw-dark-blue-hover); }
+wa-button[appearance="outlined"]::part(button) { border-width: 2px; }
+wa-button[appearance="outlined"]::part(button):hover { background-color: var(--gw-grey); }
+
+/* Dividers inside cards use the line colour. */
+wa-divider { --color: var(--gw-line); }
 :focus-visible { outline: var(--wa-focus-ring); outline-offset: var(--wa-focus-ring-offset); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
