@@ -44,7 +44,7 @@
   .g-meta { padding: 16px 18px 12px; display: grid; gap: 4px; border-block-end: 1px solid var(--g-line); }
   .g-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
   .g-title h3 { font-size: 1.125rem; }
-  .g-title code { font-family: var(--wa-font-family-code); font-weight: 500; font-size: 0.8125rem; color: var(--gw-ink); background: var(--gw-grey); padding: 1px 6px; }
+  .g-title code { font-family: var(--wa-font-family-code); font-weight: 500; font-size: 0.8125rem; color: var(--gw-ink); background: var(--gw-grey); padding: 1px 6px; border-radius: 4px; }
   .g-title .exp { font-size: 0.75rem; font-weight: 700; color: var(--wa-color-warning-30); background: var(--wa-color-warning-95); padding: 1px 7px; border-radius: 999px; }
   .g-title a { margin-inline-start: auto; font-size: 0.8125rem; color: var(--wa-color-text-quiet); }
   .g-use { color: var(--wa-color-text-quiet); font-size: 0.9375rem; }
@@ -121,52 +121,43 @@
     <header><h2>Foundation</h2><p>The Groundwork look every component uses. The values live in one file, <code>theme/groundwork.css</code>.</p></header>
     <div class="g-grid">
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Colours, one job each</h3></div><p class="g-use">Ink does most of the work. Dark blue is the main action. Teal marks counters. Gold means “selected” or “this matters most”. One accent per block beyond ink.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Colour roles</h3></div><p class="g-use">Ink carries text and structure. Dark blue is for actions, links, focus and dark emphasis panels. Gold marks a conclusion or what matters most.</p></div>
         <div class="g-demo">
           <div class="sw">
-            <div><i style="background:var(--gw-ink)"></i><b>Ink</b><span>text, icons, tiles</span></div>
-            <div><i style="background:var(--gw-dark-blue)"></i><b>Dark blue</b><span>main action, links</span></div>
-            <div><i style="background:var(--gw-teal)"></i><b>Teal</b><span>counters, Note icon</span></div>
+            <div><i style="background:var(--gw-ink)"></i><b>Ink</b><span>text, structure</span></div>
+            <div><i style="background:var(--gw-quiet)"></i><b>Quiet</b><span>secondary text</span></div>
+            <div><i style="background:var(--gw-dark-blue)"></i><b>Dark blue</b><span>actions, emphasis</span></div>
             <div><i style="background:var(--gw-gold)"></i><b>Gold</b><span>matters most</span></div>
-            <div><i style="background:var(--gw-gold-tint);box-shadow:inset 0 0 0 2px var(--gw-gold-deep)"></i><b>Gold tint</b><span>selected, key terms</span></div>
             <div><i style="background:var(--gw-ice)"></i><b>Ice</b><span>activity sections</span></div>
-            <div><i style="background:var(--gw-grey)"></i><b>Grey</b><span>open panels, hover</span></div>
-            <div><i style="background:var(--gw-white);box-shadow:inset 0 0 0 1px var(--gw-border)"></i><b>Border</b><span>1px outlines</span></div>
+            <div><i style="background:var(--gw-white);box-shadow:inset 0 0 0 1px var(--gw-border)"></i><b>White</b><span>reading sections</span></div>
           </div>
         </div>
       </article>
-      <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>After checking</h3></div><p class="g-use">Correct and wrong colours appear only once the learner checks, always with a tick or cross and words.</p></div>
-        <div class="g-demo col">
-          <wa-callout variant="success"><wa-icon slot="icon" name="circle-check"></wa-icon><strong>Correct.</strong> Adoption makes the code law.</wa-callout>
-          <wa-callout variant="danger"><wa-icon slot="icon" name="circle-x"></wa-icon><strong>Not quite.</strong> Publication alone doesn’t.</wa-callout>
-        </div>
-      </article>
-      <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>Order run</h3></div><p class="g-use">Diagram shapes and knowledge-check progress only, always in this order. Never text, backgrounds, cards or buttons.</p></div>
-        <div class="g-demo col">
-          <div class="ramp" style="grid-template-columns:repeat(5,1fr)"><i style="background:var(--gw-run-1)"></i><i style="background:var(--gw-run-2)"></i><i style="background:var(--gw-run-3)"></i><i style="background:var(--gw-run-4)"></i><i style="background:var(--gw-run-5)"></i></div>
-          <div class="ramp-label"><span>leaf</span><span>jade</span><span>teal</span><span>azure</span><span>dark blue</span></div>
-        </div>
-      </article>
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Type</h3></div><p class="g-use">Archivo for headings, Atkinson Hyperlegible Next for reading, IBM Plex Mono for numerals and answer letters. Body text in blocks is 17px.</p></div>
-        <div class="g-demo col">
-          <div class="type-row"><span>Question · 22</span><h2 style="font-size:1.375rem">Who develops the national model codes?</h2></div>
-          <div class="type-row"><span>Card heading · 20</span><h3 style="font-size:1.25rem">Code development committees</h3></div>
-          <div class="type-row"><span>Body · 17</span><p>A new model code does not automatically become law in a province or territory. Check what has been adopted.</p></div>
-          <div class="type-row"><span>Label · 15</span><span class="gw-eyebrow">Think about it</span></div>
-          <div class="type-row"><span>Numbers · mono</span><p><span class="gw-num">3 of 5</span> stages viewed · <span class="gw-num">2023</span> edition</p></div>
-        </div>
-      </article>
-      <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Shape</h3></div><p class="g-use">Square corners and 1px outlines. 2px only for selected, correct and wrong states and outline buttons. No shadows.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Item hues</h3></div><p class="g-use">When related items differ, give each its own hue instead of making everything blue. Each class sets <code>--hue</code>, <code>--hue-deep</code> (labels, icons) and <code>--hue-tint</code> (surfaces).</p></div>
         <div class="g-demo">
-          <div class="shape">1px outline</div>
-          <div class="shape" style="border:2px solid var(--gw-gold-deep);background:var(--gw-gold-tint);color:var(--gw-ink)">selected</div>
-          <div class="shape" style="border:2px solid var(--gw-correct);background:var(--gw-correct-fill);color:var(--gw-ink)">correct</div>
-          <div class="shape" style="border:0;background:var(--gw-ice);color:var(--gw-ink)">ice card</div>
-          <div class="shape" style="border:0;background:var(--gw-ink);color:var(--gw-white)"><wa-icon name="hard-hat" style="font-size:28px"></wa-icon></div>
+          <div class="sw"><div class="gw-hue-blue"><i style="background:var(--hue-tint);box-shadow:inset 0 0 0 1px var(--hue)"></i><b style="color:var(--hue-deep)">Blue</b><span>.gw-hue-blue</span></div><div class="gw-hue-coral"><i style="background:var(--hue-tint);box-shadow:inset 0 0 0 1px var(--hue)"></i><b style="color:var(--hue-deep)">Coral</b><span>.gw-hue-coral</span></div><div class="gw-hue-plum"><i style="background:var(--hue-tint);box-shadow:inset 0 0 0 1px var(--hue)"></i><b style="color:var(--hue-deep)">Plum</b><span>.gw-hue-plum</span></div><div class="gw-hue-jade"><i style="background:var(--hue-tint);box-shadow:inset 0 0 0 1px var(--hue)"></i><b style="color:var(--hue-deep)">Jade</b><span>.gw-hue-jade</span></div><div class="gw-hue-cobalt"><i style="background:var(--hue-tint);box-shadow:inset 0 0 0 1px var(--hue)"></i><b style="color:var(--hue-deep)">Cobalt</b><span>.gw-hue-cobalt</span></div></div>
+        </div>
+      </article>
+      <article class="g-item wide">
+        <div class="g-meta"><div class="g-title"><h3>Type</h3></div><p class="g-use">Archivo for headings, Atkinson Hyperlegible Next for reading (17px), IBM Plex Mono for numbers.</p></div>
+        <div class="g-demo col">
+          <div class="type-row"><span>Question · 20</span><h2 style="font-size:1.25rem">Who develops the national model codes?</h2></div>
+          <div class="type-row"><span>Item heading · 18</span><h3 style="font-size:1.125rem">Code development committees</h3></div>
+          <div class="type-row"><span>Body · 17</span><p>A new model code does not automatically become law in a province or territory.</p></div>
+          <div class="type-row"><span>Label · 13</span><span class="gw-eyebrow">Worked example · situation</span></div>
+          <div class="type-row"><span>Numbers · mono</span><p><span class="gw-num">3 of 5</span> stages viewed</p></div>
+        </div>
+      </article>
+      <article class="g-item wide">
+        <div class="g-meta"><div class="g-title"><h3>Shape, depth and density</h3></div><p class="g-use">Rounded surfaces (12px), soft shadows only where they show grouping or something to press, light borders. Compact: Rise adds block padding.</p></div>
+        <div class="g-demo">
+          <div class="shape" style="border-radius:var(--wa-border-radius-s)">6px</div>
+          <div class="shape" style="border-radius:var(--wa-border-radius-m)">8px</div>
+          <div class="shape" style="border-radius:var(--wa-border-radius-l)">12px</div>
+          <div class="shape" style="border-radius:var(--wa-border-radius-l);border-color:transparent;box-shadow:var(--wa-shadow-m)">shadow m</div>
+          <div class="shape gw-hue-plum" style="border-radius:var(--wa-border-radius-l);border:0;border-top:3px solid var(--hue);background:var(--hue-tint)">tinted card</div>
+          <div class="shape" style="border-radius:var(--wa-border-radius-l);border:0;background:var(--gw-dark-blue);color:var(--gw-white)">emphasis</div>
         </div>
       </article>
     </div>
@@ -177,7 +168,7 @@
     <header><h2>Actions</h2><p>Anything the learner presses.</p></header>
     <div class="g-grid">
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Button</h3><code>&lt;wa-button&gt;</code><a href="https://webawesome.com/docs/components/button" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">One dark-blue main action per block (<code>variant="brand"</code>). Everything else is an ink outline button (<code>variant="neutral" appearance="outlined"</code>) or plain.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Button</h3><code>&lt;wa-button&gt;</code><a href="https://webawesome.com/docs/components/button" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">One dark-blue main action per block (<code>variant="brand"</code>). Secondary actions are neutral outline buttons or plain links.</p></div>
         <div class="g-demo col">
           <div class="wa-cluster wa-gap-s">
             <wa-button variant="brand">Check answer</wa-button>
@@ -337,17 +328,17 @@
       <article class="g-item wide">
         <div class="g-meta"><div class="g-title"><h3>Callout</h3><code>&lt;wa-callout&gt;</code><a href="https://webawesome.com/docs/components/callout" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Asides and feedback. Use neutral for notes; success and danger only for feedback after checking; warning (gold) for “this matters most”. Always say the meaning in words.</p></div>
         <div class="g-demo col">
-          <wa-callout variant="neutral" appearance="filled"><wa-icon slot="icon" name="info" style="color:var(--gw-teal)"></wa-icon><strong>Note.</strong> Publication of a model code is not the same as adoption.</wa-callout>
+          <wa-callout variant="neutral" appearance="filled"><wa-icon slot="icon" name="info"></wa-icon><strong>Note.</strong> Publication of a model code is not the same as adoption.</wa-callout>
           <wa-callout variant="success"><wa-icon slot="icon" name="circle-check"></wa-icon><strong>Correct.</strong> Record the edition and article you relied on.</wa-callout>
           <wa-callout variant="warning"><wa-icon slot="icon" name="triangle-alert"></wa-icon><strong>Check first.</strong> Confirm which edition is in force on the permit date.</wa-callout>
           <wa-callout variant="danger"><wa-icon slot="icon" name="circle-x"></wa-icon><strong>Not quite.</strong> Applying the newest edition before it has been adopted.</wa-callout>
         </div>
       </article>
       <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>Badge</h3><code>&lt;wa-badge&gt;</code><a href="https://webawesome.com/docs/components/badge" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Counters are teal: <code>class="gw-counter" appearance="accent"</code>.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Badge</h3><code>&lt;wa-badge&gt;</code><a href="https://webawesome.com/docs/components/badge" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Counters: <code>class="gw-counter" appearance="accent"</code>, add <code>is-done</code> when complete.</p></div>
         <div class="g-demo">
           <wa-badge class="gw-counter" appearance="accent"><span class="gw-num">2</span>&nbsp;of&nbsp;<span class="gw-num">4</span>&nbsp;viewed</wa-badge>
-          <wa-badge class="gw-counter" appearance="accent"><span class="gw-num">2</span>&nbsp;left</wa-badge>
+          <wa-badge class="gw-counter is-done" appearance="accent">4 of 4 viewed</wa-badge>
           <wa-badge variant="neutral" appearance="outlined">Required</wa-badge>
         </div>
       </article>
@@ -564,9 +555,9 @@
             <wa-divider style="--spacing:14px"></wa-divider>
             <wa-button variant="neutral" appearance="plain" size="s">See the reasoning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </wa-card>
-          <wa-card appearance="filled" style="max-width:360px;--wa-color-fill-quiet:var(--gw-ice)">
-            <span class="gw-eyebrow">Ice card</span>
-            <p style="margin-top:6px">Borderless and ice-filled, like Definition and Note.</p>
+          <wa-card class="gw-hue-jade" appearance="filled" style="max-width:360px;--wa-color-fill-quiet:var(--hue-tint)">
+            <span class="gw-eyebrow" style="color:var(--hue-deep)">Tinted card</span>
+            <p style="margin-top:6px">A hue tint groups related content without a border.</p>
           </wa-card>
         </div>
       </article>
@@ -597,7 +588,7 @@
   </section>
 
   <footer class="g-foot">
-    <p>Web Awesome 3.14 (free) with the Groundwork theme (the Groundwork for Rise look). Not included: code highlighter, markdown, colour picker, QR code, animation and Web Awesome Pro.</p>
+    <p>Web Awesome 3.14 (free) with the Groundwork theme. Not included: code highlighter, markdown, colour picker, QR code, animation and Web Awesome Pro.</p>
     <p>Experimental components work, but their markup may change in a future Web Awesome version.</p>
   </footer>
 </div>
