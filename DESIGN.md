@@ -13,7 +13,7 @@ Groundwork helps create clear, engaging and accessible professional learning in 
 1. **Design for understanding.** Design explanatory visuals around the understanding they need to create, not simply the information they contain. Identify what learners must recognize, relate, compare, decide or practise; make the central idea or relationship apparent at first glance, with hierarchy directing attention to the most important concept or distinction.
 2. **Consistency without uniformity.** Share typography, accessibility, visual hierarchy and interaction conventions. Allow different compositions and levels of visual expression.
 3. **Purposeful variety.** Compose a coherent whole, not a collection of individually styled elements. Make related elements feel related through proximity, alignment, grouping or connectors. Open space, shared backgrounds, cards, pills and colour are tools for communicating relationships, not requirements. Choose open layouts, contained treatments or custom diagrams according to their instructional role.
-4. **Professional with personality.** Aim for a contemporary editorial/product-design sensibility: readable, precise, warm, polished and not sterile. Keep instructional components compact and scannable through concise labels, strong hierarchy and purposeful spacing; preserve necessary explanation and comfortable text sizes.
+4. **Professional with personality.** Aim for a contemporary editorial/product-design sensibility: readable, precise, warm, polished and not sterile. Keep instructional components compact and scannable through concise labels, strong hierarchy and purposeful spacing; preserve necessary explanation. Explanatory body text should remain comfortably readable relative to surrounding lesson text; compactness should come primarily from composition and spacing.
 5. **Design in context.** Design desktop-first for Rise 360, including laptop viewing. Review each block beside its surrounding Rise content; complement the lesson’s explanation rather than unnecessarily repeat it, and judge spacing, background transitions, density and visual rhythm. Keep mobile layouts readable and functional, preserving the meaning of relationships when rearranging them.
 6. **Accessible by default.** Maintain readable type, sufficient contrast, explicit labels, keyboard operation, visible focus and mobile usability. Do not communicate meaning by colour alone.
 7. **Simple to maintain.** Add a reusable abstraction only after a recurring need is demonstrated. Prefer plain HTML, CSS and JavaScript for custom blocks.
@@ -41,7 +41,7 @@ These are **design approaches, not new component classes**. Do not turn each app
 ## Decision process
 
 1. Identify the understanding the visual should create and how it complements the surrounding explanation.
-2. Decide if native Rise already handles it effectively.
+2. Plan a Groundwork custom component; use native Rise when specifically requested or necessary for course-level functionality.
 3. Choose and arrange a representation so relationships and reading order are clear; use a tested component only if its structure fits.
 4. Consider the whole lesson composition, accessibility, mobile behaviour and amount of reading required.
 5. Inspect the rendered composition as a whole and refine meaningful problems before treating it as approved.
