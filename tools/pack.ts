@@ -14,7 +14,7 @@
  * A block source is a normal HTML document: <title>, the block's own <style> in <head>,
  * markup in <body>, and any block JavaScript as <script type="module"> (it runs after the components load).
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync, mkdtempSync } from 'fs';
 import { resolve, dirname, basename, join } from 'path';
 
 const ROOT = resolve(dirname(import.meta.path), '..');
@@ -43,9 +43,7 @@ if (unknown.length) fail('Unknown Lucide icon(s): ' + unknown.join(', ') + ' (se
 const icons = Object.fromEntries([...iconNames].map(n => [n, ICONS[n]]));
 
 // 3. Bundle only what's needed
-const tmp = join(ROOT, '.pack-tmp');
-rmSync(tmp, { recursive: true, force: true });
-mkdirSync(tmp, { recursive: true });
+const tmp = mkdtempSync(join(ROOT, '.pack-tmp-')); // unique per run, so packs can run in parallel
 const entry = join(tmp, 'entry.js');
 writeFileSync(entry, `
 import { registerIconLibrary } from ${JSON.stringify(join(WA, 'icon-library.js'))};

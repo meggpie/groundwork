@@ -1,2 +1,4 @@
 exports/
 .pack-tmp/
+.pack-tmp-*/
+exports/preview/
