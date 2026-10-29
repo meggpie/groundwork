@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle diagram — Project cycle</title>
+<!--
+  Cycle diagram ("Explore it"): 3–5 stages round a ring. Selecting a stage (its card, its ring segment,
+  or Previous/Next) shows its detail: facts, text and an optional link. An optional dashed loop arrow marks
+  "back for revision" between two stages. On phones the stages become a stacked list that opens in place.
+  Completes (window.gwComplete) when every stage has been viewed; the first stage counts as viewed on load.
+  Source: groundwork-for-rise library/presets/cycle--five-stages.json
+  Pack for Rise: bun tools/pack.ts blocks/cycle--five-stages.html
+  Edit only DATA below; the markup is generated from it.
+-->
+<style>
+  .cy { display: grid; gap: var(--wa-space-l); }
+  .cy-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); }
+  .cy-head h2 { font-size: 1.375rem; margin-block-start: var(--wa-space-2xs); }
+  .cy-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  .cy-head .gw-eyebrow { display: inline-flex; align-items: center; gap: 6px; }
+  .cy-count { flex: none; }
+  .cy-count wa-icon { display: none; }
+  .cy-count[variant="success"] wa-icon { display: inline-flex; }
+
+  /* Desktop: stage cards either side of the ring, laid out to sit beside their segments */
+  .cy-desk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 300px) minmax(0, 1fr); grid-template-rows: repeat(var(--rows), auto); column-gap: var(--wa-space-l); row-gap: var(--wa-space-s); align-items: center; }
+  .cy-ring { grid-column: 2; grid-row: 1 / -1; position: relative; }
+  .cy-ring svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .cy-seg { fill: var(--gw-ice); stroke: var(--wa-color-brand-80); stroke-width: 1; cursor: pointer; transition: fill var(--wa-transition-normal) var(--wa-transition-easing); }
+  .cy-seg:hover { fill: var(--wa-color-brand-90); }
+  .cy-seg.on { fill: var(--gw-dark-blue); stroke: var(--gw-dark-blue); }
+  .cy-segnum { fill: var(--gw-dark-blue); font-family: var(--wa-font-family-code); font-weight: 500; font-size: 17px; pointer-events: none; }
+  .cy-segnum.on { fill: var(--gw-white); }
+  .cy-hub { fill: var(--gw-white); }
+  .cy-hubicon { color: var(--gw-dark-blue); }
+  .cy-loop { fill: none; stroke: var(--wa-color-neutral-50); stroke-width: 2; stroke-dasharray: 5 5; }
+  .cy-loop.on { stroke: var(--gw-dark-blue); }
+  .cy-loophead { fill: none; stroke: var(--wa-color-neutral-50); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .cy-loop.on + .cy-loophead { stroke: var(--gw-dark-blue); }
+  .cy-looplabel { fill: var(--wa-color-text-quiet); font-family: var(--wa-font-family-body); font-size: 14px; font-weight: 700; }
+  .cy-looplabel.on { fill: var(--gw-dark-blue); }
+
+  .cy-card {
+    all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--wa-space-s); row-gap: 2px; align-items: center;
+    padding: var(--wa-space-s) var(--wa-space-m); border-radius: var(--wa-border-radius-m); background: var(--gw-white);
+    border: 1px solid var(--wa-color-surface-border); box-shadow: var(--wa-shadow-s);
+    transition: box-shadow var(--wa-transition-normal) var(--wa-transition-easing), border-color var(--wa-transition-normal);
+  }
+  .cy-card:hover { box-shadow: var(--wa-shadow-m); border-color: var(--wa-color-brand-80); }
+  .cy-card:focus-visible { outline: var(--wa-focus-ring); outline-offset: 2px; }
+  .cy-card[aria-pressed="true"] { border: 2px solid var(--gw-dark-blue); padding: calc(var(--wa-space-s) - 1px) calc(var(--wa-space-m) - 1px); box-shadow: var(--wa-shadow-m); }
+  .cy-card strong { font-family: var(--wa-font-family-heading); font-size: 1.0625rem; line-height: 1.25; }
+  .cy-card .cy-sum { grid-column: 2; color: var(--wa-color-text-quiet); font-size: 0.9375rem; line-height: 1.35; }
+  .cy-card .cy-seen { grid-column: 2; grid-row: 1; justify-self: end; color: var(--wa-color-success-40); font-size: 1rem; display: none; }
+  .cy-card.is-seen .cy-seen { display: inline-flex; }
+  .cy-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 0.875rem; line-height: 1; grid-row: span 2; align-self: start; }
+  [aria-pressed="true"] .cy-n, [aria-expanded="true"] .cy-n, .cy-panel .cy-n { background: var(--gw-dark-blue); color: var(--gw-white); }
+
+  /* Detail panel: every stage's panel shares one cell, so the panel keeps the tallest stage's height */
+  .cy-panels { display: grid; background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); }
+  .cy-panel { grid-area: 1 / 1; padding: var(--wa-space-l); display: grid; gap: var(--wa-space-m); align-content: start; }
+  .cy-panel[hidden] { display: grid; visibility: hidden; }
+  .cy-ph { display: flex; align-items: center; gap: var(--wa-space-s); }
+  .cy-ph h3 { font-size: 1.25rem; }
+  .cy-ph .cy-n { width: 34px; height: 34px; }
+  .cy-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); margin: 0; border-block: 1px solid var(--wa-color-surface-border); }
+  .cy-facts dt, .cy-facts dd { margin: 0; padding-block: var(--wa-space-s); }
+  .cy-facts dt { padding-inline-end: var(--wa-space-xl); }
+  .cy-facts dt .gw-eyebrow { color: var(--wa-color-text-quiet); }
+  .cy-facts dt:not(:first-of-type), .cy-facts dt:not(:first-of-type) + dd { border-block-start: 1px solid var(--wa-color-surface-border); }
+  .cy-text { display: grid; gap: var(--wa-space-xs); }
+
+  .cy-nav { display: flex; gap: var(--wa-space-s); flex-wrap: wrap; }
+
+  /* Phones: a stacked list; the selected stage opens in place */
+  .cy-bands { display: none; list-style: none; margin: 0; padding: 0; gap: var(--wa-space-s); }
+  .cy-band { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: var(--wa-space-s); align-items: center; padding: var(--wa-space-s) var(--wa-space-m); }
+  .cy-band:focus-visible { outline: var(--wa-focus-ring); outline-offset: -3px; border-radius: var(--wa-border-radius-m); }
+  .cy-band .cy-n { grid-row: auto; align-self: center; }
+  .cy-band strong { font-family: var(--wa-font-family-heading); font-size: 1.0625rem; }
+  .cy-band .cy-chev { color: var(--wa-color-text-quiet); transition: transform var(--wa-transition-normal); }
+  .cy-band[aria-expanded="true"] .cy-chev { transform: rotate(180deg); }
+  .cy-bands > li { background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-m); box-shadow: var(--wa-shadow-s); }
+  .cy-bands > li.is-open { border: 2px solid var(--gw-dark-blue); }
+  .cy-bands .cy-panel { padding: 0 var(--wa-space-m) var(--wa-space-m); }
+  .cy-bands .cy-panel .cy-ph { display: none; }
+  .cy-bands .cy-panel[hidden] { display: none; }
+  .cy-bands .cy-band .cy-sum { grid-column: 2; color: var(--wa-color-text-quiet); font-size: 0.9375rem; }
+
+  @media (max-width: 700px) {
+    .cy-head { flex-direction: column; align-items: start; }
+    .cy-desk, .cy-panels, .cy-nav { display: none; }
+    .cy-bands { display: grid; }
+    .cy-facts { grid-template-columns: minmax(0, 1fr); }
+    .cy-facts dt { padding-block-end: 0; }
+    .cy-facts dd { padding-block-start: 2px; }
+    .cy-facts dt:not(:first-of-type) + dd { border-block-start: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cy-seg, .cy-card, .cy-chev { transition: none; } }
+</style>
+</head>
+<body>
+<section class="gw-block cy" aria-labelledby="cy-title" data-gw-icons="target refresh-cw check chevron-down arrow-right arrow-left external-link circle-check">
+  <header class="cy-head">
+    <div>
+      <span class="gw-eyebrow"><wa-icon name="target"></wa-icon>Explore it</span>
+      <h2 id="cy-title">Project cycle</h2>
+      <p>Select each stage to see who is involved and what it produces.</p>
+    </div>
+    <wa-badge class="cy-count" variant="neutral" appearance="filled" pill><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>5</span>&nbsp;viewed</wa-badge>
+  </header>
+  <p class="wa-visually-hidden" aria-live="polite" data-live></p>
+  <div class="cy-desk" data-desk></div>
+  <div class="cy-panels" data-panels></div>
+  <div class="cy-nav">
+    <wa-button variant="brand" appearance="outlined" data-prev><wa-icon slot="start" name="arrow-left"></wa-icon>Previous</wa-button>
+    <wa-button variant="brand" data-next><span data-next-label>Next</span><wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
+  </div>
+  <ul class="cy-bands" data-bands></ul>
+</section>
+
+<script type="module">
+  // ── Content (from the preset). 3–5 stages; loop is optional (from/to are stage numbers). link is optional: { text, href }.
+  const DATA = {
+    loop: { from: 4, to: 3, text: 'Back for revision' },
+    stages: [
+      { title: 'Plan', summary: 'Produces: priorities', facts: [['Who', 'The people setting direction'], ['Result', 'Agreed priorities']], text: ['Set out what needs to happen and why, and agree what matters most this cycle.'] },
+      { title: 'Design', summary: 'Produces: a work plan', facts: [['Who', 'The design team'], ['Result', 'A work plan']], text: ['Work out the details before work starts.'] },
+      { title: 'Build', summary: 'Produces: proposed changes', facts: [['Who', 'The delivery team'], ['Result', 'Proposed changes']], text: ['Put the plan into practice and prepare the changes for review.'] },
+      { title: 'Review', summary: 'Produces: approved changes', facts: [['Who', 'Reviewers and the public'], ['Result', 'Approved changes']], text: ['Check the changes against the standard. Anything that needs more work goes back for revision.'] },
+      { title: 'Release', summary: 'Produces: a new edition', facts: [['Who', 'The publisher'], ['Result', 'A new edition']], text: ['Publish the approved changes, then start the next cycle.'] },
+    ],
+  };
+
+  const block = document.querySelector('.cy');
+  const S = DATA.stages, N = S.length, rows = Math.ceil(N / 2);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const num = i => String(i + 1).padStart(2, '0');
+  const seen = new Set([0]);
+  let sel = 0, completed = false;
+
+  // ── Ring geometry
+  const RM = 112, TH = 64, RO = RM + TH / 2, RI = RM - TH / 2, step = 360 / N;
+  const rad = a => a * Math.PI / 180, f = n => n.toFixed(1);
+  const P = (a, r, push = 0, base = a) => [push * Math.cos(rad(base)) + r * Math.cos(rad(a)), push * Math.sin(rad(base)) + r * Math.sin(rad(a))];
+  const centre = i => -90 + step * i;
+  function seg(i, push) {
+    const a = centre(i), h = step / 2 - 1.6, tip = 7;
+    const o0 = P(a - h, RO, push), o1 = P(a + h, RO, push), i1 = P(a + h, RI, push), i0 = P(a - h, RI, push), tp = P(a + h + tip, RM, push), nt = P(a - h + tip, RM, push), m = P(a + 3, RM, push);
+    return { d: `M${f(o0[0])} ${f(o0[1])}A${RO} ${RO} 0 0 1 ${f(o1[0])} ${f(o1[1])}L${f(tp[0])} ${f(tp[1])}L${f(i1[0])} ${f(i1[1])}A${RI} ${RI} 0 0 0 ${f(i0[0])} ${f(i0[1])}L${f(nt[0])} ${f(nt[1])}Z`, x: m[0], y: m[1] + 6 };
+  }
+  const loop = DATA.loop && S[DATA.loop.from - 1] && S[DATA.loop.to - 1] && DATA.loop.from !== DATA.loop.to ? DATA.loop : null;
+  function loopGeo() {
+    const a0 = centre(loop.from - 1), a1 = centre(loop.to - 1), delta = ((a1 - a0 + 540) % 360) - 180, dir = Math.sign(delta) || 1;
+    const s0 = a0 + dir * step * 0.22, s1 = a1 - dir * step * 0.22, mid = a0 + delta / 2, near = Math.abs(delta) <= step + 0.01;
+    if (near) {
+      const p0 = P(s0, RO + 14), p1 = P(s1, RO + 14), q = P(mid, RO + 64);
+      const apex = [0.25 * p0[0] + 0.5 * q[0] + 0.25 * p1[0], 0.25 * p0[1] + 0.5 * q[1] + 0.25 * p1[1]];
+      const lb = [apex[0] + 4 * Math.cos(rad(mid)), apex[1] + 4 * Math.sin(rad(mid))];
+      return { d: `M${f(p0[0])} ${f(p0[1])}Q${f(q[0])} ${f(q[1])} ${f(p1[0])} ${f(p1[1])}`, end: p1, ctrl: q, lb };
+    }
+    const r = RO + 16, p0 = P(s0, r), p1 = P(s1, r), lb = P(mid, RO + 34);
+    return { d: `M${f(p0[0])} ${f(p0[1])}A${r} ${r} 0 0 ${dir > 0 ? 1 : 0} ${f(p1[0])} ${f(p1[1])}`, end: p1, ctrl: P(s1 - dir * 4, r), lb };
+  }
+  function arrowHead(end, from) {
+    const ang = Math.atan2(end[1] - from[1], end[0] - from[0]), L = 9, w = 0.5;
+    const a = [end[0] - L * Math.cos(ang - w), end[1] - L * Math.sin(ang - w)], b = [end[0] - L * Math.cos(ang + w), end[1] - L * Math.sin(ang + w)];
+    return `M${f(a[0])} ${f(a[1])}L${f(end[0])} ${f(end[1])}L${f(b[0])} ${f(b[1])}`;
+  }
+  function ringSvg() {
+    let minY = -RO - 12, maxY = RO + 12, minX = -RO - 12, maxX = RO + 12, loopMarkup = '';
+    if (loop) {
+      const g = loopGeo(), on = sel === loop.from - 1, tw = loop.text.length * 7.6, anchor = g.lb[0] < -RO * 0.4 ? 'end' : g.lb[0] > RO * 0.4 ? 'start' : 'middle';
+      const ly = g.lb[1] + (g.lb[1] > 0 ? 18 : -8);
+      loopMarkup = `<path class="cy-loop${on ? ' on' : ''}" d="${g.d}"/><path class="cy-loophead" d="${arrowHead(g.end, g.ctrl)}"/><text class="cy-looplabel${on ? ' on' : ''}" x="${f(g.lb[0])}" y="${f(ly)}" text-anchor="${anchor}">${esc(loop.text)}</text>`;
+      const x0 = anchor === 'end' ? g.lb[0] - tw : anchor === 'start' ? g.lb[0] : g.lb[0] - tw / 2;
+      minX = Math.min(minX, x0 - 4); maxX = Math.max(maxX, x0 + tw + 4); minY = Math.min(minY, g.ctrl[1] - 8, ly - 16); maxY = Math.max(maxY, g.ctrl[1] + 8, ly + 6);
+    }
+    const segs = S.map((_, i) => { const g = seg(i, i === sel ? 9 : 0); return `<path class="cy-seg${i === sel ? ' on' : ''}" d="${g.d}" data-pick="${i}"/><text class="cy-segnum${i === sel ? ' on' : ''}" x="${f(g.x)}" y="${f(g.y)}" text-anchor="middle">${num(i)}</text>`; }).join('');
+    return `<svg viewBox="${f(minX)} ${f(minY)} ${f(maxX - minX)} ${f(maxY - minY)}" aria-hidden="true">${segs}<circle class="cy-hub" r="${RI - 6}"/><foreignObject x="-18" y="-18" width="36" height="36"><wa-icon class="cy-hubicon" name="refresh-cw" style="font-size:36px"></wa-icon></foreignObject>${loopMarkup}</svg>`;
+  }
+
+  const facts = s => `<dl class="cy-facts">${s.facts.map(([k, v]) => `<dt><span class="gw-eyebrow">${esc(k)}</span></dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+  const panel = (s, i) => `<div class="cy-panel" data-panel="${i}"${i === sel ? '' : ' hidden'}><div class="cy-ph"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><h3>${esc(s.title)}</h3></div>${facts(s)}<div class="cy-text">${s.text.map(t => `<p>${esc(t)}</p>`).join('')}</div>${s.link ? `<p><a href="${esc(s.link.href)}" target="_blank" rel="noopener">${esc(s.link.text)}</a></p>` : ''}</div>`;
+  const pos = i => i < rows ? { col: 3, row: i + 1 } : { col: 1, row: rows - (i - rows) };
+
+  function render(focus) {
+    const desk = block.querySelector('[data-desk]');
+    desk.style.setProperty('--rows', rows);
+    desk.innerHTML = `<div class="cy-ring">${ringSvg()}</div>` + S.map((s, i) => { const p = pos(i); return `<button type="button" class="cy-card${seen.has(i) ? ' is-seen' : ''}" style="grid-column:${p.col};grid-row:${p.row}" aria-pressed="${i === sel}" data-pick="${i}"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><strong>${esc(s.title)}</strong><wa-icon class="cy-seen" name="circle-check" label="Viewed"></wa-icon><span class="cy-sum">${esc(s.summary)}</span></button>`; }).join('');
+    block.querySelector('[data-panels]').innerHTML = S.map(panel).join('');
+    block.querySelector('[data-bands]').innerHTML = S.map((s, i) => `<li class="${i === sel ? 'is-open' : ''}"><button type="button" class="cy-band" aria-expanded="${i === sel}" data-pick="${i}"><span class="cy-n gw-num" aria-hidden="true">${num(i)}</span><span><strong>${esc(s.title)}</strong><span class="cy-sum" style="display:block">${esc(s.summary)}</span></span><wa-icon class="cy-chev" name="chevron-down"></wa-icon></button>${panel(s, i)}</li>`).join('');
+    const next = (sel + 1) % N, prev = (sel + N - 1) % N;
+    const nextBtn = block.querySelector('[data-next]');
+    nextBtn.querySelector('[data-next-label]').textContent = `Next: ${S[next].title}`;
+    nextBtn.dataset.target = next; block.querySelector('[data-prev]').dataset.target = prev;
+    block.querySelector('[data-seen]').textContent = seen.size;
+    block.querySelectorAll('[data-pick]').forEach(el => el.addEventListener('click', () => pick(Number(el.dataset.pick), el.classList.contains('cy-band') ? 'band' : el.classList.contains('cy-card') ? 'card' : null)));
+    if (focus === 'card') block.querySelector(`.cy-card[data-pick="${sel}"]`)?.focus();
+    if (focus === 'band') block.querySelector(`.cy-band[data-pick="${sel}"]`)?.focus();
+  }
+
+  function pick(i, focus) {
+    sel = i; seen.add(i);
+    render(focus);
+    block.querySelector('[data-live]').textContent = `Stage ${i + 1} of ${N}: ${S[i].title}. ${seen.size} of ${N} viewed.`;
+    if (!completed && seen.size === N) {
+      completed = true;
+      block.querySelector('.cy-count').variant = 'success';
+      window.gwComplete();
+    }
+  }
+
+  block.querySelector('[data-total]').textContent = N;
+  block.querySelector('[data-next]').addEventListener('click', e => pick(Number(e.currentTarget.dataset.target)));
+  block.querySelector('[data-prev]').addEventListener('click', e => pick(Number(e.currentTarget.dataset.target)));
+  render();
+</script>
+</body>
+</html>

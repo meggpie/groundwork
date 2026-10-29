@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparison table</title>
+<!--
+  Comparison table: 2–3 things side by side, as a real table. Optional corner label, column subtitle,
+  1–6 rows; a cell is plain text or a bold lead above text. On phones each row stacks and names its column. Static.
+  Source: groundwork-for-rise library/presets/compare--two-columns.json
+  Pack for Rise: bun tools/pack.ts blocks/compare--two-columns.html
+  For a third column, add a <th> and a <td data-col="…"> to every row; data-col must match the column title.
+-->
+<style>
+  .cmp-wrap { background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-l); box-shadow: var(--wa-shadow-l); overflow: hidden; }
+  .cmp { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .cmp col.cmp-labelcol { width: 22%; }
+  .cmp th, .cmp td { text-align: start; vertical-align: top; padding: var(--wa-space-m) var(--wa-space-l); }
+  .cmp thead th { padding-block: var(--wa-space-l) var(--wa-space-m); border-block-end: 2px solid var(--gw-dark-blue); }
+  .cmp tbody tr + tr > * { border-block-start: 1px solid var(--wa-color-surface-border); }
+  .cmp tbody th, .cmp-corner { padding-inline-end: var(--wa-space-s); }
+  .cmp-corner .gw-eyebrow { color: var(--wa-color-text-quiet); }
+  .cmp tbody th .gw-eyebrow { color: var(--gw-ink); }
+  .cmp-col { display: block; font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.1875rem; line-height: var(--wa-line-height-condensed); letter-spacing: -0.02em; color: var(--gw-ink); }
+  .cmp-sub { display: block; font-size: 0.9375rem; font-weight: 400; color: var(--wa-color-text-quiet); margin-block-start: 2px; }
+  .cmp-lead { display: block; font-weight: 700; margin-block-end: var(--wa-space-3xs); }
+  .gw-eyebrow { padding-block-start: 3px; }
+
+  @media (max-width: 600px) {
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: 100%; }
+    .cmp colgroup, .cmp thead { display: none; }
+    .cmp tbody tr { padding: var(--wa-space-m) var(--wa-space-m) var(--wa-space-s); }
+    .cmp tbody tr + tr { border-block-start: 1px solid var(--wa-color-surface-border); }
+    .cmp tbody tr + tr > * { border-block-start: 0; }
+    .cmp tbody th, .cmp td { padding: 0; }
+    .cmp tbody th { margin-block-end: var(--wa-space-s); }
+    .cmp td { padding-block: var(--wa-space-xs) var(--wa-space-s); }
+    .cmp td + td { border-block-start: 1px dashed var(--wa-color-surface-border); padding-block-start: var(--wa-space-s); }
+    .cmp td::before { content: attr(data-col); display: block; font-family: var(--wa-font-family-heading); font-weight: 700; color: var(--gw-dark-blue); font-size: 0.9375rem; margin-block-end: 2px; }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block">
+  <div class="cmp-wrap">
+    <table class="cmp">
+      <caption class="wa-visually-hidden">Two approaches compared</caption>
+      <colgroup><col class="cmp-labelcol"><col><col></colgroup>
+      <thead>
+        <tr>
+          <th scope="col" class="cmp-corner"><span class="gw-eyebrow">Feature</span></th>
+          <th scope="col"><span class="cmp-col">Approach A</span><span class="cmp-sub">what it covers</span></th>
+          <th scope="col"><span class="cmp-col">Approach B</span><span class="cmp-sub">how it works</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><span class="gw-eyebrow">Purpose</span></th>
+          <td data-col="Approach A">Sets out what must be achieved and where it applies.</td>
+          <td data-col="Approach B">Sets out the detailed method used to achieve it.</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="gw-eyebrow">Example</span></th>
+          <td data-col="Approach A"><strong class="cmp-lead">Example A</strong>A short sentence showing the first approach in use.</td>
+          <td data-col="Approach B"><strong class="cmp-lead">Example B</strong>A short sentence showing the second approach in use.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</body>
+</html>

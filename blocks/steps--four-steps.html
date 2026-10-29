@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numbered steps</title>
+<!--
+  Numbered steps: 3–5 steps in order, with an optional loop line. Static: nothing to click, no completion.
+  Source: groundwork-for-rise library/presets/steps--four-steps.json
+  Pack for Rise: bun tools/pack.ts blocks/steps--four-steps.html
+
+  Layouts (set data-layout on .st):
+    "stack" (default) numbered markers joined by a line, title and text beside each
+    "row"   steps side by side (stacks on phones); only for very short text
+    "list"  no markers: mono numerals (01, 02…) in a left column, rows divided by soft lines
+-->
+<style>
+  .st { list-style: none; margin: 0; padding: 0; display: grid; }
+  .st > li { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--wa-space-m); position: relative; }
+  .st-n {
+    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--gw-dark-blue); color: var(--gw-white); font-size: 0.9375rem; line-height: 1;
+  }
+  .st h3 { font-size: 1.1875rem; padding-block-start: 7px; }
+  .st p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  .st-body { padding-block-end: var(--wa-space-xl); min-width: 0; }
+
+  /* stack: a connector runs from each marker to the next */
+  .st[data-layout="stack"] > li:not(:last-child)::before {
+    content: ""; position: absolute; inset-inline-start: 19px; top: 48px; bottom: 8px;
+    width: 2px; border-radius: 2px; background: var(--wa-color-brand-80);
+  }
+  .st[data-layout="stack"] > li:last-child .st-body { padding-block-end: 0; }
+
+  /* row: side by side, connector runs across */
+  .st[data-layout="row"] { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: var(--wa-space-l); }
+  .st[data-layout="row"] > li { grid-template-columns: minmax(0, 1fr); row-gap: var(--wa-space-s); }
+  .st[data-layout="row"] > li:not(:last-child)::before {
+    content: ""; position: absolute; top: 19px; inset-inline-start: 52px; inset-inline-end: calc(-1 * var(--wa-space-l) + 8px);
+    height: 2px; border-radius: 2px; background: var(--wa-color-brand-80);
+  }
+  .st[data-layout="row"] h3 { padding-block-start: 0; }
+  .st[data-layout="row"] .st-body { padding-block-end: 0; }
+
+  /* list: numerals in a column, soft dividers */
+  .st[data-layout="list"] > li { grid-template-columns: 64px minmax(0, 1fr); padding-block: var(--wa-space-l); border-block-end: 1px solid var(--wa-color-surface-border); }
+  .st[data-layout="list"] > li:first-child { padding-block-start: 0; }
+  .st[data-layout="list"] .st-n { width: auto; height: auto; place-items: start; background: none; color: var(--gw-dark-blue); font-size: 1.5rem; }
+  .st[data-layout="list"] h3 { padding-block-start: 2px; }
+  .st[data-layout="list"] .st-body { padding-block-end: 0; }
+
+  .st-loop {
+    display: flex; align-items: center; gap: var(--wa-space-s);
+    margin-block-start: var(--wa-space-l); padding-block-start: var(--wa-space-m);
+    border-block-start: 1px solid var(--wa-color-surface-border); color: var(--wa-color-text-quiet);
+  }
+  .st-loop wa-icon { color: var(--gw-dark-blue); font-size: 1.25rem; flex: none; }
+
+  @media (max-width: 600px) {
+    .st[data-layout="row"] { grid-auto-flow: row; grid-template-columns: minmax(0, 1fr); }
+    .st[data-layout="row"] > li { grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--wa-space-m); }
+    .st[data-layout="row"] > li::before { display: none; }
+    .st[data-layout="list"] > li { grid-template-columns: 48px minmax(0, 1fr); }
+    .st[data-layout="list"] .st-n { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-label="Steps">
+  <ol class="st" data-layout="stack">
+    <li><span class="st-n gw-num" aria-hidden="true">1</span><div class="st-body"><h3>Notice</h3><p>Spot something that could be done better.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">2</span><div class="st-body"><h3>Test</h3><p>Try a change on a small scale first.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">3</span><div class="st-body"><h3>Review</h3><p>Look at what the test showed.</p></div></li>
+    <li><span class="st-n gw-num" aria-hidden="true">4</span><div class="st-body"><h3>Adopt</h3><p>Make the change part of normal practice.</p></div></li>
+  </ol>
+  <p class="st-loop"><wa-icon name="rotate-ccw"></wa-icon>Then the steps start again.</p>
+</section>
+</body>
+</html>
