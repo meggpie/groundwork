@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Note</title>
+<!--
+  Library block: note (from Groundwork for Rise preset note--bordered).
+  A compact aside: useful but not essential. Static. Optional title: add <h3 class="note-title"> after the label.
+  Built on <wa-callout>; works on white and ice sections.
+  Pack for Rise: bun tools/pack.ts blocks/note--bordered.html
+-->
+<style>
+  wa-callout.note { --spacing: var(--wa-space-m) var(--wa-space-l); background: var(--gw-white); border-color: var(--wa-color-brand-80); }
+  .note-body { display: grid; gap: var(--wa-space-2xs); }
+  .note-label { display: flex; align-items: center; gap: var(--wa-space-xs); color: var(--wa-color-brand-40); }
+  .note-label wa-icon { font-size: 18px; }
+  .note-title { font-size: 1.125rem; }
+  .note-body p:not(.note-label) { color: var(--gw-ink); max-width: 66ch; }
+</style>
+</head>
+<body>
+<section class="gw-block">
+  <wa-callout class="note" variant="brand" appearance="outlined" role="note" aria-label="Note">
+    <div class="note-body">
+      <p class="note-label gw-eyebrow"><wa-icon name="info"></wa-icon>Note</p>
+      <p>Extra information that is useful to know but not essential, such as a date, an exception or where to find more detail.</p>
+    </div>
+  </wa-callout>
+</section>
+</body>
+</html>

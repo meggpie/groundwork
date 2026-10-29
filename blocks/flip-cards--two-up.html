@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flashcards — Key terms</title>
+<!--
+  Library block: flashcards, two columns (from Groundwork for Rise preset flip-cards--two-up).
+  Same pattern as blocks/flashcards.html. Per card, add <p class="fc-lead"> above the text for a bold question (see flashcards.html).
+  Completes when every card has been turned.
+  Pack for Rise: bun tools/pack.ts blocks/flip-cards--two-up.html
+-->
+<style>
+  .fc-head { display: flex; align-items: end; justify-content: space-between; gap: var(--wa-space-m); margin-block-end: var(--wa-space-l); }
+  .fc-head h2 { font-size: 1.375rem; }
+  .fc-head p { color: var(--wa-color-text-quiet); margin-block-start: var(--wa-space-2xs); }
+  .fc-count { flex: none; }
+  .fc-count wa-icon { display: none; }
+  .fc-count[variant="success"] wa-icon { display: inline-flex; }
+
+  .fc-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--wa-space-l); }
+  .fc-grid > li { display: grid; }
+
+  wa-card.fc { --spacing: var(--wa-space-l); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); height: 100%; }
+  wa-card.fc::part(body) { height: 100%; }
+  /* Both faces share one cell, so the card keeps the taller face's height and nothing jumps. */
+  .fc-faces { display: grid; height: 100%; }
+  .fc-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: var(--wa-space-s); transition: opacity var(--wa-transition-normal) var(--wa-transition-easing); }
+  .fc-face[hidden] { display: flex; visibility: hidden; opacity: 0; }
+  .fc-back wa-button { margin-block-start: auto; align-self: start; }
+  .fc-back wa-button::part(button) { padding-inline-start: 0; } /* keeps "Back" on the text's left edge */
+  /* Front: one centred group, so the space the back's text needs doesn't read as a gap. */
+  .fc-front { justify-content: center; align-items: center; text-align: center; padding-block: var(--wa-space-m); }
+
+  .fc-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 30px; }
+  .fc-front h3 { font-size: 1.25rem; margin-block-end: var(--wa-space-2xs); }
+  .fc-back .gw-eyebrow { display: block; }
+  .fc-lead { font-weight: 700; font-size: 1.0625rem; line-height: var(--wa-line-height-condensed); outline: none; }
+  /* No lead: the meaning itself is the main text. */
+  .fc-meaning { font-size: 1.0625rem; outline: none; margin-block-end: var(--wa-space-s); }
+  .fc-text { color: var(--wa-color-text-quiet); margin-block-end: var(--wa-space-s); }
+  .fc.is-flipped { border-color: var(--wa-color-brand-80); }
+
+  @media (max-width: 600px) {
+    .fc-head { flex-direction: column; align-items: start; }
+    .fc-grid { grid-template-columns: 1fr; gap: var(--wa-space-m); }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-labelledby="fc-title" data-gw-icons="check">
+  <header class="fc-head">
+    <div>
+      <h2 id="fc-title">Key terms</h2>
+      <p>Say what each one means, then check.</p>
+    </div>
+    <wa-badge class="fc-count" variant="neutral" appearance="filled" pill><wa-icon slot="start" name="check"></wa-icon><span class="gw-num" data-seen>0</span>&nbsp;of&nbsp;<span class="gw-num" data-total>2</span>&nbsp;viewed</wa-badge>
+  </header>
+  <p class="wa-visually-hidden" aria-live="polite" data-live></p>
+
+  <ul class="fc-grid">
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="drafting-compass"></wa-icon></span>
+            <h3>Requirements</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show meaning</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Requirements</span>
+            <p class="fc-meaning" tabindex="-1">Describe what must be achieved.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+    <li>
+      <wa-card class="fc">
+        <div class="fc-faces">
+          <div class="fc-face fc-front">
+            <span class="fc-icon"><wa-icon name="hard-hat"></wa-icon></span>
+            <h3>Responsibilities</h3>
+            <wa-button appearance="outlined" variant="brand" size="s" data-flip>Show meaning</wa-button>
+          </div>
+          <div class="fc-face fc-back" hidden>
+            <span class="gw-eyebrow">Responsibilities</span>
+            <p class="fc-meaning" tabindex="-1">Identify who is accountable for the work.</p>
+            <wa-button appearance="plain" variant="brand" size="s" data-flip><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
+          </div>
+        </div>
+      </wa-card>
+    </li>
+  </ul>
+</section>
+
+<script type="module">
+  const block = document.querySelector('.gw-block');
+  const cards = [...block.querySelectorAll('wa-card.fc')];
+  const seen = new Set();
+  const count = block.querySelector('.fc-count');
+  const live = block.querySelector('[data-live]');
+  block.querySelector('[data-total]').textContent = cards.length;
+
+  cards.forEach((card, i) => {
+    const [front, back] = card.querySelectorAll('.fc-face');
+    card.querySelectorAll('[data-flip]').forEach(btn => btn.addEventListener('click', () => {
+      const toBack = back.hidden;
+      front.hidden = toBack;
+      back.hidden = !toBack;
+      card.classList.toggle('is-flipped', toBack);
+      if (toBack) {
+        back.querySelector('[tabindex="-1"]').focus();
+        seen.add(i);
+        block.querySelector('[data-seen]').textContent = seen.size;
+        if (seen.size === cards.length) {
+          count.variant = 'success';
+          live.textContent = 'All cards viewed.';
+          window.gwComplete();
+        }
+      } else {
+        front.querySelector('wa-button').focus();
+      }
+    }));
+  });
+</script>
+</body>
+</html>

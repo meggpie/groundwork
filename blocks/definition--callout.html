@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Definition — callout</title>
+<!--
+  Library block: definition callout (from Groundwork for Rise preset definition--callout).
+  A short official definition set apart inside reading content. Static; nothing to select.
+  Works on white and ice sections. For a definition learners explore, use definition--key-term.
+  Pack for Rise: bun tools/pack.ts blocks/definition--callout.html
+-->
+<style>
+  .defc { background: var(--gw-white); border: 1px solid var(--wa-color-surface-border); border-radius: var(--wa-border-radius-l); padding: var(--wa-space-l) var(--wa-space-xl); display: grid; gap: var(--wa-space-xs); }
+  .defc-label { display: flex; align-items: center; gap: var(--wa-space-xs); color: var(--wa-color-brand-40); }
+  .defc-label wa-icon { font-size: 18px; }
+  .defc dt { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; line-height: var(--wa-line-height-condensed); }
+  .defc dd { margin: 0; max-width: 64ch; }
+  @media (max-width: 600px) { .defc { padding: var(--wa-space-m) var(--wa-space-l); } }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-label="Definition">
+  <div class="defc">
+    <p class="defc-label gw-eyebrow"><wa-icon name="bookmark"></wa-icon>Definition</p>
+    <dl class="wa-stack wa-gap-2xs" style="margin:0">
+      <dt>Term</dt>
+      <dd>A short, official definition of the term, set apart from the surrounding reading so it is easy to find again.</dd>
+    </dl>
+  </div>
+</section>
+</body>
+</html>
