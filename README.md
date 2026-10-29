@@ -25,4 +25,4 @@ The previous `groundwork-for-rise` repository remains the reference for existing
 
 Use native Rise blocks where they meet the learning need. Custom blocks should remain straightforward to inspect, preview, export, and revise. Explore and validate design ideas before turning them into reusable components.
 
-See the initial design-foundation pull request before starting the technical migration.
+See the [design experiments](experiments/index.html) before starting the technical migration.
