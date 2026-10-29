@@ -21,13 +21,13 @@
   .g-how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; background: var(--gw-ice); border-radius: var(--wa-border-radius-l); margin-block-end: 20px; }
   .g-how li { list-style: none; padding: 20px 22px; display: grid; gap: 6px; align-content: start; min-width: 0; }
   .g-how li + li { border-inline-start: 1px solid rgb(16 76 143 / 0.12); }
-  .g-how .n { font-family: var(--wa-font-family-code); font-weight: 500; color: var(--gw-dark-blue); font-size: 0.875rem; }
+  .g-how .n { font-family: var(--wa-font-family-code); font-weight: 500; color: var(--gw-ink); font-size: 0.875rem; }
   .g-how strong { font-family: var(--wa-font-family-heading); font-size: 1.0625rem; }
   .g-how p { color: var(--wa-color-text-quiet); font-size: 0.9375rem; }
   .g-how q { font-style: italic; color: var(--gw-ink); }
   .g-notes { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--wa-color-text-quiet); font-size: 0.9375rem; margin-block-end: 28px; }
   .g-notes span { display: inline-flex; align-items: center; gap: 8px; }
-  .g-notes wa-icon { color: var(--gw-dark-blue); }
+  .g-notes wa-icon { color: var(--gw-ink); }
 
   .g-nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgb(255 255 255 / 0.94); backdrop-filter: blur(6px); border-block-end: 1px solid var(--g-line); margin-inline: -8px; padding: 10px 8px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
   .g-nav a { flex: none; text-decoration: none; color: var(--gw-ink); font-weight: 700; font-size: 0.875rem; padding: 6px 12px; border-radius: 999px; }
@@ -44,12 +44,12 @@
   .g-meta { padding: 16px 18px 12px; display: grid; gap: 4px; border-block-end: 1px solid var(--g-line); }
   .g-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
   .g-title h3 { font-size: 1.125rem; }
-  .g-title code { font-family: var(--wa-font-family-code); font-weight: 500; font-size: 0.8125rem; color: var(--gw-dark-blue); background: var(--wa-color-brand-95); padding: 1px 6px; border-radius: 4px; }
+  .g-title code { font-family: var(--wa-font-family-code); font-weight: 500; font-size: 0.8125rem; color: var(--gw-ink); background: var(--gw-grey); padding: 1px 6px; }
   .g-title .exp { font-size: 0.75rem; font-weight: 700; color: var(--wa-color-warning-30); background: var(--wa-color-warning-95); padding: 1px 7px; border-radius: 999px; }
   .g-title a { margin-inline-start: auto; font-size: 0.8125rem; color: var(--wa-color-text-quiet); }
   .g-use { color: var(--wa-color-text-quiet); font-size: 0.9375rem; }
   .g-demo { padding: 20px 18px; display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; gap: 12px; min-width: 0; }
-  .g-demo.col { flex-direction: column; align-items: stretch; }
+  .g-demo.col { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
   .g-demo > * { min-width: 0; }
 
   /* Specimen content */
@@ -66,8 +66,8 @@
   .shape { display: grid; place-items: center; width: 110px; height: 72px; background: var(--gw-white); border: 1px solid var(--g-line); font-size: 0.8125rem; color: var(--wa-color-text-quiet); text-align: center; }
   .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; width: 100%; }
   .icons div { display: grid; justify-items: center; gap: 6px; padding: 12px 4px; border-radius: var(--wa-border-radius-m); background: var(--wa-color-neutral-95); font-size: 0.75rem; color: var(--wa-color-text-quiet); font-family: var(--wa-font-family-code); }
-  .icons wa-icon { font-size: 24px; color: var(--gw-dark-blue); }
-  .box { background: var(--gw-ice); border-radius: 6px; padding: 8px 10px; font-size: 0.8125rem; color: var(--gw-dark-blue); font-weight: 700; }
+  .icons wa-icon { font-size: 24px; color: var(--gw-ink); }
+  .box { background: var(--gw-grey); padding: 8px 10px; font-size: 0.8125rem; color: var(--gw-ink); font-weight: 700; }
   .ref { font-family: var(--wa-font-family-code); font-weight: 500; background: var(--wa-color-neutral-95); padding: 6px 10px; border-radius: 6px; font-size: 0.875rem; }
   .term { color: var(--gw-dark-blue); text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; background: none; border: 0; padding: 0; font: inherit; font-weight: 700; }
   .g-demo wa-number-input { width: 100%; max-width: 280px; }
@@ -118,62 +118,55 @@
 
   <!-- ───────────────────────── Foundation ───────────────────────── -->
   <section class="g-group" id="foundation">
-    <header><h2>Foundation</h2><p>The Groundwork values every component uses. They live in one file, <code>theme/groundwork.css</code>.</p></header>
+    <header><h2>Foundation</h2><p>The Groundwork look every component uses. The values live in one file, <code>theme/groundwork.css</code>.</p></header>
     <div class="g-grid">
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Core colours</h3></div><p class="g-use">Dark blue for interaction and emphasis, ice for activity surfaces, ink for text, gold as a sparing accent.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Colours, one job each</h3></div><p class="g-use">Ink does most of the work. Dark blue is the main action. Teal marks counters. Gold means “selected” or “this matters most”. One accent per block beyond ink.</p></div>
         <div class="g-demo">
           <div class="sw">
-            <div><i style="background:var(--gw-dark-blue)"></i><b>Dark blue</b><span>--gw-dark-blue</span></div>
-            <div><i style="background:var(--gw-ice)"></i><b>Ice</b><span>--gw-ice</span></div>
-            <div><i style="background:var(--gw-ink)"></i><b>Ink</b><span>--gw-ink</span></div>
-            <div><i style="background:var(--gw-white)"></i><b>White</b><span>--gw-white</span></div>
-            <div><i style="background:var(--gw-gold)"></i><b>Gold</b><span>--gw-gold</span></div>
-            <div><i style="background:var(--wa-color-neutral-40)"></i><b>Quiet text</b><span>--wa-color-text-quiet</span></div>
+            <div><i style="background:var(--gw-ink)"></i><b>Ink</b><span>text, icons, tiles</span></div>
+            <div><i style="background:var(--gw-dark-blue)"></i><b>Dark blue</b><span>main action, links</span></div>
+            <div><i style="background:var(--gw-teal)"></i><b>Teal</b><span>counters, Note icon</span></div>
+            <div><i style="background:var(--gw-gold)"></i><b>Gold</b><span>matters most</span></div>
+            <div><i style="background:var(--gw-gold-tint);box-shadow:inset 0 0 0 2px var(--gw-gold-deep)"></i><b>Gold tint</b><span>selected, key terms</span></div>
+            <div><i style="background:var(--gw-ice)"></i><b>Ice</b><span>activity sections</span></div>
+            <div><i style="background:var(--gw-grey)"></i><b>Grey</b><span>open panels, hover</span></div>
+            <div><i style="background:var(--gw-white);box-shadow:inset 0 0 0 1px var(--gw-border)"></i><b>Border</b><span>1px outlines</span></div>
           </div>
         </div>
       </article>
       <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>Illustration colours</h3></div><p class="g-use">Fills and accents in drawings and diagrams. Too light for small text on white.</p></div>
-        <div class="g-demo">
-          <div class="sw">
-            <div><i style="background:var(--gw-cobalt)"></i><b>Cobalt</b><span>--gw-cobalt</span></div>
-            <div><i style="background:var(--gw-plum)"></i><b>Plum</b><span>--gw-plum</span></div>
-            <div><i style="background:var(--gw-jade)"></i><b>Jade</b><span>--gw-jade</span></div>
-            <div><i style="background:var(--gw-coral)"></i><b>Coral</b><span>--gw-coral</span></div>
-          </div>
-        </div>
-      </article>
-      <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>Colour scales</h3></div><p class="g-use">Generated from the core colours. Components pick tints from these automatically.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>After checking</h3></div><p class="g-use">Correct and wrong colours appear only once the learner checks, always with a tick or cross and words.</p></div>
         <div class="g-demo col">
-          <div class="ramp" aria-label="Brand scale"><i style="background:var(--wa-color-brand-95)"></i><i style="background:var(--wa-color-brand-90)"></i><i style="background:var(--wa-color-brand-80)"></i><i style="background:var(--wa-color-brand-70)"></i><i style="background:var(--wa-color-brand-60)"></i><i style="background:var(--wa-color-brand-50)"></i><i style="background:var(--wa-color-brand-40)"></i><i style="background:var(--wa-color-brand-30)"></i><i style="background:var(--wa-color-brand-20)"></i><i style="background:var(--wa-color-brand-10)"></i><i style="background:var(--wa-color-brand-05)"></i></div>
-          <div class="ramp-label"><span>brand 95</span><span>40 = dark blue</span><span>05</span></div>
-          <div class="ramp" aria-label="Neutral scale"><i style="background:var(--wa-color-neutral-95)"></i><i style="background:var(--wa-color-neutral-90)"></i><i style="background:var(--wa-color-neutral-80)"></i><i style="background:var(--wa-color-neutral-70)"></i><i style="background:var(--wa-color-neutral-60)"></i><i style="background:var(--wa-color-neutral-50)"></i><i style="background:var(--wa-color-neutral-40)"></i><i style="background:var(--wa-color-neutral-30)"></i><i style="background:var(--wa-color-neutral-20)"></i><i style="background:var(--wa-color-neutral-10)"></i><i style="background:var(--wa-color-neutral-05)"></i></div>
-          <div class="ramp-label"><span>neutral 95</span><span>10 = ink</span><span>05</span></div>
-          <div class="ramp" aria-label="Success, warning and danger"><i style="background:var(--wa-color-success-90)"></i><i style="background:var(--wa-color-success-60)"></i><i style="background:var(--wa-color-success-40)"></i><i style="background:var(--wa-color-success-20)"></i><i style="background:var(--wa-color-warning-90)"></i><i style="background:var(--wa-color-warning-70)"></i><i style="background:var(--wa-color-warning-40)"></i><i style="background:var(--wa-color-danger-90)"></i><i style="background:var(--wa-color-danger-60)"></i><i style="background:var(--wa-color-danger-40)"></i><i style="background:var(--wa-color-danger-20)"></i></div>
-          <div class="ramp-label"><span>success</span><span>warning (gold)</span><span>danger</span></div>
+          <wa-callout variant="success"><wa-icon slot="icon" name="circle-check"></wa-icon><strong>Correct.</strong> Adoption makes the code law.</wa-callout>
+          <wa-callout variant="danger"><wa-icon slot="icon" name="circle-x"></wa-icon><strong>Not quite.</strong> Publication alone doesn’t.</wa-callout>
+        </div>
+      </article>
+      <article class="g-item">
+        <div class="g-meta"><div class="g-title"><h3>Order run</h3></div><p class="g-use">Diagram shapes and knowledge-check progress only, always in this order. Never text, backgrounds, cards or buttons.</p></div>
+        <div class="g-demo col">
+          <div class="ramp" style="grid-template-columns:repeat(5,1fr)"><i style="background:var(--gw-run-1)"></i><i style="background:var(--gw-run-2)"></i><i style="background:var(--gw-run-3)"></i><i style="background:var(--gw-run-4)"></i><i style="background:var(--gw-run-5)"></i></div>
+          <div class="ramp-label"><span>leaf</span><span>jade</span><span>teal</span><span>azure</span><span>dark blue</span></div>
         </div>
       </article>
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Type</h3></div><p class="g-use">Archivo for headings, Atkinson Hyperlegible Next for reading, IBM Plex Mono only for numbers and counts. Body text in blocks is 17px.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Type</h3></div><p class="g-use">Archivo for headings, Atkinson Hyperlegible Next for reading, IBM Plex Mono for numerals and answer letters. Body text in blocks is 17px.</p></div>
         <div class="g-demo col">
-          <div class="type-row"><span>Block heading · 24</span><h2 style="font-size:1.5rem">Who develops the national model codes?</h2></div>
+          <div class="type-row"><span>Question · 22</span><h2 style="font-size:1.375rem">Who develops the national model codes?</h2></div>
           <div class="type-row"><span>Card heading · 20</span><h3 style="font-size:1.25rem">Code development committees</h3></div>
           <div class="type-row"><span>Body · 17</span><p>A new model code does not automatically become law in a province or territory. Check what has been adopted.</p></div>
-          <div class="type-row"><span>Eyebrow · 13</span><span class="gw-eyebrow">Worked example · situation</span></div>
+          <div class="type-row"><span>Label · 15</span><span class="gw-eyebrow">Think about it</span></div>
           <div class="type-row"><span>Numbers · mono</span><p><span class="gw-num">3 of 5</span> stages viewed · <span class="gw-num">2023</span> edition</p></div>
         </div>
       </article>
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Corners and depth</h3></div><p class="g-use">Three corner sizes and three soft shadows. Use elevation where it shows grouping or something you can press.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Shape</h3></div><p class="g-use">Square corners and 1px outlines. 2px only for selected, correct and wrong states and outline buttons. No shadows.</p></div>
         <div class="g-demo">
-          <div class="shape" style="border-radius:var(--wa-border-radius-s)">small · 6px</div>
-          <div class="shape" style="border-radius:var(--wa-border-radius-m)">medium · 10px</div>
-          <div class="shape" style="border-radius:var(--wa-border-radius-l)">large · 16px</div>
-          <div class="shape" style="border-radius:var(--wa-border-radius-m);border-color:transparent;box-shadow:var(--wa-shadow-s)">shadow s</div>
-          <div class="shape" style="border-radius:var(--wa-border-radius-m);border-color:transparent;box-shadow:var(--wa-shadow-m)">shadow m</div>
-          <div class="shape" style="border-radius:var(--wa-border-radius-m);border-color:transparent;box-shadow:var(--wa-shadow-l)">shadow l</div>
+          <div class="shape">1px outline</div>
+          <div class="shape" style="border:2px solid var(--gw-gold-deep);background:var(--gw-gold-tint);color:var(--gw-ink)">selected</div>
+          <div class="shape" style="border:2px solid var(--gw-correct);background:var(--gw-correct-fill);color:var(--gw-ink)">correct</div>
+          <div class="shape" style="border:0;background:var(--gw-ice);color:var(--gw-ink)">ice card</div>
+          <div class="shape" style="border:0;background:var(--gw-ink);color:var(--gw-white)"><wa-icon name="hard-hat" style="font-size:28px"></wa-icon></div>
         </div>
       </article>
     </div>
@@ -184,19 +177,15 @@
     <header><h2>Actions</h2><p>Anything the learner presses.</p></header>
     <div class="g-grid">
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Button</h3><code>&lt;wa-button&gt;</code><a href="https://webawesome.com/docs/components/button" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Check an answer, reveal, reset, move on. Set <code>variant</code> for colour, <code>appearance</code> for weight, <code>size</code> for scale.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Button</h3><code>&lt;wa-button&gt;</code><a href="https://webawesome.com/docs/components/button" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">One dark-blue main action per block (<code>variant="brand"</code>). Everything else is an ink outline button (<code>variant="neutral" appearance="outlined"</code>) or plain.</p></div>
         <div class="g-demo col">
           <div class="wa-cluster wa-gap-s">
             <wa-button variant="brand">Check answer</wa-button>
-            <wa-button variant="brand" appearance="outlined">Show question</wa-button>
-            <wa-button variant="brand" appearance="filled">Try again</wa-button>
-            <wa-button variant="brand" appearance="plain"><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
-            <wa-button variant="neutral" appearance="outlined">Reset</wa-button>
+            <wa-button variant="neutral" appearance="outlined">Show meaning</wa-button>
+            <wa-button variant="neutral" appearance="outlined">Try again</wa-button>
+            <wa-button variant="neutral" appearance="plain"><wa-icon slot="start" name="rotate-ccw"></wa-icon>Back</wa-button>
           </div>
           <div class="wa-cluster wa-gap-s">
-            <wa-button variant="success">Submit</wa-button>
-            <wa-button variant="warning">Review</wa-button>
-            <wa-button variant="danger" appearance="outlined">Clear all</wa-button>
             <wa-button variant="brand" loading>Saving</wa-button>
             <wa-button variant="brand" disabled>Not yet</wa-button>
           </div>
@@ -204,7 +193,7 @@
             <wa-button variant="brand" size="s">Small</wa-button>
             <wa-button variant="brand">Medium</wa-button>
             <wa-button variant="brand" size="l">Large<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
-            <wa-button variant="brand" pill>Pill</wa-button>
+            
           </div>
         </div>
       </article>
@@ -212,9 +201,9 @@
         <div class="g-meta"><div class="g-title"><h3>Button group</h3><code>&lt;wa-button-group&gt;</code><a href="https://webawesome.com/docs/components/button-group" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Switch between views of one thing, such as plan and section.</p></div>
         <div class="g-demo">
           <wa-button-group label="Drawing view">
-            <wa-button variant="brand">Plan</wa-button>
-            <wa-button variant="brand" appearance="outlined">Section</wa-button>
-            <wa-button variant="brand" appearance="outlined">Elevation</wa-button>
+            <wa-button variant="neutral" appearance="filled">Plan</wa-button>
+            <wa-button variant="neutral" appearance="outlined">Section</wa-button>
+            <wa-button variant="neutral" appearance="outlined">Elevation</wa-button>
           </wa-button-group>
         </div>
       </article>
@@ -277,7 +266,7 @@
       <article class="g-item">
         <div class="g-meta"><div class="g-title"><h3>Dialog</h3><code>&lt;wa-dialog&gt;</code><a href="https://webawesome.com/docs/components/dialog" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">A focused detail without leaving the block, such as a definition or a larger drawing.</p></div>
         <div class="g-demo">
-          <wa-button variant="brand" appearance="outlined" data-open="dlg-model"><wa-icon slot="start" name="book-open"></wa-icon>What is a model code?</wa-button>
+          <wa-button variant="neutral" appearance="outlined" data-open="dlg-model"><wa-icon slot="start" name="book-open"></wa-icon>What is a model code?</wa-button>
           <wa-dialog label="Model code" id="dlg-model" light-dismiss>
             A code developed to be adopted by others. It has no legal force until a province or territory adopts it.
             <wa-button slot="footer" variant="brand" data-dialog="close">Got it</wa-button>
@@ -346,31 +335,29 @@
     <header><h2>Messages &amp; status</h2><p>Notes, warnings, feedback and progress.</p></header>
     <div class="g-grid">
       <article class="g-item wide">
-        <div class="g-meta"><div class="g-title"><h3>Callout</h3><code>&lt;wa-callout&gt;</code><a href="https://webawesome.com/docs/components/callout" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Notes, tips, cautions and common mistakes inside a block. <code>variant</code> sets the meaning; always say it in words too.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Callout</h3><code>&lt;wa-callout&gt;</code><a href="https://webawesome.com/docs/components/callout" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Asides and feedback. Use neutral for notes; success and danger only for feedback after checking; warning (gold) for “this matters most”. Always say the meaning in words.</p></div>
         <div class="g-demo col">
-          <wa-callout variant="brand"><wa-icon slot="icon" name="info"></wa-icon><strong>Note.</strong> Publication of a model code is not the same as adoption.</wa-callout>
-          <wa-callout variant="success"><wa-icon slot="icon" name="circle-check"></wa-icon><strong>Good practice.</strong> Record the edition and article you relied on.</wa-callout>
+          <wa-callout variant="neutral" appearance="filled"><wa-icon slot="icon" name="info" style="color:var(--gw-teal)"></wa-icon><strong>Note.</strong> Publication of a model code is not the same as adoption.</wa-callout>
+          <wa-callout variant="success"><wa-icon slot="icon" name="circle-check"></wa-icon><strong>Correct.</strong> Record the edition and article you relied on.</wa-callout>
           <wa-callout variant="warning"><wa-icon slot="icon" name="triangle-alert"></wa-icon><strong>Check first.</strong> Confirm which edition is in force on the permit date.</wa-callout>
-          <wa-callout variant="danger"><wa-icon slot="icon" name="octagon-alert"></wa-icon><strong>Common mistake.</strong> Applying the newest edition before it has been adopted.</wa-callout>
-          <wa-callout variant="neutral" appearance="filled"><wa-icon slot="icon" name="lightbulb"></wa-icon>Neutral and filled: a quieter aside.</wa-callout>
+          <wa-callout variant="danger"><wa-icon slot="icon" name="circle-x"></wa-icon><strong>Not quite.</strong> Applying the newest edition before it has been adopted.</wa-callout>
         </div>
       </article>
       <article class="g-item">
-        <div class="g-meta"><div class="g-title"><h3>Badge</h3><code>&lt;wa-badge&gt;</code><a href="https://webawesome.com/docs/components/badge" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Counts and short status beside a heading.</p></div>
+        <div class="g-meta"><div class="g-title"><h3>Badge</h3><code>&lt;wa-badge&gt;</code><a href="https://webawesome.com/docs/components/badge" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Counters are teal: <code>class="gw-counter" appearance="accent"</code>.</p></div>
         <div class="g-demo">
-          <wa-badge variant="neutral" appearance="filled" pill><span class="gw-num">2</span>&nbsp;of&nbsp;<span class="gw-num">4</span>&nbsp;viewed</wa-badge>
-          <wa-badge variant="success" appearance="filled" pill><wa-icon slot="start" name="check"></wa-icon>Complete</wa-badge>
-          <wa-badge variant="brand">Required</wa-badge>
-          <wa-badge variant="warning">Updated 2023</wa-badge>
+          <wa-badge class="gw-counter" appearance="accent"><span class="gw-num">2</span>&nbsp;of&nbsp;<span class="gw-num">4</span>&nbsp;viewed</wa-badge>
+          <wa-badge class="gw-counter" appearance="accent"><span class="gw-num">2</span>&nbsp;left</wa-badge>
+          <wa-badge variant="neutral" appearance="outlined">Required</wa-badge>
         </div>
       </article>
       <article class="g-item">
         <div class="g-meta"><div class="g-title"><h3>Tag</h3><code>&lt;wa-tag&gt;</code><a href="https://webawesome.com/docs/components/tag" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Categories and labels, including ones learners remove.</p></div>
         <div class="g-demo">
-          <wa-tag variant="brand">Building</wa-tag>
+          <wa-tag>Building</wa-tag>
           <wa-tag>Fire</wa-tag>
           <wa-tag>Plumbing</wa-tag>
-          <wa-tag variant="success" with-remove>Electrical</wa-tag>
+          <wa-tag with-remove>Electrical</wa-tag>
         </div>
       </article>
       <article class="g-item">
@@ -383,7 +370,7 @@
       <article class="g-item">
         <div class="g-meta"><div class="g-title"><h3>Toast</h3><code>&lt;wa-toast&gt;</code><a href="https://webawesome.com/docs/components/toast" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">Brief confirmation, such as “Response saved”. Don’t use it for feedback learners need to read.</p></div>
         <div class="g-demo">
-          <wa-button variant="brand" appearance="outlined" data-toast>Save response</wa-button>
+          <wa-button variant="neutral" appearance="outlined" data-toast>Save response</wa-button>
           <wa-toast></wa-toast>
         </div>
       </article>
@@ -570,16 +557,16 @@
       <article class="g-item wide">
         <div class="g-meta"><div class="g-title"><h3>Card and divider</h3><code>&lt;wa-card&gt;</code> <code>&lt;wa-divider&gt;</code><a href="https://webawesome.com/docs/components/card" target="_blank" rel="noopener">Docs ↗</a></div><p class="g-use">A contained surface for a worked example or one item in a set. Use only when grouping needs it.</p></div>
         <div class="g-demo">
-          <wa-card style="max-width:360px;box-shadow:var(--wa-shadow-l)">
+          <wa-card style="max-width:360px">
             <span class="gw-eyebrow">Worked example</span>
             <h3 style="font-size:1.125rem;margin-block:6px 8px">Can we use the newest model code?</h3>
             <p style="color:var(--wa-color-text-quiet)">Not until it is adopted. Confirm what is in force first.</p>
             <wa-divider style="--spacing:14px"></wa-divider>
-            <wa-button variant="brand" appearance="plain" size="s">See the reasoning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
+            <wa-button variant="neutral" appearance="plain" size="s">See the reasoning<wa-icon slot="end" name="arrow-right"></wa-icon></wa-button>
           </wa-card>
-          <wa-card appearance="filled" style="max-width:360px">
-            <span class="gw-eyebrow">Filled card</span>
-            <p style="margin-top:6px">Sits on ice. Good for prompts and activities.</p>
+          <wa-card appearance="filled" style="max-width:360px;--wa-color-fill-quiet:var(--gw-ice)">
+            <span class="gw-eyebrow">Ice card</span>
+            <p style="margin-top:6px">Borderless and ice-filled, like Definition and Note.</p>
           </wa-card>
         </div>
       </article>
@@ -610,7 +597,7 @@
   </section>
 
   <footer class="g-foot">
-    <p>Web Awesome 3.14 (free) with the Groundwork theme. Not included: code highlighter, markdown, colour picker, QR code, animation and Web Awesome Pro.</p>
+    <p>Web Awesome 3.14 (free) with the Groundwork theme (the Groundwork for Rise look). Not included: code highlighter, markdown, colour picker, QR code, animation and Web Awesome Pro.</p>
     <p>Experimental components work, but their markup may change in a future Web Awesome version.</p>
   </footer>
 </div>

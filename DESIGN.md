@@ -24,14 +24,14 @@ Blocks are built on **Web Awesome**, themed with Groundwork's colours and fonts 
 
 ## Visual direction
 
-These are **starting points**, not new prohibitions. Evaluate them against real examples before locking specific values.
+Blocks use the **Groundwork for Rise look** (chosen October 2026 over a blue-heavy trial). Exact values live in `theme/groundwork.css`.
 
-- **Type:** Archivo headings, Atkinson Hyperlegible Next body (17px in blocks), IBM Plex Mono selectively for numbers.
-- **Icons:** Lucide line icons, recoloured through tokens.
-- **Core colour candidates:** dark blue `#104C8F`, ice `#E7EDF4`, ink `#1D2030`, white and gold `#DAA82F`. These preserve continuity with the existing system, but are subject to visual testing.
-- **Illustration candidates:** cobalt `#3656BD`, plum `#705B83`, jade `#3FBE90`, warm coral `#D9866B`. Use expressive illustration colours purposefully, choosing a restrained subset for each illustration and checking contrast and meaning. The trials’ exact combinations are not a required palette for every component.
-- **Shape:** rounded corners are part of the visual direction where a surface is useful. Choose their scale for the composition; the prototypes’ radii are not universal rules. Preserve open layouts and avoid unnecessary nested containers.
-- **Depth:** subtle drop shadows are part of the visual direction. Apply elevation where it clarifies grouping or interaction rather than automatically to every element. Avoid combining heavy borders with heavy shadows.
+- **Every colour has one job.** Ink does most of the work: text, headings, icons, icon tiles and outline buttons. Dark blue is the main action (and focus, links and the lesson header). Teal marks counters and the Note icon. Gold means "selected" or "this matters most" (key takeaway bar, lesson-header tab, an open key term, chosen answers in gold tint). One accent per block beyond ink; counters are the only exception. When blue starts appearing on things you can't press, that is drift.
+- **Where colour goes:** reading content sits on white. Ice is the section colour behind activity and prompt blocks, and the fill of Definition and Note cards. Correct and wrong colours appear only after the learner checks, always with a tick or cross and words. The order-run colours stay in diagrams and the knowledge-check progress.
+- **Type:** Archivo headings, Atkinson Hyperlegible Next body (17px in blocks), IBM Plex Mono for numerals and answer letters.
+- **Icons:** Lucide line icons in ink, either with no backing shape or white inside a solid ink tile.
+- **Shape:** square corners, 1px outlines; 2px only for selected, correct and wrong states and outline buttons. Preserve open layouts and avoid unnecessary nested containers.
+- **Depth:** no shadows.
 - **Diagrams:** tailor geometry to the actual relationships; do not invent or oversimplify roles, sequence or authority. Keep labels close to their referents, use clear connectors, and allow dark panels for meaningful endpoints or emphasis.
 - **Illustrations:** contemporary flat line-and-fill artwork with consistent visual weight. Colour and detail should illuminate, not compete with, the teaching.
 
