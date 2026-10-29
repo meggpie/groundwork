@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sorter — three categories</title>
+<!--
+  Sorter: each statement gets one choice per category (two to four categories).
+  Rebuilt on Web Awesome from Groundwork for Rise preset sorter--three-categories.
+  Behaviour: Check answers is enabled once every statement has a choice; correct rows lock;
+  wrong rows show their "why" and can be tried again; completes (gwComplete) when every row is correct.
+  Edit the content in the JSON below. Pack for Rise: bun tools/pack.ts blocks/sorter--three-categories.html
+-->
+<style>
+  wa-card.st { --spacing: var(--wa-space-xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
+  .st-top { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s); margin-block-end: var(--wa-space-m); }
+  .st-label { display: inline-flex; align-items: center; gap: var(--wa-space-xs); }
+  .st-label wa-icon { font-size: 1.125rem; color: var(--gw-dark-blue); }
+  .st h2 { font-size: 1.375rem; }
+  .st-hint { color: var(--wa-color-text-quiet); margin-block: var(--wa-space-2xs) var(--wa-space-l); }
+
+  .st-rows { list-style: none; margin: 0; padding: 0; display: grid; }
+  .st-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--wa-space-s) var(--wa-space-l); padding-block: var(--wa-space-m); border-block-start: 1px solid var(--wa-color-surface-border); }
+  .st-row:last-child { border-block-end: 1px solid var(--wa-color-surface-border); }
+  .st-text { display: flex; gap: var(--wa-space-s); align-items: baseline; font-weight: 700; }
+  .st-n { flex: none; color: var(--gw-dark-blue); font-size: 0.875rem; }
+  .st-mark { display: inline-flex; align-items: center; gap: 4px; margin-inline-start: var(--wa-space-xs); font-size: 0.875rem; white-space: nowrap; }
+  .st-row.is-ok .st-mark { color: var(--wa-color-success-30); }
+  .st-row.is-no .st-mark { color: var(--wa-color-danger-40); }
+
+  /* Choices: Web Awesome button radios */
+  .st-choice::part(form-control-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .st-choice wa-radio[appearance="button"] { min-height: 2.5rem; font-size: 0.9375rem; }
+  .st-choice wa-radio[aria-checked="true"] { background: var(--wa-color-brand-95); border-color: var(--wa-color-brand-50); color: var(--wa-color-brand-30); font-weight: 700; }
+  .st-choice wa-radio[disabled] { opacity: 1; cursor: default; }
+  .st-row.is-ok wa-radio[aria-checked="true"] { background: var(--wa-color-success-95); border-color: var(--wa-color-success-50); color: var(--wa-color-success-30); }
+  .st-row.is-no wa-radio[aria-checked="true"] { background: var(--wa-color-danger-95); border-color: var(--wa-color-danger-50); color: var(--wa-color-danger-40); }
+  .st-row.is-ok wa-radio:not([aria-checked="true"]), .st-row.is-no wa-radio:not([aria-checked="true"]) { color: var(--wa-color-text-quiet); }
+
+  .st-why { grid-column: 1 / -1; }
+  .st-summary:not(:empty) { margin-block-start: var(--wa-space-l); }
+  .st-summary wa-callout { outline: none; }
+  .st-actions { display: flex; flex-wrap: wrap; gap: var(--wa-space-s); margin-block-start: var(--wa-space-l); }
+
+  @media (max-width: 640px) {
+    wa-card.st { --spacing: var(--wa-space-l); }
+    .st h2 { font-size: 1.25rem; }
+    .st-row { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-label="Sort it"
+  data-gw-components="radio-group radio callout button" data-gw-icons="circle-check circle-x check rotate-ccw lightbulb info">
+  <wa-card class="st">
+    <div class="st-top">
+      <span class="st-label gw-eyebrow"><wa-icon name="arrow-down-up"></wa-icon><span data-label>Sort it</span></span>
+      <wa-badge class="st-count" variant="neutral" appearance="filled" pill data-count></wa-badge>
+    </div>
+    <h2 data-instruction></h2>
+    <p class="st-hint" data-hint></p>
+    <ol class="st-rows" data-rows></ol>
+    <div class="st-summary" role="status" aria-live="polite" data-summary></div>
+    <div class="st-actions" data-actions></div>
+  </wa-card>
+</section>
+
+<script type="application/json" id="st-data">
+{
+  "label": "Sort it",
+  "instruction": "Choose the category that best matches each statement.",
+  "hint": "Choose one for each statement.",
+  "categories": ["Requirements", "Implementation", "Maintenance"],
+  "items": [
+    { "text": "Technical provisions in a code", "answer": "Requirements", "why": "Provisions are what the code requires, so they are requirements." },
+    { "text": "Carrying out approved work", "answer": "Implementation", "why": "Doing the approved work is implementation." },
+    { "text": "Keeping a system working over time", "answer": "Maintenance", "why": "Ongoing upkeep is maintenance." }
+  ]
+}
+</script>
+
+<script type="module">
+  const d = JSON.parse(document.getElementById('st-data').textContent);
+  const block = document.querySelector('.gw-block');
+  const $ = s => block.querySelector(s);
+  const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.innerHTML = html; return e; };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const cats = d.categories.slice(0, 4), items = d.items;
+  const narrow = matchMedia('(max-width: 640px)');
+
+  $('[data-label]').textContent = d.label || 'Sort it';
+  block.setAttribute('aria-label', d.label || 'Sort it');
+  $('[data-instruction]').textContent = d.instruction;
+  $('[data-hint]').textContent = d.hint || 'Choose one for each statement.';
+
+  const rows = items.map((item, i) => {
+    const li = el('li', { class: 'st-row' });
+    const text = el('p', { class: 'st-text', id: `st-t${i}` }, `<span class="st-n gw-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(item.text)}<span class="st-mark" data-mark></span></span>`);
+    const group = el('wa-radio-group', { class: 'st-choice', label: item.text, name: `st-${i}`, orientation: narrow.matches ? 'vertical' : 'horizontal' });
+    cats.forEach(c => group.append(el('wa-radio', { appearance: 'button', value: c }, esc(c))));
+    li.append(text, group);
+    $('[data-rows]').append(li);
+    group.addEventListener('change', update);
+    return { li, group, item, locked: false };
+  });
+  narrow.addEventListener('change', () => rows.forEach(r => r.group.orientation = narrow.matches ? 'vertical' : 'horizontal'));
+
+  const count = $('[data-count]'), summary = $('[data-summary]'), actions = $('[data-actions]');
+  const check = el('wa-button', { variant: 'brand', disabled: '' }, 'Check answers');
+  const retry = el('wa-button', { variant: 'brand', appearance: 'outlined' }, '<wa-icon slot="start" name="rotate-ccw"></wa-icon>Try again');
+  actions.append(check);
+
+  function update() {
+    const left = rows.filter(r => !r.group.value).length;
+    count.innerHTML = left ? `<span class="gw-num">${left}</span>&nbsp;left` : 'All placed';
+    check.disabled = left > 0;
+  }
+
+  check.addEventListener('click', () => {
+    rows.forEach(r => {
+      if (r.locked) return;
+      const ok = r.group.value === r.item.answer;
+      r.locked = ok;
+      r.li.classList.add(ok ? 'is-ok' : 'is-no');
+      r.group.querySelectorAll('wa-radio').forEach(x => x.disabled = true);
+      r.li.querySelector('[data-mark]').innerHTML = ok ? '<wa-icon name="circle-check"></wa-icon>Correct' : '<wa-icon name="circle-x"></wa-icon>Not quite';
+      if (!ok && r.item.why) {
+        const why = el('wa-callout', { class: 'st-why', variant: 'neutral', appearance: 'filled', size: 's' }, esc(r.item.why));
+        why.prepend(el('wa-icon', { slot: 'icon', name: 'lightbulb' }));
+        r.li.append(why);
+      }
+    });
+    const right = rows.filter(r => r.locked).length, all = right === rows.length;
+    const msg = el('wa-callout', { variant: all ? 'success' : 'brand', appearance: 'filled-outlined', tabindex: '-1' },
+      `<strong>${right} of ${rows.length} correct.</strong>${all ? ' Every statement is in the right category.' : ' Try the others again.'}`);
+    msg.prepend(el('wa-icon', { slot: 'icon', name: all ? 'circle-check' : 'info' }));
+    summary.replaceChildren(msg);
+    actions.replaceChildren(...(all ? [] : [retry]));
+    if (all) {
+      count.variant = 'success';
+      count.innerHTML = `<wa-icon slot="start" name="check"></wa-icon><span class="gw-num">${right}</span>&nbsp;of&nbsp;<span class="gw-num">${rows.length}</span>&nbsp;correct`;
+      setTimeout(() => msg.focus(), 50);
+      window.gwComplete();
+    } else {
+      count.innerHTML = `<span class="gw-num">${right}</span>&nbsp;of&nbsp;<span class="gw-num">${rows.length}</span>&nbsp;correct`;
+      setTimeout(() => retry.focus(), 50);
+    }
+  });
+
+  retry.addEventListener('click', () => {
+    rows.forEach(r => {
+      if (r.locked) return;
+      r.li.classList.remove('is-no');
+      r.li.querySelector('[data-mark]').innerHTML = '';
+      r.li.querySelector('.st-why')?.remove();
+      r.group.value = null;
+      r.group.querySelectorAll('wa-radio').forEach(x => x.disabled = false);
+    });
+    summary.replaceChildren();
+    actions.replaceChildren(check);
+    update();
+    setTimeout(() => rows.find(r => !r.locked)?.group.querySelector('wa-radio')?.focus(), 50);
+  });
+
+  update();
+</script>
+</body>
+</html>

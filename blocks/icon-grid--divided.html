@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icon list — divided</title>
+<!--
+  Groundwork block: icon list, "divided" layout. Divided list: one column of items separated by fine rules, for slightly longer text.
+  Source preset: groundwork-for-rise library/presets/icon-grid--divided.json
+  Add class "ig--tile" to the list for icons in ice circles. Static: no completion.
+  Pack for Rise: bun tools/pack.ts blocks/icon-grid--divided.html
+-->
+<style>
+  .ig { list-style: none; margin: 0; padding: 0; }
+  .ig-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--wa-space-m); align-items: start; min-width: 0; }
+  .ig-icon { color: var(--gw-dark-blue); font-size: 32px; line-height: 0; padding-block-start: 2px; }
+  .ig-title { font-size: 1.1875rem; margin-block-end: var(--wa-space-3xs); }
+  .ig-text { color: var(--wa-color-text-quiet); }
+  /* Tile style: icon in a 64px ice circle (same treatment as the flashcards) */
+  .ig--tile .ig-item { align-items: center; }
+  .ig--tile .ig-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--gw-ice); font-size: 30px; padding: 0; }
+  @media (max-width: 600px) { .ig--tile .ig-icon { width: 52px; height: 52px; font-size: 26px; } }
+  .ig--divided { display: grid; }
+  .ig-rule { grid-column: 1 / -1; }
+  .ig--divided wa-divider { --spacing: var(--wa-space-l); --color: var(--wa-color-neutral-90); }
+</style>
+</head>
+<body>
+<section class="gw-block">
+  <ul class="ig ig--divided" aria-label="Key ideas">
+    <li class="ig-item">
+      <span class="ig-icon"><wa-icon name="drafting-compass"></wa-icon></span>
+      <div><h3 class="ig-title">Plan</h3><p class="ig-text">Set out what needs to happen and why.</p></div>
+    </li>
+    <li class="ig-item">
+      <wa-divider class="ig-rule"></wa-divider>
+      <span class="ig-icon"><wa-icon name="scroll-text"></wa-icon></span>
+      <div><h3 class="ig-title">Design</h3><p class="ig-text">Work out the details before work starts.</p></div>
+    </li>
+    <li class="ig-item">
+      <wa-divider class="ig-rule"></wa-divider>
+      <span class="ig-icon"><wa-icon name="hard-hat"></wa-icon></span>
+      <div><h3 class="ig-title">Build</h3><p class="ig-text">Put the plan into practice.</p></div>
+    </li>
+    <li class="ig-item">
+      <wa-divider class="ig-rule"></wa-divider>
+      <span class="ig-icon"><wa-icon name="badge-check"></wa-icon></span>
+      <div><h3 class="ig-title">Check</h3><p class="ig-text">Confirm the result meets the standard.</p></div>
+    </li>
+  </ul>
+</section>
+</body>
+</html>

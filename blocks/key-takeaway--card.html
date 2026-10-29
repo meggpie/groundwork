@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Key takeaway — card</title>
+<!--
+  Groundwork block: key takeaway. One short statement the learner should remember from the section.
+  Gold is its accent (the only content block that uses gold this way). Works on white or ice sections.
+  Source preset: groundwork-for-rise library/presets/key-takeaway--card.json
+  Static: no completion.
+  Pack for Rise: bun tools/pack.ts blocks/key-takeaway--card.html
+-->
+<style>
+  wa-card.kt { --spacing: var(--wa-space-xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
+  .kt-body { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--wa-space-2xs) var(--wa-space-l); align-items: center; }
+  .kt-icon { grid-row: span 2; align-self: start; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--gw-gold); color: var(--gw-ink); font-size: 28px; }
+  .kt-label { color: var(--gw-ink); }
+  .kt-text { font-family: var(--wa-font-family-heading); font-weight: 700; font-size: 1.1875rem; line-height: 1.45; letter-spacing: -0.01em; color: var(--gw-ink); max-width: 60ch; }
+
+  @media (max-width: 600px) {
+    wa-card.kt { --spacing: var(--wa-space-l); }
+    .kt-body { grid-template-columns: 1fr; gap: var(--wa-space-s); }
+    .kt-icon { grid-row: auto; width: 48px; height: 48px; font-size: 24px; }
+    .kt-text { font-size: 1.0625rem; }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block">
+  <wa-card class="kt">
+    <div class="kt-body">
+      <span class="kt-icon"><wa-icon name="lightbulb"></wa-icon></span>
+      <p class="gw-eyebrow kt-label">Key takeaway</p>
+      <p class="kt-text">One or two sentences that state the idea the learner should remember from this section.</p>
+    </div>
+  </wa-card>
+</section>
+</body>
+</html>

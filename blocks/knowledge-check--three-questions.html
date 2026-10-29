@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge check — three questions</title>
+<!--
+  Knowledge check: one to five single-choice questions, one at a time.
+  Rebuilt on Web Awesome from Groundwork for Rise preset knowledge-check--three-questions.
+  Behaviour: wrong answer → feedback + Try again; right answer → feedback + Next question;
+  progress fills per question answered correctly; completes (gwComplete) when every question is answered correctly.
+  Edit the questions in the JSON below. Pack for Rise: bun tools/pack.ts blocks/knowledge-check--three-questions.html
+-->
+<style>
+  wa-card.kc { --spacing: var(--wa-space-xl); box-shadow: var(--wa-shadow-l); border-color: var(--wa-color-surface-border); }
+  .kc-top { display: flex; align-items: center; justify-content: space-between; gap: var(--wa-space-s); }
+  .kc-label { display: inline-flex; align-items: center; gap: var(--wa-space-xs); }
+  .kc-label wa-icon { font-size: 1.125rem; color: var(--gw-dark-blue); }
+  .kc-progress { --track-height: 6px; --indicator-color: var(--gw-dark-blue); margin-block: var(--wa-space-m) var(--wa-space-l); }
+  .kc-progress::part(base) { border-radius: 999px; }
+  .kc-progress[hidden] + [data-question] { margin-block-start: var(--wa-space-m); }
+  .kc h2 { font-size: 1.375rem; outline: none; }
+  .kc-hint { color: var(--wa-color-text-quiet); margin-block: var(--wa-space-2xs) var(--wa-space-m); }
+
+  /* Answers: each radio is a full-width option row */
+  .kc-opts::part(form-control-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .kc-opts::part(form-control-input) { gap: var(--wa-space-s); }
+  wa-radio.kc-opt {
+    display: flex; align-items: center; width: 100%; margin: 0; gap: var(--wa-space-s);
+    padding: var(--wa-space-s) var(--wa-space-m); border: 1px solid var(--wa-color-neutral-80); border-radius: var(--wa-border-radius-m);
+    background: var(--wa-color-surface-default);
+    transition: border-color var(--wa-transition-fast), background-color var(--wa-transition-fast);
+  }
+  wa-radio.kc-opt:hover { border-color: var(--wa-color-brand-60); }
+  wa-radio.kc-opt[aria-checked="true"] { border-color: var(--wa-color-brand-50); background: var(--wa-color-brand-95); box-shadow: inset 0 0 0 1px var(--wa-color-brand-50); }
+  wa-radio.kc-opt::part(label) { display: flex; align-items: center; gap: var(--wa-space-s); width: 100%; }
+  /* The letter tile is the selection marker, so the radio's own circle is hidden (semantics stay on wa-radio). */
+  wa-radio.kc-opt::part(control) { display: none; }
+  wa-radio.kc-opt:focus-visible { outline: var(--wa-focus-ring); outline-offset: 2px; }
+  .kc-letter { flex: none; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: var(--wa-border-radius-s); background: var(--gw-ice); color: var(--gw-dark-blue); font-size: 0.875rem; }
+  wa-radio.kc-opt[aria-checked="true"] .kc-letter { background: var(--gw-dark-blue); color: var(--gw-white); }
+  wa-radio.kc-opt.is-ok .kc-letter { background: var(--wa-color-success-40); color: var(--gw-white); }
+  wa-radio.kc-opt.is-no .kc-letter { background: var(--wa-color-danger-40); color: var(--gw-white); }
+  .kc-text { flex: 1; min-width: 0; }
+  .kc-mark { flex: none; display: inline-flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.875rem; }
+  /* After checking: the group is locked but stays fully readable */
+  wa-radio.kc-opt[disabled] { opacity: 1; cursor: default; }
+  wa-radio.kc-opt.is-ok { border-color: var(--wa-color-success-50); background: var(--wa-color-success-95); box-shadow: inset 0 0 0 1px var(--wa-color-success-50); }
+  wa-radio.kc-opt.is-ok .kc-mark { color: var(--wa-color-success-30); }
+  wa-radio.kc-opt.is-no { border-color: var(--wa-color-danger-50); background: var(--wa-color-danger-95); box-shadow: inset 0 0 0 1px var(--wa-color-danger-50); }
+  wa-radio.kc-opt.is-no .kc-mark { color: var(--wa-color-danger-40); }
+
+  .kc-feedback:not(:empty) { margin-block-start: var(--wa-space-l); }
+  .kc-feedback wa-callout { outline: none; }
+  .kc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--wa-space-s); margin-block-start: var(--wa-space-l); }
+  .kc-done { display: inline-flex; align-items: center; gap: var(--wa-space-xs); font-weight: 700; color: var(--wa-color-success-30); outline: none; }
+
+  @media (max-width: 600px) {
+    wa-card.kc { --spacing: var(--wa-space-l); }
+    .kc h2 { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<section class="gw-block" aria-label="Knowledge check"
+  data-gw-components="radio-group radio callout button" data-gw-icons="circle-check circle-x arrow-right rotate-ccw check">
+  <wa-card class="kc">
+    <div class="kc-top">
+      <span class="kc-label gw-eyebrow"><wa-icon name="list-checks"></wa-icon><span data-label>Knowledge check</span></span>
+      <wa-badge class="kc-count" variant="neutral" appearance="filled" pill hidden>Question&nbsp;<span class="gw-num" data-n>1</span>&nbsp;of&nbsp;<span class="gw-num" data-total>3</span></wa-badge>
+    </div>
+    <wa-progress-bar class="kc-progress" value="0" label="Questions answered correctly" hidden></wa-progress-bar>
+    <div data-question></div>
+  </wa-card>
+</section>
+
+<script type="application/json" id="kc-data">
+{
+  "label": "Knowledge check",
+  "questions": [
+    {
+      "question": "Which action helps confirm that a requirement was met?",
+      "answers": [
+        { "text": "Reviewing the work against its requirements", "correct": true, "feedback": "Checking the work against the requirements provides evidence of compliance." },
+        { "text": "Assuming earlier work was correct", "correct": false, "feedback": "Assumptions do not verify compliance. Look for evidence." },
+        { "text": "Skipping the final inspection", "correct": false, "feedback": "Skipping checks leaves the outcome unverified." }
+      ]
+    },
+    {
+      "question": "What does a minimum requirement set?",
+      "answers": [
+        { "text": "The best possible result", "correct": false, "feedback": "A minimum is a floor, not a target. Going further is allowed." },
+        { "text": "The lowest acceptable level", "correct": true, "feedback": "Meeting it is the baseline; anything less does not comply." },
+        { "text": "A suggestion that can be ignored", "correct": false, "feedback": "Once adopted, a requirement must be met." }
+      ]
+    },
+    {
+      "question": "Who is responsible for confirming that work complies?",
+      "answers": [
+        { "text": "Nobody, once the work is finished", "correct": false, "feedback": "Completed work still has to be verified." },
+        { "text": "Only the person who designed it", "correct": false, "feedback": "Designers are one part of it; verification is shared." },
+        { "text": "Whoever the process assigns to verify it", "correct": true, "feedback": "Each process names who checks the work and when." }
+      ]
+    }
+  ]
+}
+</script>
+
+<script type="module">
+  const data = JSON.parse(document.getElementById('kc-data').textContent);
+  const qs = data.questions.slice(0, 5);
+  const block = document.querySelector('.gw-block');
+  const host = block.querySelector('[data-question]');
+  const count = block.querySelector('.kc-count');
+  const bar = block.querySelector('.kc-progress');
+  const multi = qs.length > 1;
+  block.querySelector('[data-label]').textContent = data.label || 'Knowledge check';
+  block.setAttribute('aria-label', data.label || 'Knowledge check');
+  block.querySelector('[data-total]').textContent = qs.length;
+  count.hidden = bar.hidden = !multi;
+  let idx = 0, correct = 0;
+
+  const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.innerHTML = html; return e; };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function draw(focusQuestion) {
+    const q = qs[idx];
+    block.querySelector('[data-n]').textContent = idx + 1;
+    host.innerHTML = '';
+    const h = el('h2', { id: 'kc-q', tabindex: '-1' }, esc(q.question));
+    const hint = el('p', { class: 'kc-hint' }, esc(q.hint || data.hint || 'Select one answer.'));
+    const group = el('wa-radio-group', { class: 'kc-opts', label: q.question, name: 'kc-answer' });
+    q.answers.forEach((a, i) => group.append(el('wa-radio', { class: 'kc-opt', value: String(i) },
+      `<span class="kc-letter gw-num" aria-hidden="true">${'ABCDE'[i]}</span><span class="kc-text">${esc(a.text)}</span><span class="kc-mark" data-mark></span>`)));
+    const feedback = el('div', { class: 'kc-feedback', role: 'status', 'aria-live': 'polite' });
+    const actions = el('div', { class: 'kc-actions' });
+    const check = el('wa-button', { variant: 'brand', disabled: '' }, 'Check answer');
+    actions.append(check);
+    host.append(h, hint, group, feedback, actions);
+
+    group.addEventListener('change', () => { check.disabled = !group.value; });
+    check.addEventListener('click', () => {
+      if (!group.value) return;
+      const i = Number(group.value), a = q.answers[i], ok = a.correct === true;
+      const opt = group.querySelectorAll('wa-radio')[i];
+      group.querySelectorAll('wa-radio').forEach(r => r.disabled = true);
+      opt.classList.add(ok ? 'is-ok' : 'is-no');
+      opt.querySelector('[data-mark]').innerHTML = ok ? '<wa-icon name="circle-check"></wa-icon>Correct' : '<wa-icon name="circle-x"></wa-icon>Not this one';
+      const callout = el('wa-callout', { variant: ok ? 'success' : 'danger', appearance: 'filled-outlined' },
+        `<strong>${ok ? 'Correct.' : 'Not quite.'}</strong> ${esc(a.feedback || (ok ? 'That’s right.' : 'Review the options and try again.'))}`);
+      callout.prepend(el('wa-icon', { slot: 'icon', name: ok ? 'circle-check' : 'circle-x' }));
+      feedback.replaceChildren(callout);
+      actions.innerHTML = '';
+      if (!ok) {
+        const retry = el('wa-button', { variant: 'brand', appearance: 'outlined' }, '<wa-icon slot="start" name="rotate-ccw"></wa-icon>Try again');
+        retry.addEventListener('click', () => { draw(); setTimeout(() => host.querySelector('wa-radio')?.focus(), 50); });
+        actions.append(retry); setTimeout(() => retry.focus(), 50);
+        return;
+      }
+      correct = Math.max(correct, idx + 1);
+      bar.value = Math.round(correct / qs.length * 100);
+      if (idx < qs.length - 1) {
+        const next = el('wa-button', { variant: 'brand' }, 'Next question<wa-icon slot="end" name="arrow-right"></wa-icon>');
+        next.addEventListener('click', () => { idx++; draw(true); });
+        actions.append(next); setTimeout(() => next.focus(), 50);
+      } else {
+        const done = el('p', { class: 'kc-done', tabindex: '-1' }, `<wa-icon name="check"></wa-icon>${multi ? 'All questions answered.' : 'Question answered.'}`);
+        actions.append(done); setTimeout(() => done.focus(), 50);
+        if (multi) { count.variant = 'success'; count.innerHTML = `<wa-icon slot="start" name="check"></wa-icon><span class="gw-num">${qs.length}</span>&nbsp;of&nbsp;<span class="gw-num">${qs.length}</span>&nbsp;correct`; }
+        window.gwComplete();
+      }
+    });
+    if (focusQuestion) setTimeout(() => h.focus(), 50);
+  }
+  draw();
+</script>
+</body>
+</html>
