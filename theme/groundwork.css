@@ -31,6 +31,7 @@
   --gw-line: #7f8fa6;           /* dividers inside cards, empty progress segments */
   --gw-grey: #f0f0f0;           /* inner panels (open key term, open flashcard), hover on choices and outline buttons */
   --gw-muted: #4b5a6e;          /* disabled text only */
+  --gw-label-grey: #3d4a5c;     /* small labels on Definition and Note */
   --gw-disabled: #d5deea;       /* disabled fill */
   --gw-correct: #1b6b45;  --gw-correct-fill: #e6f2eb;   /* only after checking, with a tick and words */
   --gw-wrong: #b3261e;    --gw-wrong-fill: #fbeae8;     /* only after checking, with a cross and words */
