@@ -36,7 +36,7 @@
     .cmp tbody th, .cmp td { padding: 0; }
     .cmp tbody th { margin-block-end: var(--wa-space-s); }
     .cmp td { padding-block: var(--wa-space-xs) var(--wa-space-s); }
-    .cmp td + td { border-block-start: 1px solid var(--gw-line); padding-block-start: var(--wa-space-s); }
+    .cmp tbody tr > td + td { border-block-start: 1px solid var(--gw-line); padding-block-start: var(--wa-space-s); }
     .cmp td::before { content: attr(data-col); display: block; font-family: var(--wa-font-family-heading); font-weight: 700; color: var(--gw-ink); font-size: 1rem; margin-block-end: 2px; }
   }
 </style>

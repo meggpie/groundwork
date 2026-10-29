@@ -239,7 +239,7 @@ body {
 
 /* Counter: teal with white text, square (1 of 3, 0 of 4 viewed, 2 left). Use on <wa-badge class="gw-counter">. */
 wa-badge.gw-counter { --wa-color-fill-loud: var(--gw-teal); --wa-color-on-loud: var(--gw-white); --wa-color-border-loud: var(--gw-teal); }
-wa-badge.gw-counter::part(base) { border-radius: 0; min-height: 34px; padding: 3px 11px; font: 700 1.0625rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.02em; }
+wa-badge.gw-counter { border-radius: 0; min-height: 34px; padding: 3px 11px; font: 700 1.0625rem/1.2 var(--wa-font-family-heading); letter-spacing: 0.02em; }
 
 /* Buttons: 48px, bold; main action dark blue; outline buttons 2px ink with a grey hover. */
 wa-button::part(base), wa-button::part(button) { font-weight: 700; }
@@ -247,6 +247,7 @@ wa-button[variant="brand"]:not([appearance])::part(button):hover,
 wa-button[variant="brand"][appearance="accent"]::part(button):hover { background-color: var(--gw-dark-blue-hover); }
 wa-button[appearance="outlined"]::part(button) { border-width: 2px; }
 wa-button[appearance="outlined"]::part(button):hover { background-color: var(--gw-grey); }
+wa-button[disabled]::part(button) { background: var(--gw-disabled); border-color: var(--gw-disabled); color: var(--gw-muted); opacity: 1; }
 
 /* Dividers inside cards use the line colour. */
 wa-divider { --color: var(--gw-line); }
