@@ -1,0 +1,17 @@
+{
+  "component": "comparison",
+  "data": {
+    "columns": [
+      {
+        "heading": "In the code",
+        "document": "National Building Code of Canada",
+        "explanation": "Establishes where smoke alarms are required and includes requirements for their installation."
+      },
+      {
+        "heading": "In the referenced standard",
+        "document": "CAN/ULC-S531, Standard for Smoke Alarms",
+        "explanation": "Establishes construction, performance, and testing requirements for the alarms themselves."
+      }
+    ]
+  }
+}

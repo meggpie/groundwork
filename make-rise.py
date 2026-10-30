@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Groundwork Flashcards pilot. Standard-library adaptation of the original paste workflow.
+"""Groundwork component exports. Standard-library adaptation of the original paste workflow.
 
 python make-rise.py check
 python make-rise.py preview [preset.json | course/block-folder]
@@ -40,9 +40,10 @@ def resolve(source):
         path /= 'block.json'
     data = json.loads(path.read_text(encoding='utf-8-sig'))
     if 'component' in data:
-        if data['component'] != 'flashcards':
-            raise ValueError('This pilot supports flashcards only')
-        data = data['data']
+        component = data['component']
+        if component not in ('flashcards', 'definition', 'comparison', 'expandable-list', 'reference-table', 'key-takeaway', 'knowledge-check'):
+            raise ValueError('Unknown component')
+        data = dict(data['data'], _component=component)
     elif not path.is_relative_to(PRESETS) or not path.stem.startswith('flashcards--'):
         raise ValueError('Use a flashcards preset or a {component, data} block.json')
     if not isinstance(data, dict):
@@ -124,6 +125,18 @@ def font_css():
 
 def render(data, base=ROOT):
     """One rendering path for previews and paste-ready output. No external requests."""
+    if data.get('_component') == 'definition':
+        return render_definition(data)
+    if data.get('_component') == 'comparison':
+        return render_comparison(data)
+    if data.get('_component') == 'expandable-list':
+        return render_expandable_list(data)
+    if data.get('_component') == 'reference-table':
+        return render_reference_table(data)
+    if data.get('_component') == 'key-takeaway':
+        return render_key_takeaway(data)
+    if data.get('_component') == 'knowledge-check':
+        return render_knowledge_check(data)
     validate(data)
     esc = lambda value: html.escape(str(value), quote=True)
     use = data.get('use', 'explore')
@@ -155,6 +168,146 @@ def render(data, base=ROOT):
 <script>{js}</script><!-- Embedded font licences:\n{notices}\n--></body></html>'''
 
 
+def render_definition(data):
+    for key in ('term', 'text'):
+        if not isinstance(data.get(key), str) or not data[key].strip():
+            raise ValueError('Definition ' + key + ' must be nonempty text')
+    emphasis = data.get('emphasis', '')
+    if not isinstance(emphasis, str) or (emphasis and data['text'].count(emphasis) != 1):
+        raise ValueError('Definition emphasis must match one phrase in text')
+    esc = lambda value: html.escape(value, quote=True)
+    text = esc(data['text'])
+    if emphasis:
+        text = text.replace(esc(emphasis), '<strong>' + esc(emphasis) + '</strong>')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'definition.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(data['term'])} — Definition</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><section class="definition" aria-labelledby="definition-term"><span class="definition-label">Definition</span><dl><dt id="definition-term">{esc(data['term'])}</dt><dd>{text}</dd></dl></section></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_comparison(data):
+    columns = data.get('columns')
+    if not isinstance(columns, list) or len(columns) != 2:
+        raise ValueError('Comparison requires exactly two columns')
+    esc = lambda value: html.escape(value, quote=True)
+    items = []
+    for index, column in enumerate(columns):
+        if not isinstance(column, dict):
+            raise ValueError('Comparison columns must be objects')
+        middle = 'label' if 'label' in column else 'document'
+        for key in ('heading', middle, 'explanation'):
+            if not isinstance(column.get(key), str) or not column[key].strip():
+                raise ValueError('Comparison ' + key + ' must be nonempty text')
+        heading = f'<h2 id="column-{index}">{esc(column["heading"])}</h2>'
+        if middle == 'label':
+            content = f'<p class="comparison-label">{esc(column["label"])}</p>{heading}'
+        else:
+            content = f'{heading}<p class="comparison-document">{esc(column["document"])}</p>'
+        items.append(f'''<section class="comparison-column" aria-labelledby="column-{index}">{content}<p class="comparison-explanation">{esc(column['explanation'])}</p></section>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'comparison.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Codes and standards comparison</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="comparison">{''.join(items)}</div></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_expandable_list(data):
+    rows = data.get('rows')
+    if not isinstance(rows, list) or not rows:
+        raise ValueError('Expandable list requires rows')
+    esc = lambda value: html.escape(value, quote=True)
+    items = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError('Each expandable row must be an object')
+        for key in ('heading', 'summary', 'explanation', 'exampleCode', 'exampleTitle', 'exampleText'):
+            if not isinstance(row.get(key), str) or not row[key].strip():
+                raise ValueError('Expandable row ' + key + ' must be nonempty text')
+        items.append(f'''<details><summary><span class="row-intro"><span class="row-heading">{esc(row['heading'])}</span><span class="row-summary">{esc(row['summary'])}</span></span><span class="chevron" aria-hidden="true"></span></summary><div class="row-body"><p>{esc(row['explanation'])}</p><div class="row-example"><p class="example-label">Example standard</p><p>{esc(row['exampleCode'])}, <em>{esc(row['exampleTitle'])}</em>, {esc(row['exampleText'])}</p></div></div></details>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'expandable-list.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork expandable list</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="expandable-list">{''.join(items)}</div></main>
+<!-- Independent native details elements support multiple open rows and keyboard operation without JavaScript. -->
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_reference_table(data):
+    rows = data.get('rows')
+    if not isinstance(rows, list) or not rows:
+        raise ValueError('Reference table requires rows')
+    esc = lambda value: html.escape(value, quote=True)
+    items = []
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise ValueError('Table rows must be objects')
+        for key in ('discipline', 'designation', 'publication', 'coverage'):
+            if not isinstance(row.get(key), str) or not row[key].strip():
+                raise ValueError('Table ' + key + ' must be nonempty text')
+        items.append(f'''<tr role="row"><th role="rowheader" scope="row" id="discipline-{index}" headers="discipline"><span class="mobile-label" aria-hidden="true">Discipline</span>{esc(row['discipline'])}</th><td role="cell" headers="technical-code discipline-{index}"><span class="mobile-label" aria-hidden="true">Technical code</span><span class="code-designation">{esc(row['designation'])}</span><span class="code-publication"><span class="visually-hidden"> — </span><em>{esc(row['publication'])}</em></span></td><td role="cell" headers="coverage discipline-{index}"><span class="mobile-label" aria-hidden="true">What it covers</span>{esc(row['coverage'])}</td></tr>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'reference-table.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Examples of standards-developed technical codes in Alberta</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="table-surface"><table role="table" aria-label="Examples of standards-developed technical codes in Alberta"><colgroup><col class="discipline-col"><col class="technical-col"><col class="coverage-col"></colgroup><thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" id="discipline">Discipline</th><th role="columnheader" scope="col" id="technical-code">Technical code</th><th role="columnheader" scope="col" id="coverage">What it covers</th></tr></thead><tbody role="rowgroup">{''.join(items)}</tbody></table></div></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_key_takeaway(data):
+    if not isinstance(data.get('text'), str) or not data['text'].strip():
+        raise ValueError('Key takeaway requires nonempty text')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'key-takeaway.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Key takeaway</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><aside class="takeaway" aria-labelledby="takeaway-label"><span class="takeaway-label" id="takeaway-label">Key takeaway</span><p>{html.escape(data['text'], quote=True)}</p></aside></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_knowledge_check(data):
+    questions = data.get('questions')
+    if not isinstance(questions, list) or len(questions) != 2:
+        raise ValueError('This sequential knowledge check requires two questions')
+    slots = {}
+    for index, question in enumerate(questions, 1):
+        if not isinstance(question, dict) or not isinstance(question.get('question'), str) or not question['question'].strip():
+            raise ValueError('Question text is required')
+        answers = question.get('answers')
+        if not isinstance(answers, list) or len(answers) != 3:
+            raise ValueError('Provide three answers in order')
+        slots['Q' + str(index)] = html.escape(question['question'], quote=True)
+        for position, answer in enumerate(answers, 1):
+            if not isinstance(answer, dict) or not isinstance(answer.get('correct'), bool):
+                raise ValueError('Each answer requires a boolean correct value')
+            for key in ('text', 'feedback'):
+                if not isinstance(answer.get(key), str) or not answer[key].strip():
+                    raise ValueError('Each answer requires text and feedback')
+            number = str((index - 1) * 3 + position)
+            slots['A' + number] = html.escape(answer['text'], quote=True)
+            slots['F' + number] = html.escape(answer['feedback'], quote=True)
+            slots['C' + number] = str(answer['correct']).lower()
+        if sum(answer['correct'] for answer in answers) != 1:
+            raise ValueError('Each question needs exactly one correct answer')
+    template = (COMPONENT / 'knowledge-check.html').read_text(encoding='utf-8')
+    body = re.sub(r'\{\{([A-Z][0-9]+)\}\}', lambda match: slots[match[1]], template)
+    css = (COMPONENT / 'knowledge-check.css').read_text(encoding='utf-8')
+    js = (COMPONENT / 'knowledge-check.js').read_text(encoding='utf-8')
+    mono = base64.b64encode((FONTS / 'ibm-plex-mono-latin-500-normal.woff2').read_bytes()).decode()
+    mono_css = f"@font-face{{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(data:font/woff2;base64,{mono}) format('woff2')}}"
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt', 'OFL-IBM-Plex-Mono.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Knowledge check</title><style>{font_css()}\n{mono_css}\n{css}</style></head><body>{body}<script>{js}</script><!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
 def paste(source, copy=False):
     data, base, name = resolve(source)
     page = render(data, base)
@@ -179,6 +332,24 @@ def create_preview(source):
     target = PREVIEWS / (name + '.html')
     # Exact paste HTML inside srcdoc; only the outer lesson context differs.
     target.write_text('''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork Flashcards preview</title><style>*{box-sizing:border-box}body{margin:0;color:#1d2030;font:16px/1.5 system-ui}header,section{padding:24px max(20px,calc((100vw - 1040px)/2))}header{background:#f8fafc}h1{font-size:22px;margin:0 0 8px}p{margin:8px 0}button{font:inherit;padding:8px 14px;cursor:pointer}button:focus-visible{outline:3px solid #3656bd;outline-offset:3px}section{background:white}.ice section{background:#e7edf4}iframe{border:0;width:100%;display:block;height:650px}</style></head><body><header><h1>Groundwork · Flashcards pilot</h1><p>Edit the source JSON, then regenerate. The iframe below contains the exact paste-ready document.</p><button id="background" aria-pressed="false">Use ice-blue background</button></header><section><iframe title="Flashcards" srcdoc="''' + html.escape(page, quote=True) + '''"></iframe></section><script>const frame=document.querySelector('iframe');frame.addEventListener('load',()=>{const doc=frame.contentDocument;const resize=()=>frame.style.height=Math.ceil(doc.body.getBoundingClientRect().height+16)+'px';new ResizeObserver(resize).observe(doc.body);doc.fonts.ready.then(resize);resize()});document.querySelector('button').addEventListener('click',e=>{const ice=document.body.classList.toggle('ice');e.target.setAttribute('aria-pressed',String(ice));e.target.textContent=ice?'Use white background':'Use ice-blue background'});</script></body></html>''', encoding='utf-8')
+    if data.get('_component') == 'definition':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Definition').replace('Flashcards', 'Definition'), encoding='utf-8')
+    elif data.get('_component') == 'comparison':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Comparison').replace('Flashcards', 'Comparison'), encoding='utf-8')
+    elif data.get('_component') == 'expandable-list':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Expandable list').replace('Flashcards', 'Expandable list'), encoding='utf-8')
+    elif data.get('_component') == 'reference-table':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Reference table').replace('Flashcards', 'Reference table'), encoding='utf-8')
+    elif data.get('_component') == 'key-takeaway':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Key takeaway').replace('Flashcards', 'Key takeaway'), encoding='utf-8')
+    elif data.get('_component') == 'knowledge-check':
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', 'Knowledge check').replace('Flashcards', 'Knowledge check'), encoding='utf-8')
     return target
 
 
@@ -214,7 +385,7 @@ def main():
                 data, base, _ = resolve(source)
                 render(data, base)
         if args.action == 'check':
-            print(f'PASS: {len(selected)} Flashcard content sources render with local assets')
+            print(f'PASS: {len(selected)} component content sources render with local assets')
 
 
 if __name__ == '__main__':

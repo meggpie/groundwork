@@ -1,0 +1,23 @@
+{
+  "component": "knowledge-check",
+  "data": {
+    "questions": [
+      {
+        "question": "An adopted code requires smoke alarms to conform to a referenced standard. Why is that standard part of the technical framework?",
+        "answers": [
+          {"text": "It supplies technical requirements that the code requires the alarms to meet.", "correct": true, "feedback": "The code and standard work together. The code establishes requirements for smoke alarms and references the standard for particular technical requirements. Those referenced requirements must be followed within the scope established by the code."},
+          {"text": "It offers optional improvements beyond the code’s minimum requirements.", "correct": false, "feedback": "The referenced standard supports the code requirement. It is not simply optional guidance, and it does not replace the code’s requirements for where alarms must be installed."},
+          {"text": "It replaces the code’s requirements for where alarms must be installed.", "correct": false, "feedback": "The referenced standard supports the code requirement. It is not simply optional guidance, and it does not replace the code’s requirements for where alarms must be installed."}
+        ]
+      },
+      {
+        "question": "The Canadian Electrical Code, Part I, is developed through CSA Group and adopted directly by government. What does this show about standards?",
+        "answers": [
+          {"text": "They gain legal force through publication by an SDO.", "correct": false, "feedback": "Standards do not have to sit beneath a national model code. Some, including the Canadian Electrical Code, Part I, serve as discipline codes. Government adoption gives their requirements legal force."},
+          {"text": "They must first be referenced in a national model code.", "correct": false, "feedback": "Standards do not have to sit beneath a national model code. Some, including the Canadian Electrical Code, Part I, serve as discipline codes. Government adoption gives their requirements legal force."},
+          {"text": "They can serve as technical codes for entire disciplines.", "correct": true, "feedback": "Some standards serve as the main technical codes for a discipline. They can be adopted directly by government without first being referenced in a national model code."}
+        ]
+      }
+    ]
+  }
+}

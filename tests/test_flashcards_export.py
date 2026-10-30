@@ -22,10 +22,14 @@ class ExportWorkflow(unittest.TestCase):
             self.assertEqual(page, embedded)
             exported = (build.EXPORTS / (name + '--paste.html')).read_text(encoding='utf-8')
             self.assertEqual(page, exported)
-            self.assertEqual(page.count('data:font/woff2;base64,'), 3)
+            knowledge_check = data.get('_component') == 'knowledge-check'
+            self.assertEqual(page.count('data:font/woff2;base64,'), 4 if knowledge_check else 3)
             self.assertNotRegex(page, r'(?:src|href)="(?!data:|#)')
             self.assertNotRegex(page, r'<script\s+src=|<link\s')
-            self.assertNotIn('window.parent.postMessage', page)
+            if knowledge_check:
+                self.assertIn('window.parent.postMessage', page)
+            else:
+                self.assertNotIn('window.parent.postMessage', page)
             self.assertNotIn('Show mixed states', page)
 
     def test_content_revision_changes_render_without_component_edits(self):

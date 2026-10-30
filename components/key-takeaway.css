@@ -1,0 +1,9 @@
+/* Retains the existing experimental Key Takeaway composition and colours. */
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:transparent;color:var(--gw-text);font:var(--gw-text-m)/var(--gw-leading-normal) var(--gw-font-body)}
+main{max-width:1040px;margin:auto;padding:var(--gw-space-4)}
+.takeaway{display:grid;grid-template-columns:150px minmax(0,1fr);gap:var(--gw-space-6);align-items:start;padding:22px var(--gw-space-6);background:var(--gw-brand);color:var(--gw-on-brand);border-radius:var(--gw-radius-l);box-shadow:0 4px 16px #19385b12}
+.takeaway-label{font-size:var(--gw-text-xs);font-weight:var(--gw-weight-bold);color:#f0ce78;margin-top:5px}
+.takeaway p{margin:0;color:#f0f4f9;overflow-wrap:anywhere}
+@media(max-width:760px){.takeaway{grid-template-columns:1fr;gap:var(--gw-space-2);padding:var(--gw-space-5)}.takeaway-label{margin-top:0}}
