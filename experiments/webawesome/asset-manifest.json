@@ -1,0 +1,210 @@
+{
+  "version": "3.14.0",
+  "totalBytes": 245815,
+  "files": [
+    {
+      "file": "components/callout/callout.js",
+      "bytes": 537
+    },
+    {
+      "file": "chunks/chunk.BGEID5TE.js",
+      "bytes": 1472
+    },
+    {
+      "file": "chunks/chunk.UIKY7WPI.js",
+      "bytes": 1871
+    },
+    {
+      "file": "chunks/chunk.TLFIX76K.js",
+      "bytes": 12167
+    },
+    {
+      "file": "chunks/chunk.BKE5EYM3.js",
+      "bytes": 10602
+    },
+    {
+      "file": "chunks/chunk.RPQJAXXR.js",
+      "bytes": 588
+    },
+    {
+      "file": "chunks/chunk.JB5Y2AN3.js",
+      "bytes": 625
+    },
+    {
+      "file": "chunks/chunk.K5Q2EBKV.js",
+      "bytes": 3306
+    },
+    {
+      "file": "chunks/chunk.PZAN6FPN.js",
+      "bytes": 917
+    },
+    {
+      "file": "chunks/chunk.LBLI4KS5.js",
+      "bytes": 10475
+    },
+    {
+      "file": "chunks/chunk.JHZRD2LV.js",
+      "bytes": 3116
+    },
+    {
+      "file": "components/card/card.js",
+      "bytes": 531
+    },
+    {
+      "file": "chunks/chunk.2E2VZMOR.js",
+      "bytes": 3330
+    },
+    {
+      "file": "chunks/chunk.FG2PKHMT.js",
+      "bytes": 3805
+    },
+    {
+      "file": "chunks/chunk.RWNXKUCF.js",
+      "bytes": 2105
+    },
+    {
+      "file": "chunks/chunk.KWDPKKFO.js",
+      "bytes": 1401
+    },
+    {
+      "file": "chunks/chunk.H23DVATU.js",
+      "bytes": 735
+    },
+    {
+      "file": "components/details/details.js",
+      "bytes": 1357
+    },
+    {
+      "file": "chunks/chunk.NZNAY3HQ.js",
+      "bytes": 8262
+    },
+    {
+      "file": "chunks/chunk.XJ4PEGQL.js",
+      "bytes": 3219
+    },
+    {
+      "file": "chunks/chunk.4ZAKP7NY.js",
+      "bytes": 261
+    },
+    {
+      "file": "chunks/chunk.MQODJ75V.js",
+      "bytes": 293
+    },
+    {
+      "file": "chunks/chunk.3NKIHICW.js",
+      "bytes": 284
+    },
+    {
+      "file": "chunks/chunk.PX3HMKF7.js",
+      "bytes": 284
+    },
+    {
+      "file": "chunks/chunk.5VKLVAP2.js",
+      "bytes": 9976
+    },
+    {
+      "file": "chunks/chunk.VC3BPUZJ.js",
+      "bytes": 274
+    },
+    {
+      "file": "chunks/chunk.F25QOBDY.js",
+      "bytes": 392
+    },
+    {
+      "file": "chunks/chunk.L6CIKOFQ.js",
+      "bytes": 1464
+    },
+    {
+      "file": "chunks/chunk.DL7HG4WM.js",
+      "bytes": 526
+    },
+    {
+      "file": "chunks/chunk.D5HA4OFX.js",
+      "bytes": 6348
+    },
+    {
+      "file": "chunks/chunk.HOKYDFUG.js",
+      "bytes": 4113
+    },
+    {
+      "file": "chunks/chunk.SLTXS4GR.js",
+      "bytes": 6831
+    },
+    {
+      "file": "chunks/chunk.YDQCS2HK.js",
+      "bytes": 266
+    },
+    {
+      "file": "chunks/chunk.WDIIGUNP.js",
+      "bytes": 262
+    },
+    {
+      "file": "chunks/chunk.WLKYECLX.js",
+      "bytes": 27194
+    },
+    {
+      "file": "chunks/chunk.EFUXUR2V.js",
+      "bytes": 762
+    },
+    {
+      "file": "chunks/chunk.UDRJMWVZ.js",
+      "bytes": 1336
+    },
+    {
+      "file": "chunks/chunk.KKI7M5DP.js",
+      "bytes": 5549
+    },
+    {
+      "file": "chunks/chunk.HGBRCPUS.js",
+      "bytes": 1524
+    },
+    {
+      "file": "chunks/chunk.YPRC5XZF.js",
+      "bytes": 43217
+    },
+    {
+      "file": "chunks/chunk.MEATLWHD.js",
+      "bytes": 71
+    },
+    {
+      "file": "styles/themes/default.css",
+      "bytes": 16773
+    },
+    {
+      "file": "styles/layers.css",
+      "bytes": 691
+    },
+    {
+      "file": "styles/color/palettes/default.css",
+      "bytes": 8537
+    },
+    {
+      "file": "styles/color/palettes/base.css",
+      "bytes": 2754
+    },
+    {
+      "file": "styles/color/variants.css",
+      "bytes": 182
+    },
+    {
+      "file": "styles/color/variants/brand.css",
+      "bytes": 6850
+    },
+    {
+      "file": "styles/color/variants/neutral.css",
+      "bytes": 7130
+    },
+    {
+      "file": "styles/color/variants/success.css",
+      "bytes": 7130
+    },
+    {
+      "file": "styles/color/variants/warning.css",
+      "bytes": 7130
+    },
+    {
+      "file": "styles/color/variants/danger.css",
+      "bytes": 6990
+    }
+  ]
+}

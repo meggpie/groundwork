@@ -10,7 +10,7 @@ Infer the request mode from the user's goal; do not ask them to select a mode:
 - **Build:** Implement a selected design as a working Rise block with a preview and requested export.
 - **Maintain:** Fix defects without silently changing approved visuals or behaviours.
 
-Preserve the supplied technical facts and terminology. Prefer native Rise when sufficient. Never force content into an existing component merely to maximize reuse. Do not treat an experimental design as an approved production template.
+Preserve the supplied technical facts and terminology. Use Groundwork custom components by default for instructional visuals and interactions; use native Rise when specifically requested or necessary for course-level functionality. Never force content into an existing component merely to maximize reuse. Do not treat an experimental design as an approved production template.
 
 When creating or substantially revising an instructional visual, use **Understand → Compose → Inspect → Refine**:
 - **Understand:** Identify what the learner should understand: the central relationship, distinction or mental model.
@@ -18,13 +18,13 @@ When creating or substantially revising an instructional visual, use **Understan
 - **Inspect:** Evaluate the rendered design as a whole for weak hierarchy, disconnected elements, excessive containers, awkward spacing, unnecessary text or competing emphasis.
 - **Refine:** Address the most significant issue affecting comprehension or composition before presenting the result; preserve elements that already work.
 
-Apply this through design judgment, not mechanical checks. Inspect the rendered design and refine meaningful problems before delivery. Keep review proportional to the complexity of the task, and avoid unnecessary changes to elements that already work. If rendering or browser inspection is unavailable, state the limitation rather than claim visual verification.
+Apply this through design judgment, not mechanical checks. When creating or substantially modifying a component, use Playwright as the preferred local testing method to render the actual HTML in a browser. Inspect desktop and mobile layouts and relevant interaction states, including keyboard operation and visible focus where applicable. Fix meaningful problems and verify the result before delivery. Keep review proportional to the task, and preserve elements that already work. If rendering or browser inspection is unavailable, state the limitation rather than claim visual verification. Use Computer Use only when direct interaction with an existing browser session is necessary, such as testing inside Rise.
 
 ## Technical defaults
 
 Use plain HTML, CSS and JavaScript without introducing a framework or runtime dependencies unless there is a demonstrated need. Keep individual components understandable. Reuse shared utilities for genuinely repeated behaviour. Maintain accessible semantics, focus states, keyboard operation, readable contrast, responsive layout and reduced-motion support where applicable.
 
-For production blocks, also test meaningful interaction states and keyboard/mobile behaviour, and review the output in a realistic lesson context. Verify Rise-specific completion in Rise: local browser previews alone cannot prove it.
+For production blocks, test the final paste-ready HTML export with Playwright, not just the development preview, and review it in a realistic lesson context against its intended white and ice-blue Rise backgrounds. Verify Rise-specific completion in Rise: local browser tests alone cannot prove it.
 
 ## Change control
 

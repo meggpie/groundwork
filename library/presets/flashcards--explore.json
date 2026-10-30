@@ -1,0 +1,47 @@
+{
+  "title": "Make a review easier to follow",
+  "use": "explore",
+  "instruction": "Select a concept to explore its explanation. Select again to return to the front.",
+  "tracking": true,
+  "cards": [
+    {
+      "front": {
+        "heading": "A traceable decision",
+        "icon": "source"
+      },
+      "back": {
+        "label": "Why it matters",
+        "text": "Keep the source requirements, evidence and reasoning together. Another reviewer should be able to identify what was checked and understand the basis of the decision."
+      }
+    },
+    {
+      "front": {
+        "heading": "Evidence with a purpose",
+        "icon": "evidence"
+      },
+      "back": {
+        "text": "A calculation may support one part of a submission without resolving every question. Identify what the evidence demonstrates and which matters still need clarification."
+      }
+    },
+    {
+      "front": {
+        "heading": "Make uncertainty visible",
+        "text": "Explore a practical example."
+      },
+      "back": {
+        "label": "Example",
+        "text": "A drawing omits the detail needed to check a connection. Record the missing information and request clarification instead of assuming the connection meets the requirement."
+      }
+    },
+    {
+      "front": {
+        "heading": "A clear next action",
+        "label": "In practice",
+        "icon": "reasoning"
+      },
+      "back": {
+        "text": "Name the outstanding question, the responsible role and the evidence needed to resolve it. A specific request makes the next action clear."
+      }
+    }
+  ]
+}

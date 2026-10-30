@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groundwork Note · Design preview</title>
+<style>
+@font-face{font-family:Archivo;src:url('fonts/archivo-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Atkinson Hyperlegible Next';src:url('fonts/atkinson-hyperlegible-next-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1d2030;font:18px/1.5 'Atkinson Hyperlegible Next','Segoe UI',sans-serif}
+h1,h2,h3{font-family:Archivo,'Segoe UI',sans-serif;line-height:1.25;letter-spacing:-.025em}
+p{margin:0}
+/* Preview framing; the same Note styling is used on both backgrounds. */
+.preview-heading,.lesson{max-width:1000px;margin:auto;padding:28px 40px}
+.preview-heading{padding-bottom:20px}
+.preview-heading h1{font-size:26px;margin:4px 0 0}
+.preview-label{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#505769}
+.preview-section:last-child{background:#e7edf4}
+.lesson{padding-top:24px;padding-bottom:32px}
+.lesson h2{font-size:24px;margin:12px 0 8px}
+.lesson>p{margin-bottom:22px;color:#505769}
+.note+.note{margin-top:16px}
+/* Note: remove the h3 when no optional heading is needed. */
+.note{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;padding:17px 20px;background:#f8fafc;border:1px solid #cbd7e4;border-radius:12px;box-shadow:0 3px 12px #19385b0e}
+.note-icon{width:22px;height:22px;color:#104c8f;margin-top:1px}
+.note-header{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px}
+.note-label{color:#104c8f;font-size:14px;font-weight:700}
+.note h3{font-size:20px;margin:0}
+.note p{font-size:18px;line-height:1.5;margin-top:5px;color:#394457}
+@media(max-width:600px){
+ .preview-heading,.lesson{padding-left:20px;padding-right:20px}
+ .preview-heading h1{font-size:24px}
+ .lesson h2{font-size:22px}
+ .note{padding:16px;gap:10px}
+ .note-header{display:block}
+ .note h3{margin-top:4px}
+}
+</style>
+</head>
+<body>
+<header class="preview-heading">
+<span class="preview-label">Groundwork · Component design preview</span>
+<h1>Note</h1>
+</header>
+<main>
+<section class="preview-section" aria-labelledby="white-title">
+<div class="lesson">
+<span class="preview-label">White Rise section · With and without a heading</span>
+<h2 id="white-title">Documenting your reasoning</h2>
+<p>A clear record connects your observations to the information you used.</p>
+<aside class="note" aria-labelledby="white-note-label white-note-title">
+<svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>
+<div>
+<header class="note-header"><span class="note-label" id="white-note-label">Note</span><h3 id="white-note-title">Keep the source with your review</h3></header>
+<p>A brief source reference makes your reasoning easier to revisit when you return to the file.</p>
+</div>
+</aside>
+<aside class="note" aria-labelledby="white-short-label">
+<svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>
+<div>
+<header class="note-header"><span class="note-label" id="white-short-label">Note</span></header>
+<p>Use the accompanying diagram as a reference as you work through the next example.</p>
+</div>
+</aside>
+</div>
+</section>
+<section class="preview-section" aria-labelledby="ice-title">
+<div class="lesson">
+<span class="preview-label">Ice-blue Rise section · Same component styling</span>
+<h2 id="ice-title">Documenting your reasoning</h2>
+<p>A clear record connects your observations to the information you used.</p>
+<aside class="note" aria-labelledby="ice-note-label ice-note-title">
+<svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>
+<div>
+<header class="note-header"><span class="note-label" id="ice-note-label">Note</span><h3 id="ice-note-title">Keep the source with your review</h3></header>
+<p>A brief source reference makes your reasoning easier to revisit when you return to the file.</p>
+</div>
+</aside>
+<aside class="note" aria-labelledby="ice-short-label">
+<svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>
+<div>
+<header class="note-header"><span class="note-label" id="ice-short-label">Note</span></header>
+<p>Use the accompanying diagram as a reference as you work through the next example.</p>
+</div>
+</aside>
+</div>
+</section>
+</main>
+</body>
+</html>
