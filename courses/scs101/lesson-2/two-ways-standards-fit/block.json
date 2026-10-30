@@ -1,0 +1,17 @@
+{
+  "component": "comparison",
+  "data": {
+    "columns": [
+      {
+        "label": "Arrangement 1",
+        "heading": "Referenced by a code",
+        "explanation": "A code points to a standard for particular technical requirements, such as the smoke alarm standard you just explored."
+      },
+      {
+        "label": "Arrangement 2",
+        "heading": "Used as the main technical code",
+        "explanation": "A standards development organization produces a comprehensive document that establishes requirements across a discipline, such as electrical installations."
+      }
+    ]
+  }
+}

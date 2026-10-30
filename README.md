@@ -68,3 +68,38 @@ Incorrect responses show feedback and allow another selection. A correct respons
 ## Up Next
 
 The reusable custom lesson-ending component owns its dark-blue background and rounded corners. Edit [Lesson 1 content](courses/scs101/lesson-1/up-next/block.json), then run `python make-rise.py preview courses/scs101/lesson-1/up-next` and `python make-rise.py paste courses/scs101/lesson-1/up-next`. Use `component: "up-next"`, a `data.label`, and `data.paragraphs`, an array of paragraphs each containing text segments such as `{"text": "standards", "strong": true}`. Text is escaped; emphasis is optional. Layout lives in `components/up-next.css`. No JavaScript or runtime dependencies are needed. Copy the content JSON into another lesson folder to reuse the same component.
+
+## Reference tables
+
+The shared `components/reference-table.css` provides compact rows, an ice-blue header and subtle dividers. Technical-code tables have a 960px maximum width; organization tables have an 880px maximum width with desktop column proportions of 43/16/41 (42/18/40 at tablet widths). Both retain 17px descriptions, 18px row headings/designations and 18px vertically centred column headings, with 9px desktop vertical padding and content-driven header height. Below 700px, each row becomes a compact entry led by its organization or discipline, without repeated visible field labels. Explicit table roles, column headers, row headers and header associations remain available to assistive technology.
+
+The separate source files are `courses/scs101/lesson-2/technical-code-examples/block.json` and `courses/scs101/lesson-2/standards-organizations/block.json`; the latter selects `layout: "organizations"`. Use the existing `make-rise.py preview` and `paste` commands with either folder. `tests/check-reference-tables.cjs` verifies both actual exports across desktop, tablet and mobile widths (pass a local Playwright module path).
+
+## Lesson 2 definition
+
+The Standard definition uses `components/definition.css` and editable content in `courses/scs101/lesson-2/standard/block.json`. Copy is plain text; `emphasis` identifies one exact phrase to render in bold. The complete definition is always visible.
+
+```powershell
+python make-rise.py preview courses/scs101/lesson-2/standard
+python make-rise.py paste courses/scs101/lesson-2/standard --copy
+```
+
+The paste command generates `exports/scs101--lesson-2--standard--paste.html`, embedding CSS, fonts and font licences. Every completed custom component requires a self-contained paste-ready export and browser review of that export. The preview embeds the same document for review against white and ice-blue backgrounds.
+
+## Expandable list
+
+`components/expandable-list.css` follows the existing accordion treatment. Independent HTML `details`/`summary` controls provide keyboard operation and multiple open rows without JavaScript. Content lives in `courses/scs101/lesson-2/what-standards-cover/block.json`; each row has a heading, visible summary, explanation, example code, italicized example title and example text. Reuse the `expandable-list` component with another row set as needed.
+
+```powershell
+python make-rise.py preview courses/scs101/lesson-2/what-standards-cover
+python make-rise.py paste courses/scs101/lesson-2/what-standards-cover --copy
+```
+
+The final export is `exports/scs101--lesson-2--what-standards-cover--paste.html`. Browser checks are in `tests/check-expandable-list-browser.cjs` (pass an installed Playwright module path as its first argument).
+
+
+## Lesson 2 Knowledge Check
+
+Lesson 2 uses the approved Lesson 1 Knowledge Check CSS, JavaScript and renderer unchanged. Its ordered teaching content remains in `courses/scs101/lesson-2/knowledge-check/block.json`. Generate with `python make-rise.py paste courses/scs101/lesson-2/knowledge-check` and `python make-rise.py preview courses/scs101/lesson-2/knowledge-check`. Place the export in a dark-blue Rise section, as in Lesson 1. The preview supplies this context. Completion is local and does not send a Rise completion message.
+
+The earlier local rebuild is preserved on `recovery/lesson-2-before-main-20261030`; it is not used by the exporter. Lesson 2 browser verification is in `tests/check-knowledge-check-browser.cjs`.

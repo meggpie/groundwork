@@ -70,6 +70,10 @@ Use the custom **UP NEXT →** pattern for recurring lesson endings, with shared
 
 ## Core component candidates
 
+### Reference table — approved default
+
+Use the shared `components/reference-table.css` and `make-rise.py` reference-table renderer as the default for technical reference tables. The approved Lesson 2 Alberta technical codes and standards organizations tables are the reference implementations. Preserve their compact typography, content-driven header height, vertically centred headings, ice-blue header, rounded outer corners and subtle horizontal dividers. Choose column proportions and maximum width to suit the actual content, giving short designations a narrow but readable column. At mobile widths, use compact stacked entries led by the organization or discipline, without repeated visible field labels; retain semantic table headers and associations. Exact sizes and responsive rules live in the shared stylesheet. Reuse this pattern for future reference tables, adapting content and column proportions where needed rather than restarting the design.
+
 The [fresh-direction showcase](experiments/08-fresh-directions.html) is the candidate approved visual baseline for Numbered Steps, Icon Grid, Flashcards, Tabs and Accordions after the targeted refinement pass. Preserve these designs during subsequent implementation; evaluate changes individually rather than restarting the family exploration. These remain experimental, with production accessibility and Rise integration testing still required. Definition remains a separate unresolved design.
 
 ## Accessibility checks

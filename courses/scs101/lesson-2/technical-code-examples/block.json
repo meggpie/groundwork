@@ -1,0 +1,13 @@
+{
+  "component": "reference-table",
+  "data": {
+    "rows": [
+      {"discipline": "Electrical", "designation": "CSA C22.1-24", "publication": "Canadian Electrical Code, Part I", "coverage": "Electrical installations and equipment safety."},
+      {"discipline": "Gas", "designation": "CSA B149.1:25", "publication": "Natural gas and propane installation code", "coverage": "Installation of natural gas and propane systems and equipment."},
+      {"discipline": "Elevating devices", "designation": "ASME A17.1-2019/CSA B44-19", "publication": "Safety Code for Elevators and Escalators", "coverage": "Safety requirements for elevators and escalators."},
+      {"discipline": "Pressure equipment", "designation": "CSA B51:19", "publication": "Boiler, pressure vessel, and pressure piping code", "coverage": "Boilers, pressure vessels, and pressure piping systems."},
+      {"discipline": "Amusement rides", "designation": "ASTM F2783-25", "publication": "Amusement Rides and Devices, in Canada", "coverage": "Design, operation, maintenance, and inspection of amusement rides."},
+      {"discipline": "Passenger ropeways", "designation": "CAN/CSA-Z98-24", "publication": "Passenger ropeways and passenger conveyors", "coverage": "Passenger ropeways, ski lifts, and passenger conveyors."}
+    ]
+  }
+}

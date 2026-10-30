@@ -1,0 +1,11 @@
+/* Static, term-led definition. All teaching remains visible. */
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:transparent;color:var(--gw-text);font:var(--gw-text-m)/var(--gw-leading-normal) var(--gw-font-body)}
+main{max-width:920px;margin:auto;padding:var(--gw-space-8) var(--gw-space-6)}
+.definition{padding:28px var(--gw-space-8);background:var(--gw-surface);border:var(--gw-border-width) solid var(--gw-border);border-radius:var(--gw-radius-xl);box-shadow:0 4px 16px #19385b0d}
+.definition-label{font-size:var(--gw-text-xs);font-weight:var(--gw-weight-bold);color:var(--gw-brand)}
+.definition dl{margin:var(--gw-space-2) 0 0}
+.definition dt{font:var(--gw-weight-bold) var(--gw-text-2xl)/1.2 var(--gw-font-heading);letter-spacing:-.025em;margin-bottom:14px}
+.definition dd{margin:0;color:#394457;max-width:72ch;overflow-wrap:anywhere}
+@media(max-width:480px){main{padding:var(--gw-space-5) var(--gw-space-4)}.definition{padding:22px var(--gw-space-5)}.definition dt{font-size:28px}}

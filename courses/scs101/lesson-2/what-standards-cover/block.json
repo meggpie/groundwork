@@ -1,0 +1,39 @@
+{
+  "component": "expandable-list",
+  "data": {
+    "rows": [
+      {
+        "heading": "Materials and products",
+        "summary": "Requirements for the properties, construction, and performance of materials and products.",
+        "explanation": "These requirements can address physical, mechanical, or chemical characteristics, as well as what a product must be capable of doing. They establish a common technical basis for evaluating whether a material or product is suitable for its intended use.",
+        "exampleCode": "CAN/ULC-S531",
+        "exampleTitle": "Standard for Smoke Alarms",
+        "exampleText": "establishes construction and performance requirements for smoke alarms, along with tests used to evaluate them."
+      },
+      {
+        "heading": "Test methods",
+        "summary": "Procedures for measuring properties or evaluating performance under defined conditions.",
+        "explanation": "The procedure used to conduct a test matters. When testing follows the same specified method, results can be evaluated consistently. Results obtained using different procedures may not be directly comparable.",
+        "exampleCode": "CAN/ULC-S101",
+        "exampleTitle": "Standard Methods of Fire Endurance Tests of Building Construction and Materials",
+        "exampleText": "establishes methods for evaluating fire endurance."
+      },
+      {
+        "heading": "Design and installation",
+        "summary": "Requirements for how equipment and system components are selected, arranged, and installed.",
+        "explanation": "These standards can address entire systems, not just individual products. They establish requirements for how components are designed and installed so they function together as intended.",
+        "exampleCode": "NFPA 13",
+        "exampleTitle": "Standard for the Installation of Sprinkler Systems",
+        "exampleText": "addresses sprinkler system design and installation."
+      },
+      {
+        "heading": "Inspection, testing, and maintenance",
+        "summary": "Requirements for checking and maintaining equipment or systems during their service life.",
+        "explanation": "Meeting installation requirements is only the starting point. Equipment and systems must also continue to function as intended. In-service requirements address how their condition and performance are checked over time.",
+        "exampleCode": "CAN/ULC-S536",
+        "exampleTitle": "Standard for Inspection and Testing of Fire Alarm Systems",
+        "exampleText": "specifies requirements for inspecting and testing fire alarm systems already in service."
+      }
+    ]
+  }
+}

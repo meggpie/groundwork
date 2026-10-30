@@ -1,0 +1,13 @@
+{
+  "component": "reference-table",
+  "data": {
+    "layout": "organizations",
+    "rows": [
+      {"organization": "CSA Group", "designation": "CSA", "coverage": "Electrical, gas and pressure equipment codes"},
+      {"organization": "UL Standards & Engagement", "designation": "ULC, CAN/ULC", "coverage": "Smoke alarms, fire testing and product safety"},
+      {"organization": "ASTM International", "designation": "ASTM", "coverage": "Materials, test methods and amusement rides"},
+      {"organization": "National Fire Protection Association", "designation": "NFPA", "coverage": "Fire protection systems and installation"},
+      {"organization": "American Society of Mechanical Engineers", "designation": "ASME", "coverage": "Elevators, escalators and mechanical equipment"}
+    ]
+  }
+}

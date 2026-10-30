@@ -41,8 +41,8 @@ def resolve(source):
     data = json.loads(path.read_text(encoding='utf-8-sig'))
     if 'component' in data:
         component = data['component']
-        if component not in ('flashcards', 'knowledge-check', 'up-next'):
-            raise ValueError('Supported components: flashcards, knowledge-check, up-next')
+        if component not in ('flashcards', 'knowledge-check', 'up-next', 'definition', 'comparison', 'expandable-list', 'reference-table', 'key-takeaway'):
+            raise ValueError('Unsupported component')
         data = dict(data['data'])
         if component != 'flashcards':
             data['_component'] = component
@@ -131,6 +131,16 @@ def render(data, base=ROOT):
         return render_knowledge_check(data)
     if data.get('_component') == 'up-next':
         return render_up_next(data)
+    if data.get('_component') == 'definition':
+        return render_definition(data)
+    if data.get('_component') == 'comparison':
+        return render_comparison(data)
+    if data.get('_component') == 'expandable-list':
+        return render_expandable_list(data)
+    if data.get('_component') == 'reference-table':
+        return render_reference_table(data)
+    if data.get('_component') == 'key-takeaway':
+        return render_key_takeaway(data)
     validate(data)
     esc = lambda value: html.escape(str(value), quote=True)
     use = data.get('use', 'explore')
@@ -220,6 +230,117 @@ def render_up_next(data):
 <!-- Embedded font licences:\n{notices}\n--></body></html>'''
 
 
+def render_definition(data):
+    for key in ('term', 'text'):
+        if not isinstance(data.get(key), str) or not data[key].strip():
+            raise ValueError('Definition ' + key + ' must be nonempty text')
+    emphasis = data.get('emphasis', '')
+    if not isinstance(emphasis, str) or (emphasis and data['text'].count(emphasis) != 1):
+        raise ValueError('Definition emphasis must match one phrase in text')
+    esc = lambda value: html.escape(value, quote=True)
+    text = esc(data['text'])
+    if emphasis:
+        text = text.replace(esc(emphasis), '<strong>' + esc(emphasis) + '</strong>')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'definition.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(data['term'])} — Definition</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><section class="definition" aria-labelledby="definition-term"><span class="definition-label">Definition</span><dl><dt id="definition-term">{esc(data['term'])}</dt><dd>{text}</dd></dl></section></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_comparison(data):
+    columns = data.get('columns')
+    if not isinstance(columns, list) or len(columns) != 2:
+        raise ValueError('Comparison requires exactly two columns')
+    esc = lambda value: html.escape(value, quote=True)
+    items = []
+    for index, column in enumerate(columns):
+        if not isinstance(column, dict):
+            raise ValueError('Comparison columns must be objects')
+        middle = 'label' if 'label' in column else 'document'
+        for key in ('heading', middle, 'explanation'):
+            if not isinstance(column.get(key), str) or not column[key].strip():
+                raise ValueError('Comparison ' + key + ' must be nonempty text')
+        heading = f'<h2 id="column-{index}">{esc(column["heading"])}</h2>'
+        if middle == 'label':
+            content = f'<p class="comparison-label">{esc(column["label"])}</p>{heading}'
+        else:
+            content = f'{heading}<p class="comparison-document">{esc(column["document"])}</p>'
+        items.append(f'''<section class="comparison-column" aria-labelledby="column-{index}">{content}<p class="comparison-explanation">{esc(column['explanation'])}</p></section>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'comparison.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Codes and standards comparison</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="comparison">{''.join(items)}</div></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_expandable_list(data):
+    rows = data.get('rows')
+    if not isinstance(rows, list) or not rows:
+        raise ValueError('Expandable list requires rows')
+    esc = lambda value: html.escape(value, quote=True)
+    items = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError('Each expandable row must be an object')
+        for key in ('heading', 'summary', 'explanation', 'exampleCode', 'exampleTitle', 'exampleText'):
+            if not isinstance(row.get(key), str) or not row[key].strip():
+                raise ValueError('Expandable row ' + key + ' must be nonempty text')
+        items.append(f'''<details><summary><span class="row-intro"><span class="row-heading">{esc(row['heading'])}</span><span class="row-summary">{esc(row['summary'])}</span></span><span class="chevron" aria-hidden="true"></span></summary><div class="row-body"><p>{esc(row['explanation'])}</p><div class="row-example"><p class="example-label">Example standard</p><p>{esc(row['exampleCode'])}, <em>{esc(row['exampleTitle'])}</em>, {esc(row['exampleText'])}</p></div></div></details>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'expandable-list.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork expandable list</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="expandable-list">{''.join(items)}</div></main>
+<!-- Independent native details elements support multiple open rows and keyboard operation without JavaScript. -->
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_reference_table(data):
+    rows = data.get('rows')
+    if not isinstance(rows, list) or not rows:
+        raise ValueError('Reference table requires rows')
+    esc = lambda value: html.escape(value, quote=True)
+    organizations = data.get('layout') == 'organizations'
+    title = 'Standards organizations you\'ll encounter' if organizations else 'Examples of standards-developed technical codes in Alberta'
+    labels = ('Organization', 'Designation', 'Examples of work') if organizations else ('Discipline', 'Technical code', 'What it covers')
+    items = []
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise ValueError('Table rows must be objects')
+        keys = ('organization', 'designation', 'coverage') if organizations else ('discipline', 'designation', 'publication', 'coverage')
+        for key in keys:
+            if not isinstance(row.get(key), str) or not row[key].strip():
+                raise ValueError('Table ' + key + ' must be nonempty text')
+        publication = '' if organizations else f'<span class="code-publication"><span class="visually-hidden"> — </span><em>{esc(row["publication"])}</em></span>'
+        name = row['organization'] if organizations else row['discipline']
+        items.append(f'''<tr role="row"><th role="rowheader" scope="row" id="discipline-{index}" headers="discipline"><span class="mobile-label" aria-hidden="true">{labels[0]}</span>{esc(name)}</th><td role="cell" headers="technical-code discipline-{index}"><span class="mobile-label" aria-hidden="true">{labels[1]}</span><span class="code-designation">{esc(row['designation'])}</span>{publication}</td><td role="cell" headers="coverage discipline-{index}"><span class="mobile-label" aria-hidden="true">{labels[2]}</span>{esc(row['coverage'])}</td></tr>''')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'reference-table.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="table-surface{' organizations' if organizations else ''}"><table role="table" aria-label="{esc(title)}"><colgroup><col class="discipline-col"><col class="technical-col"><col class="coverage-col"></colgroup><thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" id="discipline">{labels[0]}</th><th role="columnheader" scope="col" id="technical-code">{labels[1]}</th><th role="columnheader" scope="col" id="coverage">{labels[2]}</th></tr></thead><tbody role="rowgroup">{''.join(items)}</tbody></table></div></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_key_takeaway(data):
+    if not isinstance(data.get('text'), str) or not data['text'].strip():
+        raise ValueError('Key takeaway requires nonempty text')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'key-takeaway.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Key takeaway</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><aside class="takeaway" aria-labelledby="takeaway-label"><span class="takeaway-label" id="takeaway-label">Key takeaway</span><p>{html.escape(data['text'], quote=True)}</p></aside></main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
 def paste(source, copy=False):
     data, base, name = resolve(source)
     page = render(data, base)
@@ -253,6 +374,10 @@ def create_preview(source):
     elif data.get('_component') == 'up-next':
         preview = target.read_text(encoding='utf-8').replace('Flashcards pilot', 'Up Next').replace('Flashcards preview', 'Up Next preview').replace('title="Flashcards"', 'title="Up Next"')
         target.write_text(preview, encoding='utf-8')
+    if data.get('_component') in ('definition', 'comparison', 'expandable-list', 'reference-table', 'key-takeaway'):
+        label = data['_component'].replace('-', ' ').title()
+        preview = target.read_text(encoding='utf-8')
+        target.write_text(preview.replace('Flashcards pilot', label).replace('Flashcards', label), encoding='utf-8')
     return target
 
 

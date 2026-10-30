@@ -1,0 +1,22 @@
+/* Groundwork accordion treatment, with persistent summaries and independent rows. */
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:transparent;color:var(--gw-text);font:var(--gw-text-m)/var(--gw-leading-normal) var(--gw-font-body)}
+main{max-width:1040px;margin:auto;padding:var(--gw-space-4)}
+.expandable-list{background:var(--gw-surface-soft);border-radius:var(--gw-radius-l);padding-inline:var(--gw-space-6);box-shadow:var(--gw-shadow-s)}
+details+details{border-top:var(--gw-border-width) solid var(--gw-border)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:var(--gw-space-5);padding-block:var(--gw-space-5);border-radius:var(--gw-radius-s)}
+summary::-webkit-details-marker{display:none}
+.row-intro{display:block;min-width:0}
+.row-heading{display:block;font:var(--gw-weight-bold) var(--gw-text-l)/var(--gw-leading-tight) var(--gw-font-heading);letter-spacing:-.025em}
+.row-summary{display:block;margin-top:var(--gw-space-2);color:var(--gw-text-muted)}
+.chevron{width:10px;height:10px;border-right:2px solid var(--gw-brand);border-bottom:2px solid var(--gw-brand);transform:rotate(45deg);flex:none;margin:0 var(--gw-space-2) var(--gw-space-1)}
+details[open] .chevron{transform:rotate(225deg);margin-bottom:0}
+details[open] .row-heading,summary:hover .row-heading{color:var(--gw-brand)}
+summary:focus-visible{outline:var(--gw-focus-width) solid var(--gw-focus-color);outline-offset:var(--gw-focus-offset)}
+.row-body{padding:0 var(--gw-space-10) var(--gw-space-6) 0;max-width:82ch;overflow-wrap:anywhere}
+.row-body p{margin:0}
+.row-example{margin-top:var(--gw-space-5);padding-left:var(--gw-space-4);border-left:2px solid var(--gw-border-control)}
+.row-example .example-label{font-size:var(--gw-text-xs);font-weight:var(--gw-weight-bold);color:var(--gw-brand);margin-bottom:var(--gw-space-2)}
+/* The bundled body fonts are upright; titles use the browser's synthesized italic. */
+@media(max-width:760px){.expandable-list{padding-inline:var(--gw-space-5)}.row-body{padding-right:0}}
