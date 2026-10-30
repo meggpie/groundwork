@@ -21,24 +21,24 @@ p{margin:0}
 .note-label{color:#104c8f;font-size:14px;font-weight:700}
 .note h3{font-size:20px;margin:0}
 .note p{font-size:18px;line-height:1.5;margin-top:5px;color:#394457}
-/* Definition: the term leads an open reference treatment, not a second Note card. */
-.definitions{display:grid;align-items:start;grid-template-columns:1fr 1fr;gap:40px;margin:28px 0}
-.definition{min-width:0;border-left:3px solid #705b83;padding-left:20px}
-.component-label{color:#594568;font-size:14px;font-weight:700}
+/* Definition: a term-led reference surface with an integrated explanation area. */
+.definitions{display:grid;align-items:start;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0}
+.definition{min-width:0;overflow:hidden;border:1px solid #cbd7e4;border-radius:16px;padding:26px 28px;background:#fff;box-shadow:0 4px 16px #19385b0d}
+.component-label{color:#104c8f;font-size:14px;font-weight:700}
 .variation{font-weight:400;color:#505769}
 dl{margin:8px 0 0}
-dt{font-size:27px;font-weight:700;margin:0 0 10px}
+dt{font-size:30px;font-weight:700;margin:0 0 10px}
 dd{margin:0;color:#394457}
 .term{font:inherit;font-weight:700;color:#104c8f;background:#e4ebf6;border:0;border-radius:4px;padding:0 4px;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;cursor:pointer}
 .term:hover{background:#d3dff1}
 .term[aria-expanded="true"]{background:#104c8f;color:#fff;text-decoration:none}
 .interaction-hint{font-size:14px;color:#505769;margin-top:10px}
-.explanation{position:relative;margin-top:16px;padding:12px 16px;border-left:3px solid #104c8f;border-radius:0 8px 8px 0;background:#f8fafc;box-shadow:0 2px 8px #19385b09}
-.explanation:before{content:'';position:absolute;top:-7px;left:var(--pointer,24px);width:12px;height:12px;background:#f8fafc;transform:rotate(45deg)}
+.explanation{margin:20px -28px -26px;padding:18px 28px 22px;background:#edf3fa;border-top:1px solid #cbd7e4}
+
 .explanation-header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative}
 .explanation h4{font-size:17px;color:#104c8f;margin:0}
 .explanation p{font-size:17px;color:#394457;margin-top:5px}
-.close{font:24px/1 'Atkinson Hyperlegible Next',sans-serif;background:none;color:#104c8f;border:0;border-radius:4px;min-width:28px;min-height:28px;cursor:pointer}
+.close{font:24px/1 'Atkinson Hyperlegible Next',sans-serif;background:none;color:#104c8f;border:0;border-radius:4px;min-width:44px;min-height:44px;cursor:pointer}
 .close:hover{background:#e7edf4}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid #3656bd;outline-offset:4px}
@@ -54,17 +54,17 @@ dd{margin:0;color:#394457}
  .takeaway-label{margin-top:0}
  .takeaway h3{font-size:23px}
 }
-@media(max-width:480px){.note{padding:16px;gap:10px}.note-header{display:block}.note h3{margin-top:4px}.definition{padding-left:16px}.preview-header h1{font-size:25px}}
+@media(max-width:480px){.note{padding:16px;gap:10px}.note-header{display:block}.note h3{margin-top:4px}.definition{padding:22px 20px}.explanation{margin:18px -20px -22px;padding:16px 20px 20px}.preview-header h1{font-size:25px}}
+.supplement{font-size:17px;color:#505769;margin-top:14px}.tracking{font-size:14px;color:#505769;margin-top:14px}.term{min-height:32px}.term:hover{background:#d3dff1}.term[aria-expanded="true"]:hover{background:#104c8f}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 </style></head><body>
-<header class="preview-header"><span class="preview-label">Groundwork · Design approval preview</span><h1>Informational components</h1><p>Note, Definition and Key Takeaway. Definition includes an optional interactive variation.</p></header><main>
+<header class="preview-header"><span class="preview-label">Groundwork · Visual refinement preview</span><h1>Informational components</h1><p>Note retained, Definition refined for review, Key Takeaway unchanged. Compare static and interactive Definitions on both lesson backgrounds.</p></header><main>
 <section class="preview-section " aria-labelledby="white-title"><div class="lesson">
 <h2 class="preview-label" id="white-title">White Rise background</h2>
 <aside class="note" aria-labelledby="white-note-label white-note-title"><svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg><div><header class="note-header"><span class="note-label" id="white-note-label">Note</span><h3 id="white-note-title">Keep the source with your review</h3></header><p>A brief source reference makes your reasoning easier to revisit when you return to the file.</p></div></aside>
 <div class="definitions">
 <section class="definition" aria-labelledby="white-static-term"><span class="component-label">Definition</span><dl><dt id="white-static-term">Code adoption</dt><dd>In Alberta, applicable codes are adopted through regulations under the <em>Safety Codes Act</em>.</dd></dl></section>
-<section class="definition interactive" aria-labelledby="white-interactive-term"><span class="component-label">Definition <span class="variation">· Interactive variation</span></span><dl><dt id="white-interactive-term">Model code</dt><dd>A <button class="term" id="white-technical" aria-expanded="false" aria-controls="white-technical-detail">technical model<span aria-hidden="true"> +</span></button> that does not automatically become <button class="term" id="white-law" aria-expanded="false" aria-controls="white-law-detail">law<span aria-hidden="true"> +</span></button>.</dd></dl><p class="interaction-hint">Select a highlighted word or phrase to explore.</p>
-<div class="explanation" id="white-technical-detail" role="region" aria-labelledby="white-technical-title" hidden><div class="explanation-header"><h4 id="white-technical-title">Technical model</h4><button class="close" aria-label="Close technical model explanation">×</button></div><p>The model provides technical content for adoption.</p></div>
-<div class="explanation" id="white-law-detail" role="region" aria-labelledby="white-law-title" hidden><div class="explanation-header"><h4 id="white-law-title">Law</h4><button class="close" aria-label="Close law explanation">×</button></div><p>In Alberta, adoption happens through regulations under the <em>Safety Codes Act</em>.</p></div>
+<section class="definition interactive" aria-labelledby="white-interactive-term"><span class="component-label">Definition <span class="variation">· Interactive variation</span></span><dl><dt id="white-interactive-term">Model code</dt><dd>A <button class="term" id="white-technical" aria-expanded="false" aria-controls="white-explanation">technical model<span aria-hidden="true"> +</span></button> that does not automatically become <button class="term" id="white-law" aria-expanded="false" aria-controls="white-explanation">law<span aria-hidden="true"> +</span></button>.</dd></dl><p class="supplement">A model code provides a common technical reference for jurisdictions considering adoption.</p><p class="interaction-hint">Select a highlighted term to explore its meaning.</p><p class="tracking" role="status">Terms explored: <span>0</span> of 2</p>
+<div class="explanation" id="white-explanation" role="region" aria-labelledby="white-explanation-title" hidden><div class="explanation-header"><h4 id="white-explanation-title"></h4><button class="close" aria-label="Close term explanation">×</button></div><p></p></div>
 </section></div>
 <aside class="takeaway" aria-labelledby="white-takeaway-label white-takeaway-title"><span class="takeaway-label" id="white-takeaway-label">Key takeaway</span><div><h3 id="white-takeaway-title">Publication is not adoption.</h3><p>Applicable legal requirements depend on the adopted edition, amendments and effective dates.</p></div></aside>
 </div></section>
@@ -73,21 +73,19 @@ dd{margin:0;color:#394457}
 <aside class="note" aria-labelledby="ice-note-label ice-note-title"><svg class="note-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#e7edf4" stroke="currentColor" stroke-width="1.6"/><path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg><div><header class="note-header"><span class="note-label" id="ice-note-label">Note</span><h3 id="ice-note-title">Keep the source with your review</h3></header><p>A brief source reference makes your reasoning easier to revisit when you return to the file.</p></div></aside>
 <div class="definitions">
 <section class="definition" aria-labelledby="ice-static-term"><span class="component-label">Definition</span><dl><dt id="ice-static-term">Code adoption</dt><dd>In Alberta, applicable codes are adopted through regulations under the <em>Safety Codes Act</em>.</dd></dl></section>
-<section class="definition interactive" aria-labelledby="ice-interactive-term"><span class="component-label">Definition <span class="variation">· Interactive variation</span></span><dl><dt id="ice-interactive-term">Model code</dt><dd>A <button class="term" id="ice-technical" aria-expanded="false" aria-controls="ice-technical-detail">technical model<span aria-hidden="true"> +</span></button> that does not automatically become <button class="term" id="ice-law" aria-expanded="false" aria-controls="ice-law-detail">law<span aria-hidden="true"> +</span></button>.</dd></dl><p class="interaction-hint">Select a highlighted word or phrase to explore.</p>
-<div class="explanation" id="ice-technical-detail" role="region" aria-labelledby="ice-technical-title" hidden><div class="explanation-header"><h4 id="ice-technical-title">Technical model</h4><button class="close" aria-label="Close technical model explanation">×</button></div><p>The model provides technical content for adoption.</p></div>
-<div class="explanation" id="ice-law-detail" role="region" aria-labelledby="ice-law-title" hidden><div class="explanation-header"><h4 id="ice-law-title">Law</h4><button class="close" aria-label="Close law explanation">×</button></div><p>In Alberta, adoption happens through regulations under the <em>Safety Codes Act</em>.</p></div>
+<section class="definition interactive" aria-labelledby="ice-interactive-term"><span class="component-label">Definition <span class="variation">· Interactive variation</span></span><dl><dt id="ice-interactive-term">Model code</dt><dd>A <button class="term" id="ice-technical" aria-expanded="false" aria-controls="ice-explanation">technical model<span aria-hidden="true"> +</span></button> that does not automatically become <button class="term" id="ice-law" aria-expanded="false" aria-controls="ice-explanation">law<span aria-hidden="true"> +</span></button>.</dd></dl><p class="supplement">A model code provides a common technical reference for jurisdictions considering adoption.</p><p class="interaction-hint">Select a highlighted term to explore its meaning.</p><p class="tracking" role="status">Terms explored: <span>0</span> of 2</p>
+<div class="explanation" id="ice-explanation" role="region" aria-labelledby="ice-explanation-title" hidden><div class="explanation-header"><h4 id="ice-explanation-title"></h4><button class="close" aria-label="Close term explanation">×</button></div><p></p></div>
 </section></div>
 <aside class="takeaway" aria-labelledby="ice-takeaway-label ice-takeaway-title"><span class="takeaway-label" id="ice-takeaway-label">Key takeaway</span><div><h3 id="ice-takeaway-title">Publication is not adoption.</h3><p>Applicable legal requirements depend on the adopted edition, amendments and effective dates.</p></div></aside>
 </div></section>
 </main><script>
-// One expanded explanation per definition; buttons keep their native keyboard behaviour.
+// A single panel belongs to each definition. Tracking is local exploration feedback only.
 document.querySelectorAll('.interactive').forEach(definition=>{
- const terms=[...definition.querySelectorAll('.term')];
- const position=(button,panel)=>{const b=button.getBoundingClientRect(),p=panel.getBoundingClientRect();panel.style.setProperty('--pointer',Math.max(12,Math.min(p.width-24,b.left+b.width/2-p.left-6))+'px')};
- const close=(returnFocus=false)=>{const active=terms.find(button=>button.getAttribute('aria-expanded')==='true');terms.forEach(button=>{button.setAttribute('aria-expanded','false');button.querySelector('span').textContent=' +';document.getElementById(button.getAttribute('aria-controls')).hidden=true});if(returnFocus&&active)active.focus()};
- terms.forEach(button=>button.addEventListener('click',()=>{const open=button.getAttribute('aria-expanded')==='true';close();if(!open){const panel=document.getElementById(button.getAttribute('aria-controls'));panel.hidden=false;button.setAttribute('aria-expanded','true');button.querySelector('span').textContent=' −';position(button,panel)}}));
- definition.querySelectorAll('.close').forEach(button=>button.addEventListener('click',()=>close(true)));
- definition.addEventListener('keydown',event=>{if(event.key==='Escape'&&terms.some(button=>button.getAttribute('aria-expanded')==='true')){event.preventDefault();close(true)}});
- new ResizeObserver(()=>{const active=terms.find(button=>button.getAttribute('aria-expanded')==='true');if(active)position(active,document.getElementById(active.getAttribute('aria-controls')))}).observe(definition);
+ const terms=[...definition.querySelectorAll('.term')],panel=definition.querySelector('.explanation'),seen=new Set();let active=null;
+ const content=[['Technical model','The model provides technical content for adoption.'],['Law','In Alberta, adoption happens through regulations under the Safety Codes Act.']];
+ function close(returnFocus=false){const previous=active;active=null;panel.hidden=true;terms.forEach(b=>{b.setAttribute('aria-expanded','false');b.querySelector('span').textContent=' +'});if(returnFocus&&previous)previous.focus()}
+ terms.forEach((button,index)=>button.addEventListener('click',()=>{const wasOpen=active===button;close();if(wasOpen)return;active=button;seen.add(index);button.setAttribute('aria-expanded','true');button.querySelector('span').textContent=' −';panel.querySelector('h4').textContent=content[index][0];panel.querySelector('p').textContent=content[index][1];panel.hidden=false;definition.querySelector('.tracking span').textContent=seen.size}));
+ definition.querySelector('.close').addEventListener('click',()=>close(true));
+ definition.addEventListener('keydown',event=>{if(event.key==='Escape'&&active){event.preventDefault();close(true)}});
 });
 </script></body></html>

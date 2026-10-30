@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" class="wa-theme-default wa-light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork · Web Awesome comparison</title>
+<link rel="stylesheet" href="vendor/styles/themes/default.css">
+<link rel="stylesheet" href="comparison.css">
+</head><body>
+<header class="review"><span class="eyebrow">Groundwork / Isolated exploration / 3.14.0 Core</span><h1>Same teaching. Two foundations.</h1><p>Compare Groundwork HTML/CSS with locally hosted Web Awesome, styled for Groundwork. Try the highlighted terms and related-term buttons.</p><div class="controls"><button id="background" aria-pressed="false">Use ice-blue lesson background</button><a href="../06-informational-family.html">Existing visual reference ↗</a></div><p id="status" role="status">Loading local Web Awesome components…</p></header>
+<main class="lesson"><div class="context"><span class="eyebrow">Lesson context · Reference and review</span><h2>Make the review easy to revisit</h2><p>Use a consistent structure when documenting what you checked and why.</p></div><div class="comparison" id="comparison"></div><div class="context"><h2>Apply it to your next review</h2><p>Keep the checklist and source references together so another reviewer can follow your reasoning.</p></div></main>
+<footer class="review"><h2>What this comparison tests</h2><p><strong>Callout → Note:</strong> a good semantic fit, but Groundwork still supplies its hierarchy and visual treatment. <strong>Card → Key Takeaway:</strong> useful slots, little behaviour to save here. <strong>Details:</strong> useful for a standalone disclosure; it does not replace linked terms, progress or a shared explanation panel.</p><p>Exploration only. No Rise completion messages are sent. All runtime assets and fonts are local; no CDN or framework. Rise packaging and completion still require validation in Rise after design approval.</p></footer>
+<script src="comparison.js"></script><script type="module">
+try {
+ await Promise.all(['callout','card','details'].map(n=>import(`./vendor/components/${n}/${n}.js`)));
+ await Promise.all(['wa-callout','wa-card','wa-details'].map(n=>customElements.whenDefined(n)));
+ document.querySelector('#status').textContent='Web Awesome ready · local assets only';
+}catch(e){document.querySelector('#status').textContent='Web Awesome could not load. Serve this folder over local HTTP; see README.';console.error(e)}
+</script></body></html>

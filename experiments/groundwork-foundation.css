@@ -1,0 +1,68 @@
+/* Groundwork foundation — experimental, provisional values.
+ * Reference: DESIGN.md, current trials, Web Awesome 3.14.0 design guidance.
+ * Opt in per experiment; this file applies no element styles or layouts.
+ * rem values below assume a 16px browser root; do not force the root size.
+ * Font families name existing local assets; font loading belongs to the preview/export.
+ */
+:root {
+  --gw-font-body: 'Atkinson Hyperlegible Next', 'Segoe UI', sans-serif;
+  --gw-font-heading: Archivo, 'Segoe UI', sans-serif;
+  --gw-font-mono: 'IBM Plex Mono', monospace;
+  --gw-weight-regular: 400;
+  --gw-weight-bold: 700;
+
+  /* 14, 16, 18, 20, 24, 30, 36px at the default root size. */
+  --gw-text-xs: 0.875rem;
+  --gw-text-s: 1rem;
+  --gw-text-m: 1.125rem;
+  --gw-text-l: 1.25rem;
+  --gw-text-xl: 1.5rem;
+  --gw-text-2xl: 1.875rem;
+  --gw-text-3xl: 2.25rem;
+  --gw-leading-tight: 1.25;
+  --gw-leading-normal: 1.5;
+  --gw-leading-relaxed: 1.6;
+
+  /* Use for gaps or padding; no component padding presets. */
+  --gw-space-scale: 1;
+  --gw-space-1: calc(0.25rem * var(--gw-space-scale));
+  --gw-space-2: calc(0.5rem * var(--gw-space-scale));
+  --gw-space-3: calc(0.75rem * var(--gw-space-scale));
+  --gw-space-4: calc(1rem * var(--gw-space-scale));
+  --gw-space-5: calc(1.25rem * var(--gw-space-scale));
+  --gw-space-6: calc(1.5rem * var(--gw-space-scale));
+  --gw-space-8: calc(2rem * var(--gw-space-scale));
+  --gw-space-10: calc(2.5rem * var(--gw-space-scale));
+  --gw-space-12: calc(3rem * var(--gw-space-scale));
+
+  --gw-radius-s: 0.25rem;
+  --gw-radius-m: 0.5rem;
+  --gw-radius-l: 0.75rem;
+  --gw-radius-xl: 1rem;
+  --gw-border-width: 1px;
+  --gw-border-width-strong: 2px;
+  --gw-shadow-s: 0 3px 12px rgb(25 56 91 / 6%);
+  --gw-shadow-m: 0 4px 16px rgb(25 56 91 / 8%);
+
+  /* Semantic roles; colours do not assign identities to component types. */
+  --gw-text: #1d2030;
+  --gw-text-muted: #505769;
+  --gw-brand: #104c8f;
+  --gw-on-brand: #ffffff;
+  --gw-accent: #daa82f; /* Accent fill; pair with --gw-text, not white. */
+  --gw-surface: #ffffff;
+  --gw-surface-soft: #f8fafc;
+  --gw-surface-ice: #e7edf4;
+  --gw-border: #cbd7e4; /* Decorative separation, not a control boundary. */
+  --gw-border-control: #66788f;
+  --gw-interactive-fill: #e4ebf6; /* Pair with --gw-brand. */
+  --gw-interactive-fill-hover: #d3dff1;
+
+  /* Apply through :focus-visible in the consuming component.
+   * Use the inverse colour on dark brand surfaces; never remove focus visibility.
+   */
+  --gw-focus-color: #3656bd;
+  --gw-focus-color-inverse: #ffffff;
+  --gw-focus-width: 3px;
+  --gw-focus-offset: 3px;
+}

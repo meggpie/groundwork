@@ -56,10 +56,24 @@ The reviewed standalone trials are preserved in [experiments/](experiments/index
 
 These trials support the principles above, not universal layouts, dimensions or colour combinations. Choose each composition for its instructional purpose; numbered steps, for example, suit the reviewed worked example but are not required for every worked example. Promote a treatment to the reusable library only when it proves useful beyond its initial example.
 
+## Informational component direction
+
+- **Note — largely approved:** preserve its compact containment, rounded corners, subtle shadow, icon and composition. Body text should sit comfortably with surrounding lesson text (approximately 18px), with an optional heading around 20px and a label around 14px. Review on white and ice-blue backgrounds.
+- **Definition — appearance under exploration:** use the original Groundwork Definition as the functional reference. Make the technical term prominent beneath a small Definition label and optional icon, with the complete definition always visible and optional supplementary explanation. Static and interactive versions share the same term-led reference structure. Interactive terms are highlighted within the text and update one shared explanation panel beneath it; preserve selected states, closing behaviour and keyboard focus. Add viewed tracking when it supports the learning purpose. Explore refined containment, rounded corners, subtle elevation and purposeful spacing. Distinguish Definition from the compact Note through structure, rather than assigning a separate colour. The previous purple vertical-rule treatment is not approved.
+- **Key Takeaway:** retain the existing experimental design for now.
+
+Web Awesome components or styling patterns may inform exploration where they improve the result; preserve instructional structure and interaction rather than forcing a fit. These experiments do not establish a production component system.
+
+## Core component candidates
+
+The [fresh-direction showcase](experiments/08-fresh-directions.html) is the candidate approved visual baseline for Numbered Steps, Icon Grid, Flashcards, Tabs and Accordions after the targeted refinement pass. Preserve these designs during subsequent implementation; evaluate changes individually rather than restarting the family exploration. These remain experimental, with production accessibility and Rise integration testing still required. Definition remains a separate unresolved design.
+
 ## Accessibility checks
 
 Test meaningful text and graphics in context, including mobile widths. Target WCAG AA contrast for normal text (4.5:1), large text (3:1), and meaningful graphical elements (3:1). Gold, jade and coral can work well as fills or accents but are generally too low-contrast for small text on white. Never rely on colour alone to convey meaning.
 
 ## Avoid instruction drift
+
+The opt-in [experimental CSS foundation](experiments/groundwork-foundation.css) holds provisional shared typography, spacing, surface and interaction values. It defines variables only, leaves composition to each component, and does not restyle existing experiments. Evaluate it across components and white/ice-blue Rise contexts before promoting the values; exact values live in the stylesheet.
 
 Keep current principles here, operational rules in `AGENTS.md`, and component implementation details beside source files. Do not append historical prohibitions each time feedback changes a visual preference. Revise the relevant principle or approved component specification instead. Experimental values are not permanent tokens until approved. When production tokens exist, keep their actual hex values and dimensions in one code location; this guide should explain the choices rather than duplicate code-level settings.
