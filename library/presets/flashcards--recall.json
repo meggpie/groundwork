@@ -1,0 +1,36 @@
+{
+  "title": "Check your understanding",
+  "use": "recall",
+  "instruction": "Think of your answer before revealing it. Select the card again to return to the prompt.",
+  "tracking": false,
+  "cards": [
+    {
+      "front": {
+        "heading": "Traceability",
+        "text": "What should someone else be able to retrace?",
+        "label": "Think first"
+      },
+      "back": {
+        "text": "The connection between a decision, its source requirements and its supporting evidence."
+      }
+    },
+    {
+      "front": {
+        "heading": "Assumption",
+        "text": "What needs to be made explicit?"
+      },
+      "back": {
+        "label": "Check your answer",
+        "text": "A condition accepted as true for the review. Record its effect and whether confirmation is needed before the decision is finalized."
+      }
+    },
+    {
+      "front": {
+        "heading": "What does verification compare?"
+      },
+      "back": {
+        "text": "The available evidence against a stated requirement, recording what was confirmed and any gaps that remain."
+      }
+    }
+  ]
+}
