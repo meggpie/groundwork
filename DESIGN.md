@@ -64,6 +64,10 @@ These trials support the principles above, not universal layouts, dimensions or 
 
 Web Awesome components or styling patterns may inform exploration where they improve the result; preserve instructional structure and interaction rather than forcing a fit. These experiments do not establish a production component system.
 
+## Lesson-ending transition
+
+Use the custom **UP NEXT →** pattern for recurring lesson endings, with shared styling in `components/up-next.css` and editable content in each lesson’s `block.json`. The component owns its dark-blue background and rounded outer corners, filling the available width on white or ice-blue Rise sections. White text sits directly on blue, with a small uppercase label and understated inline SVG arrow followed by short paragraphs in the course body typography. Keep comfortable paragraph spacing and controlled internal padding; emphasize the next lesson’s key term in bold. No inner card, border, button or additional title is needed. The open text treatment distinguishes this transition from the white-panel Knowledge Check.
+
 ## Core component candidates
 
 The [fresh-direction showcase](experiments/08-fresh-directions.html) is the candidate approved visual baseline for Numbered Steps, Icon Grid, Flashcards, Tabs and Accordions after the targeted refinement pass. Preserve these designs during subsequent implementation; evaluate changes individually rather than restarting the family exploration. These remain experimental, with production accessibility and Rise integration testing still required. Definition remains a separate unresolved design.

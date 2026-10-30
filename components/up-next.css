@@ -1,0 +1,8 @@
+/* Reusable lesson-ending transition; content and export live with the lesson. */
+*{box-sizing:border-box}
+body{margin:0;padding:8px 6px;background:transparent;color:var(--gw-on-brand);font:var(--gw-text-m)/var(--gw-leading-normal) var(--gw-font-body)}
+.up-next{width:100%;padding:32px 28px;background:var(--gw-brand);border-radius:var(--gw-radius-xl)}
+.up-next-label{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:var(--gw-text-xs);font-weight:700;letter-spacing:.08em}
+.up-next-label svg{width:20px;height:16px;flex:none}
+.up-next p{margin:0}.up-next p+p{margin-top:16px}
+@media(max-width:520px){.up-next{padding:24px 20px}}

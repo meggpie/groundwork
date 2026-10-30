@@ -1,0 +1,14 @@
+{
+  "component": "up-next",
+  "data": {
+    "label": "UP NEXT",
+    "paragraphs": [
+      [{"text": "A code may tell you where a fire door or smoke alarm is required—but how do you know the product will perform as intended?"}],
+      [
+        {"text": "In the next lesson, you’ll see how "},
+        {"text": "standards", "strong": true},
+        {"text": " provide detailed requirements and testing methods that work alongside codes."}
+      ]
+    ]
+  }
+}
