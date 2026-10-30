@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Code minimum — SCS101 Lesson 1</title>
+<style>
+/* EMBED_FONTS */
+*{box-sizing:border-box}
+body{margin:0;padding:12px 8px;background:transparent;color:#1d2030;font:18px/1.45 'Atkinson Hyperlegible Next','Segoe UI',sans-serif}
+figure{max-width:900px;margin:0 auto;padding:24px 28px;background:#fff;border-radius:16px}
+.diagram{position:relative;padding-left:64px}
+.axis{position:absolute;left:0;top:0;bottom:0;width:42px;display:flex;align-items:center;justify-content:center;border-left:2px solid #65758a}
+.axis:before{content:'';position:absolute;top:0;left:-6px;width:10px;height:10px;border-left:2px solid #65758a;border-top:2px solid #65758a;transform:rotate(45deg);background:#fff}
+.axis span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:14px;font-weight:700;color:#505d70;background:#fff;padding:12px 0}
+.zone{padding:4px 0 24px 20px}
+h2{font:700 21px/1.25 Archivo,'Segoe UI',sans-serif;letter-spacing:-.02em;margin:0 0 8px}
+p{margin:0;color:#394457;max-width:640px}
+.above{padding-top:8px;padding-bottom:48px}
+.minimum{position:relative;border-top:4px solid #104c8f;padding:0 0 24px 20px}
+.minimum h2{display:table;background:#104c8f;color:#fff;padding:10px 16px;margin:-26px 0 10px 0;border-radius:0 0 8px 8px;font-size:25px}
+.below{padding-top:12px;padding-bottom:8px}
+.below h2{color:#1d2030}
+@media(max-width:480px){body{padding:8px 4px}figure{padding:20px 16px}.diagram{padding-left:40px}.axis{width:24px}.axis span{font-size:13px}.zone{padding-left:12px}.minimum{padding-left:12px}.minimum h2{font-size:24px;padding:10px 12px}h2{font-size:20px}}
+</style>
+</head>
+<body>
+<figure aria-label="Code minimum threshold">
+
+<div class="diagram">
+<div class="axis" aria-hidden="true"><span>Measures / performance →</span></div>
+<section class="zone above" aria-labelledby="above-title">
+<h2 id="above-title">Beyond the minimum</h2>
+<p>Voluntary</p>
+</section>
+<section class="minimum" aria-labelledby="minimum-title">
+<h2 id="minimum-title">Code minimum</h2>
+<p>Required</p>
+</section>
+<section class="zone below" aria-labelledby="below-title">
+<h2 id="below-title">Below the minimum</h2>
+<p>Non-compliant</p>
+</section>
+</div>
+
+</figure>
+</body>
+</html>
+

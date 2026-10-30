@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>From model code to adopted code — SCS101 Lesson 1</title>
+<style>
+/* EMBED_FONTS */
+/* EMBED_FOUNDATION */
+*{box-sizing:border-box}
+body{margin:0;padding:8px 4px;color:var(--gw-text);background:transparent;font:var(--gw-text-m)/var(--gw-leading-normal) var(--gw-font-body)}
+figure{max-width:960px;margin:auto;padding:16px 20px;background:var(--gw-surface);border-radius:var(--gw-radius-xl)}
+.stages{display:grid;grid-template-columns:1fr 1fr;gap:72px;list-style:none;margin:0;padding:0}
+.stages li{position:relative;min-width:0}
+h2{font:700 var(--gw-text-xl)/var(--gw-leading-tight) var(--gw-font-heading);letter-spacing:-.025em;margin:0 0 8px}
+p{margin:0}
+.status{display:table;padding:5px 12px;border-radius:var(--gw-radius-s);font-weight:700;background:var(--gw-surface-ice);color:var(--gw-text)}
+.adopted .status{background:var(--gw-brand);color:var(--gw-on-brand)}
+h3{font:700 18px/1.35 var(--gw-font-body);margin:18px 0 6px}
+.model-status{display:flex;align-items:center;gap:16px;padding:0;background:none;height:37px}
+.model-status span{flex:none;padding:5px 12px;border-radius:var(--gw-radius-s);background:var(--gw-surface-ice)}
+.connector{display:block;flex:1;min-width:0;height:12px;margin-right:-56px;overflow:visible;color:var(--gw-border-control)}
+@media(max-width:520px){figure{padding:16px}.stages{grid-template-columns:1fr;gap:52px}.connector{position:absolute;top:calc(100% + 12px);left:16px;width:28px;height:12px;margin:0;transform-origin:0 0;transform:translateX(6px) rotate(90deg)}}
+</style></head><body>
+<figure aria-label="A model code has no legal force on its own; adopted requirements become legally enforceable">
+<ol class="stages" role="list">
+<li><h2>Model code</h2><p class="status model-status"><span>Not law</span><svg class="connector" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs><marker id="adoption-arrow" viewBox="0 0 6 8" refX="5" refY="4" markerWidth="6" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1 L5 4 L1 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><line x1="0" y1="6" x2="100%" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" marker-end="url(#adoption-arrow)"/></svg></p><h3>Stage 1: Develop nationally</h3><p>Developed nationally to provide a common technical foundation. No legal force on its own.</p></li>
+<li class="adopted"><h2>Adopted code</h2><p class="status">Legally enforceable</p><h3>Stage 2: Adopt provincially or territorially</h3><p>Each jurisdiction adopts all or part of the model codes, potentially with amendments, through its own legal framework.</p></li>
+</ol>
+</figure>
+</body></html>

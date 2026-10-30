@@ -1,0 +1,55 @@
+{
+  "component": "flashcards",
+  "data": {
+    "use": "explore",
+    "instruction": "Select each objective to explore what it addresses.",
+    "tracking": false,
+    "cards": [
+      {
+        "front": {
+          "heading": "Safety",
+          "artwork": "safety.svg"
+        },
+        "back": {
+          "text": "Protect people from hazards such as falls, fires and structural failures."
+        }
+      },
+      {
+        "front": {
+          "heading": "Health",
+          "artwork": "health.svg"
+        },
+        "back": {
+          "text": "Protect occupants from health hazards, including unsafe air, water and sanitation."
+        }
+      },
+      {
+        "front": {
+          "heading": "Accessibility",
+          "artwork": "accessibility.svg"
+        },
+        "back": {
+          "text": "Help people with disabilities enter, use and navigate buildings."
+        }
+      },
+      {
+        "front": {
+          "heading": "Fire and structural protection of buildings",
+          "artwork": "protection.svg"
+        },
+        "back": {
+          "text": "Limit damage to buildings and neighbouring properties from fires and structural failures."
+        }
+      },
+      {
+        "front": {
+          "heading": "Environment",
+          "artwork": "environment.svg"
+        },
+        "back": {
+          "text": "Reduce environmental impacts, including unnecessary energy and water use."
+        }
+      }
+    ]
+  }
+}

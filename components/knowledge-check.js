@@ -1,111 +1,52 @@
-/* Multi-question knowledge check behaviour. No words live here: edit index.html instead. */
-(function () {
-  "use strict";
-  var root = document.querySelector("[data-kc]");
-  if (!root) return;
-  var questions = Array.prototype.slice.call(root.querySelectorAll("[data-question]"));
-  var done = root.querySelector("[data-done]");
-  var count = root.querySelector("[data-count]");
-  var titles = { correct: root.getAttribute("data-title-correct"), wrong: root.getAttribute("data-title-wrong") };
-  var current = 0;
-  var finished = false;
-  var resets = [];
-  var retry = root.querySelector("[data-retry]");
-
-  function complete() {
-    try { window.parent.postMessage({ type: "complete" }, "*"); } catch (e) {}
+// Sequential practice: local state only; no Rise completion or persistence.
+document.querySelectorAll('[data-knowledge-check]').forEach(root=>{
+ const questions=JSON.parse(root.querySelector('[data-questions]').textContent);
+ const form=root.querySelector('form'),field=root.querySelector('fieldset'),legend=root.querySelector('legend');
+ const options=root.querySelector('.kc-options'),counter=root.querySelector('.kc-counter');
+ const feedback=root.querySelector('.kc-feedback'),action=root.querySelector('.kc-action');
+ let current=0,passed=false;
+ function clearResults(){
+  options.querySelectorAll('.kc-option').forEach(option=>{
+   delete option.dataset.result;option.querySelector('.kc-result')?.remove();
+  });
+ }
+ function resultIcon(correct){
+  const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  icon.setAttribute('viewBox','0 0 20 20');icon.setAttribute('aria-hidden','true');icon.classList.add('kc-result');
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',correct?'M4 10 8 14 16 5':'M5 5 15 15 M15 5 5 15');
+  path.setAttribute('fill','none');path.setAttribute('stroke','currentColor');path.setAttribute('stroke-width','2');
+  path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');icon.append(path);return icon;
+ }
+ function show(focus=false){
+  passed=false;field.disabled=false;feedback.replaceChildren();feedback.hidden=true;
+  counter.textContent=`Question ${current+1} of ${questions.length}`;
+  legend.textContent=questions[current].question;options.replaceChildren();
+  questions[current].answers.forEach((answer,index)=>{
+   const label=document.createElement('label');label.className='kc-option';
+   const radio=document.createElement('input');radio.type='radio';radio.name='answer';radio.value=String(index);
+   const text=document.createElement('span');text.textContent=answer.text;label.append(radio,text);options.append(label);
+  });
+  action.textContent='Check Answer';action.disabled=true;
+  if(focus)legend.focus();
+ }
+ options.addEventListener('change',()=>{clearResults();action.disabled=false;feedback.hidden=true;feedback.replaceChildren()});
+ form.addEventListener('submit',event=>{
+  event.preventDefault();
+  if(passed){
+   if(current+1<questions.length){current++;show(true)}
+   else{form.hidden=true;counter.hidden=true;const complete=root.querySelector('.kc-complete');complete.hidden=false;complete.querySelector('h2').focus()}
+   return;
   }
-
-  function setup(q, index) {
-    var form = q.querySelector("[data-form]");
-    var opts = Array.prototype.slice.call(q.querySelectorAll("[data-option]"));
-    var error = q.querySelector("[data-error]");
-    var check = q.querySelector("[data-check]");
-    var next = q.querySelector("[data-next]");
-    var fb = q.querySelector("[data-feedback]");
-    var fbTitle = q.querySelector("[data-feedback-title]");
-    var fbText = q.querySelector("[data-feedback-text]");
-    var fbGlyphOk = q.querySelector("[data-glyph-correct]");
-    var fbGlyphNo = q.querySelector("[data-glyph-wrong]");
-    var answered = false;
-
-    form.addEventListener("change", function () { error.hidden = true; });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (answered) return;
-      var chosen = opts.filter(function (o) { return o.querySelector("input").checked; })[0];
-      if (!chosen) { error.hidden = false; return; }
-
-      var right = chosen.getAttribute("data-correct") === "true";
-      var tone = right ? "correct" : "wrong";
-      chosen.setAttribute("data-result", tone);
-      var input = chosen.querySelector("input");
-      input.checked = false;
-      input.disabled = true;
-
-      fb.setAttribute("data-tone", tone);
-      fbTitle.textContent = titles[tone];
-      fbGlyphOk.hidden = !right;
-      fbGlyphNo.hidden = right;
-      fbText.textContent = chosen.querySelector("[data-feedback-for]").textContent;
-      fb.hidden = false;
-      fb.focus();
-
-      if (right) {
-        answered = true;
-        opts.forEach(function (o) { o.querySelector("input").disabled = true; });
-        check.hidden = true;
-        next.hidden = false;
-      }
-    });
-
-    resets.push(function () {
-      answered = false;
-      opts.forEach(function (o) {
-        var i = o.querySelector("input");
-        o.removeAttribute("data-result");
-        i.checked = false;
-        i.disabled = false;
-      });
-      error.hidden = true;
-      fb.hidden = true;
-      fb.removeAttribute("data-tone");
-      check.hidden = false;
-      next.hidden = true;
-    });
-
-    next.addEventListener("click", function () {
-      if (index < questions.length - 1) {
-        show(index + 1);
-      } else {
-        finish();
-      }
-    });
-  }
-
-  function show(index) {
-    current = index;
-    questions.forEach(function (q, i) { q.hidden = i !== index; });
-    count.textContent = "Question " + (index + 1) + " of " + questions.length;
-    questions[index].querySelector("h2").focus();
-  }
-
-  function finish() {
-    questions.forEach(function (q) { q.hidden = true; });
-    done.hidden = false;
-    count.textContent = "Complete";
-    done.querySelector("[data-done-title]").focus();
-    if (!finished) { finished = true; complete(); }
-  }
-
-  function restart() {
-    resets.forEach(function (r) { r(); });
-    done.hidden = true;
-    show(0);
-  }
-
-  if (retry) retry.addEventListener("click", restart);
-
-  questions.forEach(setup);
-})();
+  const selected=options.querySelector('input:checked');if(!selected)return;
+  const answer=questions[current].answers[Number(selected.value)];passed=answer.correct;
+  clearResults();
+  const option=selected.closest('.kc-option');option.dataset.result=passed?'correct':'incorrect';option.append(resultIcon(passed));
+  const title=document.createElement('strong');
+  title.append(resultIcon(passed),document.createTextNode(passed?'Correct.':'Not quite. Try again.'));
+  const message=document.createElement('p');message.textContent=answer.feedback;
+  feedback.dataset.correct=String(passed);feedback.hidden=false;feedback.replaceChildren(title,message);
+  if(passed){field.disabled=true;action.textContent=current+1<questions.length?'Next Question':'Finish';action.focus()}
+ });
+ show();
+});
