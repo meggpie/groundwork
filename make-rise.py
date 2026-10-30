@@ -306,20 +306,26 @@ def render_reference_table(data):
     if not isinstance(rows, list) or not rows:
         raise ValueError('Reference table requires rows')
     esc = lambda value: html.escape(value, quote=True)
+    organizations = data.get('layout') == 'organizations'
+    title = 'Standards organizations you\'ll encounter' if organizations else 'Examples of standards-developed technical codes in Alberta'
+    labels = ('Organization', 'Designation', 'Examples of work') if organizations else ('Discipline', 'Technical code', 'What it covers')
     items = []
     for index, row in enumerate(rows):
         if not isinstance(row, dict):
             raise ValueError('Table rows must be objects')
-        for key in ('discipline', 'designation', 'publication', 'coverage'):
+        keys = ('organization', 'designation', 'coverage') if organizations else ('discipline', 'designation', 'publication', 'coverage')
+        for key in keys:
             if not isinstance(row.get(key), str) or not row[key].strip():
                 raise ValueError('Table ' + key + ' must be nonempty text')
-        items.append(f'''<tr role="row"><th role="rowheader" scope="row" id="discipline-{index}" headers="discipline"><span class="mobile-label" aria-hidden="true">Discipline</span>{esc(row['discipline'])}</th><td role="cell" headers="technical-code discipline-{index}"><span class="mobile-label" aria-hidden="true">Technical code</span><span class="code-designation">{esc(row['designation'])}</span><span class="code-publication"><span class="visually-hidden"> — </span><em>{esc(row['publication'])}</em></span></td><td role="cell" headers="coverage discipline-{index}"><span class="mobile-label" aria-hidden="true">What it covers</span>{esc(row['coverage'])}</td></tr>''')
+        publication = '' if organizations else f'<span class="code-publication"><span class="visually-hidden"> — </span><em>{esc(row["publication"])}</em></span>'
+        name = row['organization'] if organizations else row['discipline']
+        items.append(f'''<tr role="row"><th role="rowheader" scope="row" id="discipline-{index}" headers="discipline"><span class="mobile-label" aria-hidden="true">{labels[0]}</span>{esc(name)}</th><td role="cell" headers="technical-code discipline-{index}"><span class="mobile-label" aria-hidden="true">{labels[1]}</span><span class="code-designation">{esc(row['designation'])}</span>{publication}</td><td role="cell" headers="coverage discipline-{index}"><span class="mobile-label" aria-hidden="true">{labels[2]}</span>{esc(row['coverage'])}</td></tr>''')
     foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
     css = (COMPONENT / 'reference-table.css').read_text(encoding='utf-8')
     notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
     return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Examples of standards-developed technical codes in Alberta</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
-<main><div class="table-surface"><table role="table" aria-label="Examples of standards-developed technical codes in Alberta"><colgroup><col class="discipline-col"><col class="technical-col"><col class="coverage-col"></colgroup><thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" id="discipline">Discipline</th><th role="columnheader" scope="col" id="technical-code">Technical code</th><th role="columnheader" scope="col" id="coverage">What it covers</th></tr></thead><tbody role="rowgroup">{''.join(items)}</tbody></table></div></main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main><div class="table-surface{' organizations' if organizations else ''}"><table role="table" aria-label="{esc(title)}"><colgroup><col class="discipline-col"><col class="technical-col"><col class="coverage-col"></colgroup><thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" id="discipline">{labels[0]}</th><th role="columnheader" scope="col" id="technical-code">{labels[1]}</th><th role="columnheader" scope="col" id="coverage">{labels[2]}</th></tr></thead><tbody role="rowgroup">{''.join(items)}</tbody></table></div></main>
 <!-- Embedded font licences:\n{notices}\n--></body></html>'''
 
 
