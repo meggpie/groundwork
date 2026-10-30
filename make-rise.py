@@ -40,9 +40,12 @@ def resolve(source):
         path /= 'block.json'
     data = json.loads(path.read_text(encoding='utf-8-sig'))
     if 'component' in data:
-        if data['component'] != 'flashcards':
-            raise ValueError('This pilot supports flashcards only')
-        data = data['data']
+        component = data['component']
+        if component not in ('flashcards', 'knowledge-check', 'up-next'):
+            raise ValueError('Supported components: flashcards, knowledge-check, up-next')
+        data = dict(data['data'])
+        if component != 'flashcards':
+            data['_component'] = component
     elif not path.is_relative_to(PRESETS) or not path.stem.startswith('flashcards--'):
         raise ValueError('Use a flashcards preset or a {component, data} block.json')
     if not isinstance(data, dict):
@@ -124,6 +127,10 @@ def font_css():
 
 def render(data, base=ROOT):
     """One rendering path for previews and paste-ready output. No external requests."""
+    if data.get('_component') == 'knowledge-check':
+        return render_knowledge_check(data)
+    if data.get('_component') == 'up-next':
+        return render_up_next(data)
     validate(data)
     esc = lambda value: html.escape(str(value), quote=True)
     use = data.get('use', 'explore')
@@ -155,6 +162,64 @@ def render(data, base=ROOT):
 <script>{js}</script><!-- Embedded font licences:\n{notices}\n--></body></html>'''
 
 
+def render_knowledge_check(data):
+    questions = data.get('questions')
+    if not isinstance(questions, list) or not questions:
+        raise ValueError('Knowledge check requires at least one question')
+    for question in questions:
+        if not isinstance(question.get('question'), str) or not question['question'].strip():
+            raise ValueError('Each question requires text')
+        answers = question.get('answers')
+        if not isinstance(answers, list) or len(answers) < 2:
+            raise ValueError('Each question requires at least two answers')
+        for answer in answers:
+            if (not isinstance(answer.get('correct'), bool)
+                    or any(not isinstance(answer.get(key), str) or not answer[key].strip()
+                           for key in ('text', 'feedback'))):
+                raise ValueError('Each answer requires text, feedback and a boolean correct setting')
+        if sum(answer['correct'] for answer in answers) != 1:
+            raise ValueError('Each single-choice question requires exactly one correct answer')
+    content = json.dumps(questions, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'knowledge-check.css').read_text(encoding='utf-8')
+    js = (COMPONENT / 'knowledge-check.js').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork Knowledge Check</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main class="knowledge-check" data-knowledge-check aria-label="Knowledge Check">
+<header class="kc-header">Knowledge Check</header><div class="kc-body">
+<p class="kc-counter"></p><form><fieldset><legend tabindex="-1"></legend><div class="kc-options"></div></fieldset>
+<div class="kc-feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+<button class="kc-action" type="submit" disabled>Check Answer</button></form>
+<section class="kc-complete" hidden><h2 tabindex="-1">Knowledge check complete</h2><p>You’ve answered all {len(questions)} questions correctly.</p></section>
+<noscript>This knowledge check requires JavaScript.</noscript></div>
+<script type="application/json" data-questions>{content}</script></main>
+<script>{js}</script><!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
+def render_up_next(data):
+    label = data.get('label', 'UP NEXT')
+    paragraphs = data.get('paragraphs')
+    if not isinstance(label, str) or not label.strip() or not isinstance(paragraphs, list) or not paragraphs:
+        raise ValueError('Up Next requires a label and paragraphs')
+    rendered = []
+    for paragraph in paragraphs:
+        if not isinstance(paragraph, list) or not paragraph:
+            raise ValueError('Each paragraph requires text segments')
+        segments = []
+        for segment in paragraph:
+            if not isinstance(segment, dict) or not isinstance(segment.get('text'), str) or not isinstance(segment.get('strong', False), bool):
+                raise ValueError('Each segment requires text and an optional boolean strong setting')
+            text = html.escape(segment['text'])
+            segments.append(f'<strong>{text}</strong>' if segment.get('strong') else text)
+        rendered.append('<p>' + ''.join(segments) + '</p>')
+    foundation = (ROOT / 'experiments/groundwork-foundation.css').read_text(encoding='utf-8')
+    css = (COMPONENT / 'up-next.css').read_text(encoding='utf-8')
+    notices = '\n'.join((FONTS / name).read_text(encoding='utf-8') for name in ['OFL-Archivo.txt', 'OFL-Atkinson-Hyperlegible-Next.txt']).replace('--', '—')
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork Up Next</title><style>{font_css()}\n{foundation}\n{css}</style></head><body>
+<main class="up-next" aria-labelledby="up-next-label"><div class="up-next-label" id="up-next-label">{html.escape(label)}<svg viewBox="0 0 20 16" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M2 8h15m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>{''.join(rendered)}</main>
+<!-- Embedded font licences:\n{notices}\n--></body></html>'''
+
+
 def paste(source, copy=False):
     data, base, name = resolve(source)
     page = render(data, base)
@@ -179,6 +244,15 @@ def create_preview(source):
     target = PREVIEWS / (name + '.html')
     # Exact paste HTML inside srcdoc; only the outer lesson context differs.
     target.write_text('''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groundwork Flashcards preview</title><style>*{box-sizing:border-box}body{margin:0;color:#1d2030;font:16px/1.5 system-ui}header,section{padding:24px max(20px,calc((100vw - 1040px)/2))}header{background:#f8fafc}h1{font-size:22px;margin:0 0 8px}p{margin:8px 0}button{font:inherit;padding:8px 14px;cursor:pointer}button:focus-visible{outline:3px solid #3656bd;outline-offset:3px}section{background:white}.ice section{background:#e7edf4}iframe{border:0;width:100%;display:block;height:650px}</style></head><body><header><h1>Groundwork · Flashcards pilot</h1><p>Edit the source JSON, then regenerate. The iframe below contains the exact paste-ready document.</p><button id="background" aria-pressed="false">Use ice-blue background</button></header><section><iframe title="Flashcards" srcdoc="''' + html.escape(page, quote=True) + '''"></iframe></section><script>const frame=document.querySelector('iframe');frame.addEventListener('load',()=>{const doc=frame.contentDocument;const resize=()=>frame.style.height=Math.ceil(doc.body.getBoundingClientRect().height+16)+'px';new ResizeObserver(resize).observe(doc.body);doc.fonts.ready.then(resize);resize()});document.querySelector('button').addEventListener('click',e=>{const ice=document.body.classList.toggle('ice');e.target.setAttribute('aria-pressed',String(ice));e.target.textContent=ice?'Use white background':'Use ice-blue background'});</script></body></html>''', encoding='utf-8')
+    if data.get('_component') == 'knowledge-check':
+        preview = target.read_text(encoding='utf-8').replace('Flashcards pilot', 'Knowledge Check pilot').replace('Flashcards preview', 'Knowledge Check preview').replace('title="Flashcards"', 'title="Knowledge Check"')
+        preview = preview.replace('section{background:white}', 'section{background:#104c8f}')
+        preview = re.sub(r'<button id="background".*?</button>', '', preview)
+        preview = re.sub(r"document.querySelector\('button'\).addEventListener.*?</script>", '</script>', preview)
+        target.write_text(preview, encoding='utf-8')
+    elif data.get('_component') == 'up-next':
+        preview = target.read_text(encoding='utf-8').replace('Flashcards pilot', 'Up Next').replace('Flashcards preview', 'Up Next preview').replace('title="Flashcards"', 'title="Up Next"')
+        target.write_text(preview, encoding='utf-8')
     return target
 
 
@@ -214,7 +288,7 @@ def main():
                 data, base, _ = resolve(source)
                 render(data, base)
         if args.action == 'check':
-            print(f'PASS: {len(selected)} Flashcard content sources render with local assets')
+            print(f'PASS: {len(selected)} content sources render with local assets')
 
 
 if __name__ == '__main__':

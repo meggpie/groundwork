@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Code — SCS101 Lesson 1</title>
+<style>
+/* The build script embeds the three local font faces here. */
+/* EMBED_FONTS */
+*{box-sizing:border-box}
+body{margin:0;padding:12px 8px;background:transparent;color:#1d2030;font:18px/1.5 'Atkinson Hyperlegible Next','Segoe UI',sans-serif}
+.definition{max-width:960px;margin:auto;min-width:0;overflow:hidden;border:1px solid #cbd7e4;border-radius:16px;padding:26px 28px;background:#fff;box-shadow:0 4px 16px #19385b0d}
+.component-label{color:#104c8f;font-size:14px;font-weight:700}
+h1,h2{font-family:Archivo,'Segoe UI',sans-serif;line-height:1.25;letter-spacing:-.025em}
+h1{font-size:30px;margin:8px 0 10px}
+p{margin:0;color:#394457}
+.definition-paragraph{margin-top:18px}
+.term{font:inherit;font-weight:700;color:#104c8f;background:#e4ebf6;border:0;border-radius:4px;padding:0 4px;text-decoration:underline dotted;text-underline-offset:4px;cursor:pointer}
+.term:hover{background:#d3dff1}
+.term[aria-expanded="true"]{background:#104c8f;color:#fff;text-decoration:none}
+.interaction-hint{font-size:14px;color:#505769;margin-top:10px}
+.explanation{margin:20px -28px -26px;padding:18px 28px 22px;background:#edf3fa;border-top:1px solid #cbd7e4}
+.explanation-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.explanation h2{font-size:17px;color:#104c8f;margin:0}
+.explanation p{font-size:17px;margin-top:5px}
+.close{font:24px/1 'Atkinson Hyperlegible Next',sans-serif;background:none;color:#104c8f;border:0;border-radius:4px;min-width:44px;min-height:44px;cursor:pointer}
+.close:hover{background:#e7edf4}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid #3656bd;outline-offset:4px}
+@media(max-width:480px){.definition{padding:22px 20px}.explanation{margin:18px -20px -22px;padding:16px 20px 20px}}
+</style>
+</head>
+<body>
+<main class="definition" aria-labelledby="code-term">
+<span class="component-label">Definition</span>
+<h1 id="code-term">Code</h1>
+<p>A comprehensive set of minimum administrative and technical <button type="button" class="term" data-term="requirement" aria-expanded="false" aria-controls="explanation">requirements<span aria-hidden="true"> +</span></button> governing a defined <button type="button" class="term" data-term="scope" aria-expanded="false" aria-controls="explanation">scope<span aria-hidden="true"> +</span></button>—such as buildings, fire protection, plumbing, or electrical systems—written to be adopted into law and enforced by a regulatory authority.</p>
+<p class="definition-paragraph">Within its scope, a code <button type="button" class="term" data-term="regulate" aria-expanded="false" aria-controls="explanation">regulates<span aria-hidden="true"> +</span></button> the design, construction, alteration, installation, operation, maintenance, or demolition of buildings and systems.</p>
+<p class="interaction-hint">Select a highlighted term to explore its meaning.</p>
+<section class="explanation" id="explanation" aria-labelledby="explanation-title" hidden>
+<div class="explanation-header"><h2 id="explanation-title"></h2><button type="button" class="close" aria-label="Close explanation">×</button></div>
+<p id="explanation-text"></p>
+</section>
+</main>
+<script>
+(()=>{
+ const content={
+  regulate:['Regulate','To govern an activity by establishing mandatory requirements for how it must be carried out.'],
+  scope:['Scope','The boundaries of a code—identifying the specific buildings, systems, activities, and situations the code covers. Within that overall scope, individual articles specify exactly when and where a requirement applies.'],
+  requirement:['Requirement','A mandatory rule stating what must be provided, achieved, or done to comply with the code. Unlike a guideline or recommendation, a requirement is legally binding once the code is adopted into law.']
+ };
+ const root=document.querySelector('.definition'),terms=[...root.querySelectorAll('.term')],panel=root.querySelector('.explanation');
+ let active=null;
+ function close(returnFocus=false){const previous=active;terms.forEach(button=>{button.setAttribute('aria-expanded','false');button.querySelector('span').textContent=' +'});panel.hidden=true;active=null;if(returnFocus&&previous)previous.focus()}
+ terms.forEach(button=>button.addEventListener('click',()=>{
+  const wasOpen=active===button;close();if(wasOpen)return;
+  active=button;const [title,text]=content[button.dataset.term];
+  root.querySelector('#explanation-title').textContent=title;root.querySelector('#explanation-text').textContent=text;
+  button.setAttribute('aria-expanded','true');button.querySelector('span').textContent=' −';panel.hidden=false;
+ }));
+ root.querySelector('.close').addEventListener('click',()=>close(true));
+ root.addEventListener('keydown',event=>{if(event.key==='Escape'&&active){event.preventDefault();close(true)}});
+})();
+</script>
+</body>
+</html>

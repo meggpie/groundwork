@@ -1,0 +1,57 @@
+{
+  "component": "knowledge-check",
+  "data": {
+    "questions": [
+      {
+        "question": "What does it mean when a building or system is “built to code”?",
+        "answers": [
+          {
+            "text": "It is guaranteed to be 100% free of risk.",
+            "correct": false,
+            "feedback": "Building to code means meeting the minimum legal threshold of tolerable risk—not achieving zero risk or best-in-class construction."
+          },
+          {
+            "text": "It represents the highest quality of design and construction available.",
+            "correct": false,
+            "feedback": "Building to code means meeting the minimum legal threshold of tolerable risk—not achieving zero risk or best-in-class construction."
+          },
+          {
+            "text": "It meets the minimum legal standard for tolerable risk.",
+            "correct": true,
+            "feedback": "Making a structure completely risk-free would be practically and economically impossible. Instead, a code defines the minimum legal baseline required to limit unacceptable risk."
+          },
+          {
+            "text": "It follows recommended industry guidelines that are optional to enforce.",
+            "correct": false,
+            "feedback": "Building to code means meeting the minimum legal threshold of tolerable risk—not achieving zero risk or best-in-class construction."
+          }
+        ]
+      },
+      {
+        "question": "A new edition of the National Building Code of Canada is published today. Can a local official enforce its new rules tomorrow?",
+        "answers": [
+          {
+            "text": "Yes—a National Model Code becomes law across Canada as soon as it is published.",
+            "correct": false,
+            "feedback": "A National Model Code carries zero legal force on its own. It only becomes enforceable after a province or territory adopts it through its own legislation."
+          },
+          {
+            "text": "No—a National Model Code has no legal force until a province or territory adopts it into law.",
+            "correct": true,
+            "feedback": "A National Model Code is a technical blueprint, not a law. Under Canada’s Constitution, only provinces and territories have the legal authority to adopt codes into enforceable legislation."
+          },
+          {
+            "text": "Yes—if the new requirement addresses an immediate safety hazard.",
+            "correct": false,
+            "feedback": "A National Model Code carries zero legal force on its own. It only becomes enforceable after a province or territory adopts it through its own legislation."
+          },
+          {
+            "text": "No—each municipality must write its own building code from scratch.",
+            "correct": false,
+            "feedback": "A National Model Code carries zero legal force on its own. It only becomes enforceable after a province or territory adopts it through its own legislation."
+          }
+        ]
+      }
+    ]
+  }
+}
